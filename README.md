@@ -15,6 +15,7 @@
   - [IMPORTANT NOTE REGARDING `dst_url`](#important-note-regarding-dst_url)
 - [Commands](#commands)
   - [build](#build)
+  - [load](#load)
   - [targets](#targets)
   - [target](#target)
   - [config init](#config-init)
@@ -72,6 +73,7 @@ $ DBSNAPPER_SECRET_KEY=<your_secret_key> dbsnapper [command]
 3. List all targets, size, and status with `dbsnapper targets`
 4. Build a snapshot for target `app` with `dbsnapper build app`
 5. List all snapshots for target `app` with `dbsnapper target app`
+6. Load a snapshot to a destination database (WILL OVERWRITE `dst_url`) with `dbsnapper load app 1`
 
 ### Initialization
 `dbsnapper` uses a configuration file and working directory which can be created with the init command:
@@ -146,6 +148,14 @@ Creates a snapshot of a database per the target definition. Uses `src_url` to sp
 Usage:
 ```sh
 $ dbsnapper build <target_name>
+```
+
+### load
+Load a snapshot to a target `dst_url`. This will __OVERWRITE__ the destination datbase specified in the `dst_url` pareameter
+
+Usage:
+```sh
+$ dbsnapper load <target_name> <snapshot_index>
 ```
 
 ### targets
