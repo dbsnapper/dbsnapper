@@ -46,7 +46,7 @@ __Linux:__ (.deb):
 
 ```sh
 # Download the release
-TAG=0.9.7
+TAG=0.9.8
 wget https://github.com/dbsnapper/dbsnapper/releases/download/v"$TAG"/dbsnapper_"$TAG"_Linux_amd64.deb 
 
 ## Install with dpkg
@@ -73,7 +73,7 @@ $ DBSNAPPER_SECRET_KEY=<your_secret_key> dbsnapper [command]
 3. List all targets, size, and status with `dbsnapper targets`
 4. Build a snapshot for target `app` with `dbsnapper build app`
 5. List all snapshots for target `app` with `dbsnapper target app`
-6. Load a snapshot to a destination database (WILL OVERWRITE `dst_url`) with `dbsnapper load app 1`
+6. Load a snapshot to a destination database (WILL OVERWRITE `dst_url`) with `dbsnapper load app 0`
 
 ### Initialization
 `dbsnapper` uses a configuration file and working directory which can be created with the init command:
