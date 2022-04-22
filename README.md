@@ -13,6 +13,11 @@
   - [Target definitions](#target-definitions)
   - [Secrets encryption](#secrets-encryption)
   - [IMPORTANT NOTE REGARDING `dst_url`](#important-note-regarding-dst_url)
+- [Commands](#commands)
+  - [build](#build)
+  - [targets](#targets)
+  - [target](#target)
+  - [config init](#config-init)
 ## Features
 - Create database snapshots with the `build` command
 - Load database snapshots to a target database
@@ -132,3 +137,36 @@ Example - `app` target after encryption
 To prevent potential data loss, we want to __STRESS__ the fact that a database definition specified in the `dst_url` of a target definition will be __DROPPED__ and __RECREATED__ when using the `load` command!
 
 ---
+
+## Commands
+
+### build
+Creates a snapshot of a database per the target definition. Uses `src_url` to specify the source database
+
+Usage:
+```sh
+$ dbsnapper build <target_name>
+```
+
+### targets
+List all targets and properties such as their size and status (whether they can be reached)
+
+Usage:
+```sh
+$ dbsnapper targets
+```
+### target
+List all snapshots for a target
+
+Usage:
+```sh
+$ dbsnapper target <target_name>
+```
+
+### config init
+Create and initialize the default configuration. Configuration file is stored in `~/.config/dbsnapper/dbsnapper.yml`
+
+Usage:
+```sh
+$ dbsnapper config init
+```
