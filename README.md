@@ -32,12 +32,19 @@ Only works with PostgreSQL databases at the moment, but more will be added soon.
 ## Installation
 __Mac:__ The easiest way to install `dbsnapper` is via [Homebrew](https://brew.sh/)
 
-`brew install dbsnapper/tap/dbsnapper`
+```sh
+brew install dbsnapper/tap/dbsnapper
+```
 
 __Linux:__ (.deb):
 
 ```sh
-TAG=0.9.5; wget https://github.com/joescharf/snapper/releases/download/v"$TAG"/dbsnapper_"$TAG"_Linux_amd64.deb && dpkg -i dbsnapper_"$TAG"_Linux_amd64.deb
+# Download the release
+TAG=0.9.6
+wget https://github.com/dbsnapper/dbsnapper/releases/download/v"$TAG"/dbsnapper_"$TAG"_Linux_amd64.deb 
+
+## Install with dpkg
+dpkg -i dbsnapper_"$TAG"_Linux_amd64.deb
 ```
 
 ## Usage
