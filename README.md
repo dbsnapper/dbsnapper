@@ -45,7 +45,7 @@ __Linux:__ (.deb):
 
 ```sh
 # Download the release
-TAG=0.9.6
+TAG=0.9.7
 wget https://github.com/dbsnapper/dbsnapper/releases/download/v"$TAG"/dbsnapper_"$TAG"_Linux_amd64.deb 
 
 ## Install with dpkg
