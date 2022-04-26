@@ -4,13 +4,16 @@ Build a database snapshot
 
 ## Synopsis
 
+The `build` command creates a database snapshot.	
 
-	Build creates a database snapshot.
-	
-	
+The `target_name` is the name of the target defined in the configuration file.
+
+The snapshot is built from the connection string specified in the `src_url` parameter of the target configuration. 
+
+
 
 ```
-dbsnapper build [flags]
+dbsnapper build target_name [flags]
 ```
 
 ## Options
@@ -19,7 +22,13 @@ dbsnapper build [flags]
   -h, --help   help for build
 ```
 
+## Options inherited from parent commands
+
+```
+      --config string   config file (default is $HOME/.config/dbsnapper.yml)
+```
+
 ## SEE ALSO
 
-* [dbsnapper](/cmd/dbsnapper/)	 - DBSnapper CLI
+* [dbsnapper](/cmd/dbsnapper/)	 - Easy database snapshots for development and testing
 

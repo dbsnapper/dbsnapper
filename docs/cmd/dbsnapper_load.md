@@ -1,9 +1,23 @@
 # dbsnapper load
 
-Load a targetSnap to target destination url
+Load a target snapshot to a database
+
+## Synopsis
+
+The `dbsnapper load` command loads a snapshot to a database and takes a `target_name` and `snapshot_index` as arguments.
+	
+The `target_name` is the name of the target defined in the configuration file.
+
+The `snapshot_index` is the index number of the snapshot to load.
+
+The snapshot is loaded to the database specified in the `dst_url` parameter of the target configuration. 
+
+!!! danger 
+		This is a destructive operation and any database that exists at `dst_url` will be dropped and recreated!
+
 
 ```
-dbsnapper load <target> index [flags]
+dbsnapper load target_name snapshot_index [flags]
 ```
 
 ## Options
@@ -12,7 +26,13 @@ dbsnapper load <target> index [flags]
   -h, --help   help for load
 ```
 
+## Options inherited from parent commands
+
+```
+      --config string   config file (default is $HOME/.config/dbsnapper.yml)
+```
+
 ## SEE ALSO
 
-* [dbsnapper](/cmd/dbsnapper/)	 - DBSnapper CLI
+* [dbsnapper](/cmd/dbsnapper/)	 - Easy database snapshots for development and testing
 
