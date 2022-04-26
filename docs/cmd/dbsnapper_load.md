@@ -1,4 +1,4 @@
-## dbsnapper load
+# dbsnapper load
 
 Load a targetSnap to target destination url
 
@@ -6,13 +6,13 @@ Load a targetSnap to target destination url
 dbsnapper load <target> index [flags]
 ```
 
-### Options
+## Options
 
 ```
   -h, --help   help for load
 ```
 
-### SEE ALSO
+## SEE ALSO
 
 * [dbsnapper](/cmd/dbsnapper/)	 - DBSnapper CLI
 

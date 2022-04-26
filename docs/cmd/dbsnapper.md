@@ -1,18 +1,18 @@
-## dbsnapper
+# dbsnapper
 
 DBSnapper CLI
 
-### Synopsis
+## Synopsis
 
 DBSnapper is a command line tool for managing DB snapshots
 
-### Options
+## Options
 
 ```
   -h, --help   help for dbsnapper
 ```
 
-### SEE ALSO
+## SEE ALSO
 
 * [dbsnapper build](/cmd/dbsnapper_build/)	 - Build a database snapshot
 * [dbsnapper config](/cmd/dbsnapper_config/)	 - Configuration commands

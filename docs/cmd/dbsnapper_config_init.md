@@ -1,8 +1,8 @@
-## dbsnapper config init
+# dbsnapper config init
 
 Generate dbsnapper configuration file and create working directory
 
-### Synopsis
+## Synopsis
 
 The `dbsnapper config init` command generates, a dbsnapper configuration file and working directory. 
 	
@@ -13,13 +13,13 @@ It also generates a `secret_key`used to encrypt sensitive data in the configurat
 dbsnapper config init [flags]
 ```
 
-### Options
+## Options
 
 ```
   -h, --help   help for init
 ```
 
-### SEE ALSO
+## SEE ALSO
 
 * [dbsnapper config](/cmd/dbsnapper_config/)	 - Configuration commands
 

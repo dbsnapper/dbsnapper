@@ -1,4 +1,4 @@
-## dbsnapper targets
+# dbsnapper targets
 
 List all targets
 
@@ -6,13 +6,13 @@ List all targets
 dbsnapper targets [flags]
 ```
 
-### Options
+## Options
 
 ```
   -h, --help   help for targets
 ```
 
-### SEE ALSO
+## SEE ALSO
 
 * [dbsnapper](/cmd/dbsnapper/)	 - DBSnapper CLI
 

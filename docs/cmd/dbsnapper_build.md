@@ -1,8 +1,8 @@
-## dbsnapper build
+# dbsnapper build
 
 Build a database snapshot
 
-### Synopsis
+## Synopsis
 
 
 	Build creates a database snapshot.
@@ -18,13 +18,13 @@ Build a database snapshot
 dbsnapper build [flags]
 ```
 
-### Options
+## Options
 
 ```
   -h, --help   help for build
 ```
 
-### SEE ALSO
+## SEE ALSO
 
 * [dbsnapper](/cmd/dbsnapper/)	 - DBSnapper CLI
 
