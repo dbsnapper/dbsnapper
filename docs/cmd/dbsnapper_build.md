@@ -7,11 +7,6 @@ Build a database snapshot
 
 	Build creates a database snapshot.
 	
-	Local target+local db = build local, store local
-	Local target+remote db = build local, store local
-	Cloud target+local db = build locally, store in cloud
-	Cloud target+remote db = build from cloud, store in cloud
-
 	
 
 ```
