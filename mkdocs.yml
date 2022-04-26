@@ -1,0 +1,86 @@
+site_name: DBSnapper
+site_url: https://dbsnapper.com
+site_description: "Create sanitized development snapshots of your production databases."
+copyright: Copyright &copy; 2022 Scharfnado, LLC
+
+repo_name: dbsnapper/dbsnapper
+repo_url: https://github.com/dbsnapper/dbsnapper
+
+theme:
+  name: material
+  language: en
+  icon:
+    repo: material/turtle
+  features:
+    - search.suggest
+    - search.highlight
+    - search.share    
+  palette:
+  - media: "(prefers-color-scheme: light)"  # Light mode
+    scheme: default
+    toggle:
+      icon: material/lightbulb-outline
+      name: Switch to light mode
+  - media: "(prefers-color-scheme: dark)"  # Dark mode
+    scheme: slate
+    primary: light blue
+    accent: indigo
+    toggle:
+      icon: material/lightbulb
+      name: Switch to dark mode  
+
+
+plugins:
+  - git-revision-date
+  - search
+
+     
+extra:
+  analytics:
+    provider: google
+    property: G-HWQPXED3FR
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/dbsnapper
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/dbsnapper    
+
+nav:
+  - Home: index.md
+  - installation.md
+  - quick-start.md
+  - requirements.md
+  - limitations.md
+  - Configuration:
+    - configuration/configuration.md
+    - configuration/target-definitions.md
+    - configuration/secrets-encryption.md
+  - Commands:
+    - dbsnapper: cmd/dbsnapper.md
+    - dbsnapper config init: cmd/dbsnapper_config_init.md
+    - dbsnapper build: cmd/dbsnapper_build.md
+    - dbsnapper load: cmd/dbsnapper_load.md
+    - dbsnapper targets: cmd/dbsnapper_targets.md
+    - dbsnapper target: cmd/dbsnapper_target.md
+
+
+markdown_extensions:
+
+  # Python Markdown
+  - admonition
+  - meta
+  - footnotes
+  - toc:
+      permalink: true
+
+  # Python Markdown Extensions
+  - pymdownx.highlight:
+      anchor_linenums: true
+      auto_title: false
+  - pymdownx.inlinehilite    
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true  
+  - pymdownx.tabbed:
+      alternate_style: true       
