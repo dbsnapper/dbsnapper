@@ -1,4 +1,4 @@
-site_name: DBSnapper
+site_name: DBSnapper Documentation
 site_url: https://dbsnapper.com
 site_description: "Create sanitized development snapshots of your production databases."
 copyright: Copyright &copy; 2022 Scharfnado, LLC
@@ -9,6 +9,8 @@ repo_url: https://github.com/dbsnapper/dbsnapper
 theme:
   name: material
   language: en
+  logo: static/logo.png
+  favicon: static/favicon.ico
   icon:
     repo: material/turtle
   features:
@@ -36,6 +38,7 @@ plugins:
 
      
 extra:
+  homepage: https://dbsnapper.com
   analytics:
     provider: google
     property: G-HWQPXED3FR
