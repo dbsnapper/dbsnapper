@@ -61,6 +61,7 @@ nav:
   - Commands:
     - dbsnapper: cmd/dbsnapper.md
     - dbsnapper config init: cmd/dbsnapper_config_init.md
+    - dbsnapper config check: cmd/dbsnapper_config_check.md
     - dbsnapper build: cmd/dbsnapper_build.md
     - dbsnapper load: cmd/dbsnapper_load.md
     - dbsnapper targets: cmd/dbsnapper_targets.md
