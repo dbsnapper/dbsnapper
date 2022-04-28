@@ -14,3 +14,6 @@ Supported configurations
         - `src_url` - connection string of source database
         - `dst_url` - connection string of source database: __THIS WILL BE OVERWRITTEN ON LOAD!__
 
+!!! danger
+    A database specified on the `dst_url` will be DROPPED and RECREATED when the `load` command is used
+
