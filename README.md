@@ -1,6 +1,12 @@
 # DBSnapper - Database snapshots made useful <!-- omit in toc -->
 
-`dbsnapper` is a developers friend when it comes to creating and using database snapshots for development and testing purposes. 
+[![made-with-Go](https://img.shields.io/badge/Made%20with-Go-blue)](https://go.dev/)
+[![read-the-docs](https://img.shields.io/badge/Read%20the-Documentation-informational)](https://docs.dbsnapper.com)
+
+
+
+DBSnapper simplifies the process of creating database snapshots from production data that can be used for development and testing. 
+
 
 - [Features](#features)
 - [Requirements](#requirements)
