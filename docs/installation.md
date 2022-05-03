@@ -14,7 +14,7 @@ Download the `.deb`, `.rpm`, or `.apk` packages from the [releases page][release
 
 ```sh title="Example installation via dpkg"
 # Download the release
-TAG=0.10.1
+TAG=0.11.0
 wget https://github.com/dbsnapper/dbsnapper/releases/download/v"$TAG"/dbsnapper_"$TAG"_Linux_amd64.deb 
 
 ## Install with dpkg

@@ -13,6 +13,7 @@ Supported configurations
     - `<target_name>` - specifies the name of the target definition
         - `src_url` - connection string of source database
         - `dst_url` - connection string of source database: __THIS WILL BE OVERWRITTEN ON LOAD!__
+        - `query_file` - specifies the filename of the query to be used for sanitization. This query should be located in the `working_directory` specified in the configuration.
 
 !!! danger
     A database specified on the `dst_url` will be DROPPED and RECREATED when the `load` command is used

@@ -24,6 +24,7 @@ You can specify your database targets and other configuration properties in the 
 * [dbsnapper build](/cmd/dbsnapper_build/)	 - Build a database snapshot
 * [dbsnapper config](/cmd/dbsnapper_config/)	 - Configuration commands
 * [dbsnapper load](/cmd/dbsnapper_load/)	 - Load a target snapshot to a database
+* [dbsnapper sanitize](/cmd/dbsnapper_sanitize/)	 - Sanitize a snapshot using an Ephemeral database and query
 * [dbsnapper target](/cmd/dbsnapper_target/)	 - List snapshots for a target
 * [dbsnapper targets](/cmd/dbsnapper_targets/)	 - List all targets
 
