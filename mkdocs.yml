@@ -16,7 +16,8 @@ theme:
   features:
     - search.suggest
     - search.highlight
-    - search.share    
+    - search.share
+    - navigation.sections    
   palette:
   - media: "(prefers-color-scheme: light)"  # Light mode
     scheme: default
@@ -67,6 +68,8 @@ nav:
     - dbsnapper load: cmd/dbsnapper_load.md
     - dbsnapper targets: cmd/dbsnapper_targets.md
     - dbsnapper target: cmd/dbsnapper_target.md
+  - Articles:
+    - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
 
 
 markdown_extensions:
