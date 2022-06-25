@@ -8,6 +8,7 @@ repo_url: https://github.com/dbsnapper/dbsnapper
 
 theme:
   name: material
+  custom_dir: overrides
   language: en
   logo: static/logo.png
   favicon: static/favicon.ico
@@ -17,37 +18,36 @@ theme:
     - search.suggest
     - search.highlight
     - search.share
-    - navigation.sections    
+    - navigation.sections
   palette:
-  - media: "(prefers-color-scheme: light)"  # Light mode
-    scheme: default
-    toggle:
-      icon: material/lightbulb-outline
-      name: Switch to light mode
-  - media: "(prefers-color-scheme: dark)"  # Dark mode
-    scheme: slate
-    primary: light blue
-    accent: indigo
-    toggle:
-      icon: material/lightbulb
-      name: Switch to dark mode  
-
+    - media: "(prefers-color-scheme: light)" # Light mode
+      scheme: default
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: dark)" # Dark mode
+      scheme: slate
+      primary: light blue
+      accent: indigo
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
 
 plugins:
   - git-revision-date-localized
   - search
 
-     
 extra:
   homepage: https://dbsnapper.com
   analytics:
-    provider: google
-    property: G-HWQPXED3FR
+    # provider: google
+    # property: G-HWQPXED3FR
+    provider: plausible
   social:
     - icon: fontawesome/brands/github-alt
       link: https://github.com/dbsnapper
     - icon: fontawesome/brands/twitter
-      link: https://twitter.com/dbsnapper    
+      link: https://twitter.com/dbsnapper
 
 nav:
   - Home: index.md
@@ -56,24 +56,22 @@ nav:
   - requirements.md
   - limitations.md
   - Configuration:
-    - configuration/configuration.md
-    - configuration/target-definitions.md
-    - configuration/secrets-encryption.md
+      - configuration/configuration.md
+      - configuration/target-definitions.md
+      - configuration/secrets-encryption.md
   - Commands:
-    - dbsnapper: cmd/dbsnapper.md
-    - dbsnapper config init: cmd/dbsnapper_config_init.md
-    - dbsnapper config check: cmd/dbsnapper_config_check.md
-    - dbsnapper build: cmd/dbsnapper_build.md
-    - dbsnapper sanitize: cmd/dbsnapper_sanitize.md
-    - dbsnapper load: cmd/dbsnapper_load.md
-    - dbsnapper targets: cmd/dbsnapper_targets.md
-    - dbsnapper target: cmd/dbsnapper_target.md
+      - dbsnapper: cmd/dbsnapper.md
+      - dbsnapper config init: cmd/dbsnapper_config_init.md
+      - dbsnapper config check: cmd/dbsnapper_config_check.md
+      - dbsnapper build: cmd/dbsnapper_build.md
+      - dbsnapper sanitize: cmd/dbsnapper_sanitize.md
+      - dbsnapper load: cmd/dbsnapper_load.md
+      - dbsnapper targets: cmd/dbsnapper_targets.md
+      - dbsnapper target: cmd/dbsnapper_target.md
   - Articles:
-    - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
-
+      - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
 
 markdown_extensions:
-
   # Python Markdown
   - admonition
   - meta
@@ -85,10 +83,10 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
       auto_title: false
-  - pymdownx.inlinehilite    
+  - pymdownx.inlinehilite
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.tasklist:
-      custom_checkbox: true  
+      custom_checkbox: true
   - pymdownx.tabbed:
-      alternate_style: true       
+      alternate_style: true
