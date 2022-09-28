@@ -1,6 +1,7 @@
 site_name: DBSnapper Documentation
 site_url: https://docs.dbsnapper.com
 site_description: "Create sanitized development snapshots of your production databases."
+edit_uri: ""
 copyright: Copyright &copy; 2022 Scharfnado, LLC
 
 repo_name: dbsnapper/dbsnapper
