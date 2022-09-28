@@ -14,9 +14,9 @@ While it may not be possible to eliminate all the risks associated with creating
 
 **Where does your data reside?** - Many cloud services can completely automate the task of creating database snapshots. In addition to having privilged access to your data, you should understand the intermediate and final storage locations of your snapshots. How are the snapshots secured; Are they encrypted at rest? Are there enforced retention policies? What systems are in place to detect and audit unautnorized access? Additionally, if you're in a country subject to GDPR, it may be required that your data is stored in datacenters that reside in the EU.
 
-**Database Credentials** - To perform a proper snapshot, privileged database credentials are required to access all tables and create a complete database dump. These credentials should be stored encrypted, and dedicated set of credentials should be provided for use by the snapshotting tool with restricted access (i.e. to read-only replicas).
+**Database Credentials** - To perform a proper snapshot, privileged database credentials are required to access all tables and create a complete database dump. These credentials should be stored encrypted, and a dedicated set of credentials should be provided for use by the snapshotting tool with restricted access (i.e. to read-only replicas).
 
-**IP Addresses** - By default, databases are configured to disallow access from the public internet, a means to prevent unauthorized access. Some tools will require you to whitelist the IP addresses of the machines they use to create the snapshots. 
+**IP Addresses** - As a best practice, databases are configured to disallow access from the public internet, as a means to prevent unauthorized access. Some tools will require you to whitelist the IP addresses of the machines they use to create the snapshots. 
 
 **Data in Transit** - When creating a database snapshot, the data is transferred over the network from the database to the snapshotting tool. This data should be encrypted in transit to prevent unauthorized access.
 
