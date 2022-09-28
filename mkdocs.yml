@@ -40,9 +40,9 @@ plugins:
 extra:
   homepage: https://dbsnapper.com
   analytics:
-    # provider: google
-    # property: G-HWQPXED3FR
-    provider: plausible
+    provider: google
+    property: G-HWQPXED3FR
+    # provider: plausible
   social:
     - icon: fontawesome/brands/github-alt
       link: https://github.com/dbsnapper
@@ -70,6 +70,7 @@ nav:
       - dbsnapper target: cmd/dbsnapper_target.md
   - Articles:
       - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
+      - articles/no-touching-touch-free-database-snapshots-with-dbsnapper.md
 
 markdown_extensions:
   # Python Markdown
