@@ -37,6 +37,7 @@ theme:
 plugins:
   - git-revision-date-localized
   - search
+  - social
 
 extra:
   homepage: https://dbsnapper.com

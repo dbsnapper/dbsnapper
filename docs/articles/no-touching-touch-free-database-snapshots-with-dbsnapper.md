@@ -1,3 +1,8 @@
+---
+title: No Touching! Touch-Free DB Snapshots
+description: Your data is your most important asset, here's how to create touch-free sanitized database snapshots with DBSnapper
+
+---
 # No Touching! Touch-Free Database Snapshots with DBSnapper
 
 _Your data is your most important asset so you must exercise caution when providing access to other applications and third parties. Here's how to create touch-free, sanitized database snapshots with DBSnapper._
