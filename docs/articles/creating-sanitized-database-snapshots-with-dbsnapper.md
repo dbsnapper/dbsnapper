@@ -1,3 +1,8 @@
+---
+title: Sanitized Database Snapshots with DBSnapper
+description: In this tutorial, we show how to create a database snapshot and then sanitize the sensitive data with DBSnapper.
+---
+
 # Creating Sanitized Database Snapshots with DBSnapper
 
 In this example, we're going to create a simple database with User account information. Our goal is to be able to create sanitized snapshot of this database that we can use in our development
