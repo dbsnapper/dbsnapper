@@ -32,12 +32,6 @@ dbsnapper load target_name snapshot_index [flags]
   -o, --original   Use the original snapshot instead of the sanitized version.
 ```
 
-## Options inherited from parent commands
-
-```
-      --config string   config file (default is $HOME/.config/dbsnapper.yml)
-```
-
 ## SEE ALSO
 
 * [dbsnapper](/cmd/dbsnapper/)	 - Easy database snapshots for development and testing

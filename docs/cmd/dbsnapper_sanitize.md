@@ -30,12 +30,6 @@ dbsnapper sanitize target_name snapshot_index [flags]
   -h, --help   help for sanitize
 ```
 
-## Options inherited from parent commands
-
-```
-      --config string   config file (default is $HOME/.config/dbsnapper.yml)
-```
-
 ## SEE ALSO
 
 * [dbsnapper](/cmd/dbsnapper/)	 - Easy database snapshots for development and testing

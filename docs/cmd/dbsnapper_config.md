@@ -8,12 +8,6 @@ Configuration commands
   -h, --help   help for config
 ```
 
-## Options inherited from parent commands
-
-```
-      --config string   config file (default is $HOME/.config/dbsnapper.yml)
-```
-
 ## SEE ALSO
 
 * [dbsnapper](/cmd/dbsnapper/)	 - Easy database snapshots for development and testing

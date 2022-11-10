@@ -17,12 +17,6 @@ dbsnapper config check [flags]
   -h, --help   help for check
 ```
 
-## Options inherited from parent commands
-
-```
-      --config string   config file (default is $HOME/.config/dbsnapper.yml)
-```
-
 ## SEE ALSO
 
 * [dbsnapper config](/cmd/dbsnapper_config/)	 - Configuration commands

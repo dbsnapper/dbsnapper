@@ -8,6 +8,8 @@ List snapshots for a target
 
 The `target_name` is the name of the target defined in the configuration file.
 
+Specify the `--cloud` flag to only list cloud snapshots.
+
 
 ```
 dbsnapper target target_name [flags]
@@ -16,13 +18,8 @@ dbsnapper target target_name [flags]
 ## Options
 
 ```
-  -h, --help   help for target
-```
-
-## Options inherited from parent commands
-
-```
-      --config string   config file (default is $HOME/.config/dbsnapper.yml)
+  -c, --cloud   Only display cloud snapshots
+  -h, --help    help for target
 ```
 
 ## SEE ALSO
