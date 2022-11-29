@@ -79,6 +79,7 @@ markdown_extensions:
   - admonition
   - meta
   - footnotes
+  - attr_list
   - toc:
       permalink: true
 
