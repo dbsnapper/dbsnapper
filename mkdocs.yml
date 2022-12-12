@@ -56,7 +56,17 @@ nav:
   - installation.md
   - quick-start.md
   - requirements.md
-  - limitations.md
+  - DBSnapper Cloud:
+      - dbsnapper-cloud/introduction.md
+  - Database Engines:
+      - database-engines/introduction.md
+      - database-engines/postgresql-docker.md
+      - database-engines/postgresql-local.md
+      - database-engines/mysql-docker.md
+  - Cloud Storage Engines:
+      - cloud-storage-engines/introduction.md
+      - cloud-storage-engines/cloudflare-r2.md
+      - cloud-storage-engines/amazon-s3.md
   - Configuration:
       - configuration/configuration.md
       - configuration/target-definitions.md
