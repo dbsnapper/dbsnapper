@@ -10,7 +10,7 @@ The MySQL Docker engine allows you to create snapshots of your MySQL databases r
 
 ## Requirements
 
-The MySQL Docker engine has been tested with `mysql:8.0-oracle` Docker image. But should be compatible with any recent version of the MySQL Docker image that incluedes the `mysqlsh` MySQL Shell client.
+The MySQL Docker engine has been tested with `mysql:8.0-oracle` Docker image. But should be compatible with any recent version of the MySQL Docker image that includes the `mysqlsh` MySQL Shell client.
 
 ## Usage Notes
 
