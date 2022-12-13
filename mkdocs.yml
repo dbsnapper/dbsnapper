@@ -42,8 +42,9 @@ plugins:
 extra:
   homepage: https://dbsnapper.com
   analytics:
-    provider: google
-    property: G-HWQPXED3FR
+    provider: gtm
+    # provider: google
+    # property: G-HWQPXED3FR
     # provider: plausible
   social:
     - icon: fontawesome/brands/github-alt
