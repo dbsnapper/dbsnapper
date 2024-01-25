@@ -14,5 +14,4 @@ dbsnapper auth token api_token [flags]
 
 ## SEE ALSO
 
-* [dbsnapper auth](/cmd/dbsnapper_auth/)	 - Login to DBSnapper Cloud
-
+- [dbsnapper auth]](cmd/dbsnapper_auth/) - Login to DBSnapper Cloud

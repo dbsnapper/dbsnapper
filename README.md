@@ -11,8 +11,7 @@
 
 [![read-the-docs](https://img.shields.io/badge/Read%20the-Documentation-informational)](https://docs.dbsnapper.com)
 
-
-DBSnapper simplifies the process of creating database snapshots from production data that can be used for development and testing. 
+DBSnapper simplifies the process of creating database snapshots from production data that can be used for development and testing.
 
 DBSnapper allows you to use sanitized real-world data to speed up your application development and testing.
 
@@ -26,6 +25,4 @@ Documentation is hosted at https://docs.dbsnapper.com
 
 ## Community
 
-Have questions or need support? Follow us on twitter:
-
-![Twitter Follow](https://img.shields.io/twitter/follow/dbsnapper?style=social)
+Have questions or need support? Follow us on twitter: [Contact us](https://dbsnapper.com/contact)
