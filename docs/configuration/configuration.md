@@ -3,21 +3,43 @@
 The config file specifies your targets along with system settings such as working directory and secret encryption key.
 
 !!! example "Example configuration file"
-`yaml
-    authtoken: $aes$8fc00dcfef1798be9e77ac90f58b4d9259f059940ec45603cdbf252650cc322e4f347aa7eaf88c9d693efac709e3a5fc9568799eaae6f846f907055444fcb0593bcfd647bd701303d038c99c
-    docker:
-      images:
-        mysql: mysql:8.0-oracle
-        postgres: postgres:latest
-    secret_key: 1234567890abcdef1234567890abcdef
-    targets:
-      example_app:
-        name: example_app
-        src_url: postgresql://postgres:$aes$c953f1e81c98cd6a5bd546ee53a56de2bb906ab6f53477b35c264021d6db6e62e68c6963@10.4.20.22:5432/example_app?sslmode=require
-        dst_url: postgresql://postgres:$aes$a6b41b3e2eb78a24f66333d14d2ad0e739c1a84e6dc4cf6b58c30655fb2021190c6c12db@10.4.20.22:5432/example_app_snap?sslmode=require
-        query_file: example_app.san.sql
-    working_directory: /Users/snappy/.dbsnapper    
-    `
+
+```yaml
+authtoken: 1234567890abcdef1234567890abcdef....
+working_directory: /Users/snappy/.dbsnapper
+docker:
+  images:
+    mysql: mysql:8-oracle
+    postgres: postgres:16-alpine
+secret_key: 1234567890abcdef1234567890abcdef
+targets:
+  sakila:
+    name: sakila
+    src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
+    dst_url: mysql://root:mysql@localhost:3306/sakila_snap?tls=false
+    query_file: ""
+    # Subsetting configuration
+    subset:
+      src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
+      dst_url: mysql://root:mysql@localhost:3306/sakila_subset?tls=false
+      subset_tables:
+        - table: sakila.film
+          where: "film_id < 20"
+        - table: sakila.actor
+          percent: 20
+      copy_tables:
+        - sakila.store
+      excluded_tables:
+        - sakila.staff
+      added_relationships:
+        - fk_table: sakila.address
+          fk_columns: city_id
+          ref_table: sakila.city
+          ref_columns: id
+      excluded_relationships:
+        - fk_table: sakila.store
+          ref_table: sakila.staff
+```
 
 Supported configurations
 

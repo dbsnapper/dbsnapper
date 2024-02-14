@@ -14,4 +14,5 @@ dbsnapper targets [flags]
 
 ## SEE ALSO
 
-- [dbsnapper]](cmd/dbsnapper/) - Easy database snapshots for development and testing
+* [dbsnapper](dbsnapper.md)	 - Easy database snapshots for development and testing
+

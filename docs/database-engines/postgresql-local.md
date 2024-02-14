@@ -1,4 +1,4 @@
-# PostgreSQL Local (pglocal)
+# PostgreSQL Local (postgres://)
 
 <p align="center">
   <img alt="Postgres.app Logo" src="/static/postgresapp-icon.png"  />
@@ -16,11 +16,11 @@ The PostgreSQL Local engine has been tested with [Postgres.app](https://postgres
 
 ### Specifying the PostgreSQL Local Engine
 
-To use the PostgreSQL Local engine to create or load a database snapshot, use the `pglocal://` scheme for the source or destination target url as needed. For example:
+To use the PostgreSQL Local engine to create or load a database snapshot, use the default `postgres://` scheme for the source or destination target url as needed. For example:
 
-`pglocal://username:password@host/database?sslmode=[require | disable]`
+`postgres://username:password@host/database?sslmode=[require | disable]`
 
-The `pglocal` scheme is abbreviated as `pgl` in the CLI and DBSnapper cloud
+The `postgres` scheme is abbreviated as `pgl` in the CLI and DBSnapper cloud
 
 ### Permissions
 

@@ -10,5 +10,6 @@ Login to DBSnapper Cloud
 
 ## SEE ALSO
 
-- [dbsnapper]](cmd/dbsnapper/) - Easy database snapshots for development and testing
-- [dbsnapper auth token]](cmd/dbsnapper_auth_token/) - Add DBSnapper Cloud Api Token
+* [dbsnapper](dbsnapper.md)	 - Easy database snapshots for development and testing
+* [dbsnapper auth token](dbsnapper_auth_token.md)	 - Add DBSnapper Cloud Api Token
+

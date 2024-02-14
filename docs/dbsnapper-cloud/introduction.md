@@ -14,12 +14,13 @@ The DBSnapper Cloud brings everything together and provides a processing pipelin
 
 ## Database Engines
 
-DBSnapper provides a library of Database Engines that ensure compatibility between different database vendors. 
+DBSnapper provides a library of Database Engines that ensure compatibility between different database vendors.
 
 Currently supported engines include:
 
-- PostgreSQL Docker Image
 - PostgreSQL Local installation
+- MySQL Local installation
+- PostgreSQL Docker Image
 - Mysql Docker Image
 
 More Database Engines are being created and will be added to the application in the future.

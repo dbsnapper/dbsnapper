@@ -11,13 +11,14 @@ dbsnapper config init
 ```
 
 !!! example "Configuration file initialized to default values"
-`yaml
-    secret_key: d3d234bc83dd4efe7b7329855ba0acc2
-    working_directory: /Users/joescharf/.dbsnapper
-    docker:
-      images:
-        postgres: postgres:latest
-    `
+
+```yaml
+secret_key: d3d234bc83dd4efe7b7329855ba0acc2
+working_directory: /Users/joescharf/.dbsnapper
+docker:
+  images:
+    postgres: postgres:latest
+```
 
 The default configuration uses the PostgreSQL engine with Docker. Check the [Datbase Engines]](database-engines/introduction) documentation for other database options and how to configure them.
 
@@ -30,41 +31,44 @@ dbsnapper config check
 ```
 
 !!! example "DBSnapper config check output"
-```sh
 
-      Checking DBSnapper Configuration
-    ✅ Config file ( /Users/joescharf/.config/dbsnapper/dbsnapper.yml ) found and loaded
-    🔵 Postgres Docker Engine (pgdocker)
-      ✅ Docker client connected
-      ✅ docker.images set in config file
-      ✅ docker.images.mysql set in config file
-        ✅ Found Docker image: postgres:latest
-    🔵 Postgres Local Engine (pglocal)
-      ✅ psql found at /Applications/Postgres.app/Contents/Versions/latest/bin/psql
-      ✅ pg_dump found at /Applications/Postgres.app/Contents/Versions/latest/bin/psql
-      ✅ pg_restore found at /Applications/Postgres.app/Contents/Versions/latest/bin/psql
-    🔵 Mysql Docker Engine (mydocker)
-      ✅ Docker client connected
-      ✅ docker.images set in config file
-      ✅ docker.images.mysql set in config file
-        ✅ Found Docker image: mysql:8.0-oracle
-    ✅ All supported database engines configured
-    ✅ DBSnapper Cloud connected
+````sh
+Checking DBSnapper Configuration
+  ✅ Config file ( /Users/joescharf/app/dbsnapper/cli/dbsnapper.yml ) found and loaded
+  🔵 Postgres Local Engine (pglocal)
+    ✅ psql found at /Applications/Postgres.app/Contents/Versions/latest/bin/psql
+    ✅ pg_dump found at /Applications/Postgres.app/Contents/Versions/latest/bin/pg_dump
+    ✅ pg_restore found at /Applications/Postgres.app/Contents/Versions/latest/bin/pg_restore
+  🔵 MySQL Local Engine (mylocal)
+    ✅ mysqldump found at /opt/homebrew/bin/mysqldump
+    ✅ mysql found at /opt/homebrew/bin/mysql
+  🔵 Postgres Docker Engine (pgdocker)
+    ✅ Docker client connected
+    ✅ docker.images set in config file
+    ✅ docker.images.postgres set in config file
+      ✅ Found Docker image: postgres:latest
+  🔵 Mysql Docker Engine (mydocker)
+    ✅ Docker client connected
+    ✅ docker.images set in config file
+    ✅ docker.images.mysql set in config file
+      ✅ Found Docker image: mysql:8.0-oracle
+  ✅ All supported database engines configured
+  ✅ DBSnapper Cloud connected
 
-    ✅ Configuration OK
-    ```
+  ✅ Configuration OK
+```
 
 ## Add target definitions
 
 Add one or more databse `targets` to configuration file. Here we define an `app` target with a `src_url` specifying the source database and a `dst_url` specifying the destination database
 
 !!! example "Defining an app target definition"
-`yaml
+```yaml
     targets:
       app:
         src_url: postgresql://postgres:postgres@localhost:15432/app?sslmode=disable
         dst_url: postgresql://postgres:postgres@localhost:15432/app_snap?sslmode=disable
-    `
+```
 
 !!! danger
 A database specified on the `dst_url` will be DROPPED and RECREATED when the `load` command is used
@@ -75,7 +79,7 @@ Now that we have a target defined, we can list all targets with:
 
 ```sh
 dbsnapper targets
-```
+````
 
 This command will also check the size and connectivity status for each target defined in the configuration file.
 

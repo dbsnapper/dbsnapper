@@ -61,8 +61,9 @@ nav:
       - dbsnapper-cloud/introduction.md
   - Database Engines:
       - database-engines/introduction.md
-      - database-engines/postgresql-docker.md
       - database-engines/postgresql-local.md
+      - database-engines/mysql-local.md
+      - database-engines/postgresql-docker.md
       - database-engines/mysql-docker.md
   - Cloud Storage Engines:
       - cloud-storage-engines/introduction.md
@@ -70,14 +71,16 @@ nav:
       - cloud-storage-engines/amazon-s3.md
   - Configuration:
       - configuration/configuration.md
-      - configuration/target-definitions.md
-      - configuration/secrets-encryption.md
+      # - configuration/target-definitions.md
+      # - configuration/secrets-encryption.md
   - Commands:
       - dbsnapper: cmd/dbsnapper.md
       - dbsnapper auth token: cmd/dbsnapper_auth_token.md
       - dbsnapper config init: cmd/dbsnapper_config_init.md
       - dbsnapper config check: cmd/dbsnapper_config_check.md
+      - dbsnapper subset: cmd/dbsnapper_subset.md
       - dbsnapper build: cmd/dbsnapper_build.md
+      - dbsnapper pull: cmd/dbsnapper_pull.md
       - dbsnapper sanitize: cmd/dbsnapper_sanitize.md
       - dbsnapper load: cmd/dbsnapper_load.md
       - dbsnapper targets: cmd/dbsnapper_targets.md
