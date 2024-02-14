@@ -1,24 +1,23 @@
 # Requirements
 
+Below are the requirements for the DBSnapper CLI.
+
 ## Supported Platforms
 
-[DBSnapper CLI builds](https://github.com/dbsnapper/dbsnapper/releases) are available for the following platforms:
+You can find the latest builds at the [DBSnapper CLI Releases page](https://github.com/dbsnapper/dbsnapper/releases).
 
-- MacOS
-- Linux
+- **MacOS**: Latest versions of MacOS are supported.
+
+- **Linux**: Full compatibility with various distributions of Linux, catering to a wide range of Linux-based environments.
 
 ## Supported Databases
 
-DBSnapper uses the vendor-supplied database utilities to create and restore snapshots. DBsnapper accesses these tools via the host system path or optionally by executing them from a Docker container image.
+DBSnapper leverages the native database utilities for snapshot creation and restoration. It can access these tools either directly from the host system's path or through Docker container images, offering flexibility in how you manage your database environments.
 
-DBSnapper Database Engines are available for the following databases:
+The following databases are supported at this time:
 
-- PostgreSQL Local (postgres://)
-  - Uses `pg_dump`, `pg_restore`, and `psql` found in the path of the host system.
-  - Tested with [Postgres.app](https://postgresapp.com/)
-- MySQL Local (mysql://)
-  - Uses `mysqldump` and `mysql` found in the path of the host system.
-- PostgreSQL Docker Image (pgdocker://)
-  - Uses `pg_dump`, `pg_restore`, and `psql` in the docker image
-- MySQL Docker image (mydocker://)
-  - Uses [MySQL Shell (`mysqlsh`)](https://dev.mysql.com/doc/mysql-shell/8.0/en/) client
+- **PostgreSQL**: DBSnapper supports both local and Docker-based PostgreSQL databases.
+
+- **MySQL**: DBSnapper supports both local and Docker-based MySQL databases.
+
+See the [Database Engines](database-engines/introduction.md) documentation for more information on how to configure and use these database engines.

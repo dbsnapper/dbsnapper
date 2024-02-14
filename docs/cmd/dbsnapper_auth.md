@@ -1,3 +1,7 @@
+---
+search:
+  exclude: true
+---
 # dbsnapper auth
 
 Login to DBSnapper Cloud
