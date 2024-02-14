@@ -32,7 +32,7 @@ dbsnapper config check
 
 !!! example "DBSnapper config check output"
 
-````sh
+```sh
 Checking DBSnapper Configuration
   ✅ Config file ( /Users/joescharf/app/dbsnapper/cli/dbsnapper.yml ) found and loaded
   🔵 Postgres Local Engine (pglocal)
@@ -56,6 +56,7 @@ Checking DBSnapper Configuration
   ✅ DBSnapper Cloud connected
 
   ✅ Configuration OK
+
 ```
 
 ## Add target definitions
@@ -63,11 +64,12 @@ Checking DBSnapper Configuration
 Add one or more databse `targets` to configuration file. Here we define an `app` target with a `src_url` specifying the source database and a `dst_url` specifying the destination database
 
 !!! example "Defining an app target definition"
+
 ```yaml
-    targets:
-      app:
-        src_url: postgresql://postgres:postgres@localhost:15432/app?sslmode=disable
-        dst_url: postgresql://postgres:postgres@localhost:15432/app_snap?sslmode=disable
+targets:
+  app:
+    src_url: postgresql://postgres:postgres@localhost:15432/app?sslmode=disable
+    dst_url: postgresql://postgres:postgres@localhost:15432/app_snap?sslmode=disable
 ```
 
 !!! danger
@@ -79,7 +81,7 @@ Now that we have a target defined, we can list all targets with:
 
 ```sh
 dbsnapper targets
-````
+```
 
 This command will also check the size and connectivity status for each target defined in the configuration file.
 
