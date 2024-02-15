@@ -44,6 +44,11 @@ plugins:
       exclude:
         - "cmd/dbsnapper_auth.md"
         - "cmd/dbsnapper_config.md"
+        - "configuration/secrets-encryption.md"
+        - "configuration/target-definitions.md"
+        - "subset/overview.md"
+        - "snapshot/overview.md"
+        - "sanitize/overview.md"
       exclude_unreferenced: true
 
 extra:

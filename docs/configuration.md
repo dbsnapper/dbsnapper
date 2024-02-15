@@ -64,7 +64,7 @@ The config file specifies your targets along with system settings such as workin
 - `docker`
 
   - `images`
-    - `<image_name>: <value>` - specifies the docker image to use for a given database engine. default is `postgres: postgres:latest` see [Database Engines](database-engines/introduction) for more information.
+    - `<image_name>: <value>` - specifies the docker image to use for a given database engine. default is `postgres: postgres:latest` see [Database Engines](/database-engines/introduction) for more information.
 
 - `targets` - One or more entries specifying a snapshot workflow
   - `<target_name>` - specifies the name of the target definition
