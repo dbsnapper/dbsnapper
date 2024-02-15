@@ -3,7 +3,7 @@
 The config file specifies your targets along with system settings such as working directory and secret encryption key.
 
 <!-- prettier-ignore-start -->
-!!! warn "DBSnapper 2.0 Changes"
+!!! warning "DBSnapper 2.0 Changes"
 
     DBSnapper 2.0 has introduced some backwards-incompatible changes to the configuration file to support new and future features. The new configuration file is a YAML file with the following structure:
 <!-- prettier-ignore-end -->

@@ -1,4 +1,4 @@
-# PostgreSQL Local (postgres://)
+# PostgreSQL Local (`postgres://`)
 
 <p align="center">
   <img alt="Postgres.app Logo" src="/static/postgresapp-icon.png"  />
@@ -10,7 +10,7 @@ The PostgreSQL Local engine allows you to create snapshots of your PostgreSQL da
 
 ## Requirements
 
-The PostgreSQL Local engine has been tested with [Postgres.app](https://postgresapp.com/) and  should be compatible with any recent version of PostgreSQL installed on a host machine ( >= PostgreSQL 9.2 ) that includes `pg_dump`, `pg_restore`, and `psql` in the path.
+The PostgreSQL Local engine has been tested with [Postgres.app](https://postgresapp.com/) and should be compatible with any recent version of PostgreSQL installed on a host machine ( >= PostgreSQL 9.2 ) that includes `pg_dump`, `pg_restore`, and `psql` in the path.
 
 ## Usage Notes
 

@@ -1,4 +1,4 @@
-# MySQL Docker (mydocker://)
+# MySQL Docker (`mydocker://`)
 
 <p align="center">
   <img alt="MySQL Logo" src="/static/mysql-icon.png"  />

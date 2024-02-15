@@ -1,0 +1,18 @@
+.md-nav {
+  font-size: 0.7rem;
+  line-height: 1.3;
+}
+.md-nav__title {
+  font-size: 0.8rem;
+  color: #000;
+  display: block;
+  font-weight: 700;
+  overflow: hidden;
+  padding: 0 0.6rem;
+  text-overflow: ellipsis;
+}
+
+.md-nav__item--section > .md-nav__link[for] {
+  font-size: 0.75rem;
+  color: #0000009a;
+}

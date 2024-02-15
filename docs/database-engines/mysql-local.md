@@ -1,4 +1,4 @@
-# MySQL Local (mysql://)
+# MySQL Local (`mysql://`)
 
 <p align="center">
   <img alt="MySQL Logo" src="/static/mysql-icon.png"  />

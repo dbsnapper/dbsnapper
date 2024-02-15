@@ -1,4 +1,4 @@
-# PostgreSQL Docker (pgdocker://)
+# PostgreSQL Docker (`pgdocker://`)
 
 <p align="center">
   <img alt="PostgreSQL Logo" src="/static/postgres-icon.png"  />

@@ -7,6 +7,8 @@ copyright: Copyright &copy; 2024 Scharfnado, LLC
 repo_name: dbsnapper/dbsnapper
 repo_url: https://github.com/dbsnapper/dbsnapper
 
+extra_css:
+  - stylesheets/extra.css
 theme:
   name: material
   custom_dir: overrides
@@ -64,13 +66,13 @@ nav:
       - requirements.md
       - installation.md
       - quick-start.md
-      - Configuration Settings: configuration/configuration.md
-  - Snapshot:
-      - index.md
-  - Subset:
-      - index.md
-  - Sanitize:
-      - index.md
+      - Configuration Settings: configuration.md
+  # - Snapshot:
+  #     - snapshot/overview.md
+  # - Subset:
+  #     - subset/overview.md
+  # - Sanitize:
+  #     - sanitize/overview.md
   - Share:
       - DBSnapper Cloud: dbsnapper-cloud/introduction.md
   - Database Engines:
