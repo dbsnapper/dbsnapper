@@ -7,9 +7,11 @@ description: DBSnapper simplifies the process of creating database snapshots fro
 # DBSnapper: Streamline Development with Sanitized Production Data <!-- omit in toc -->
 
 <!-- prettier-ignore-start -->
-!!! tip ":new: DBSnapper 2.0 Released!"
+!!! tip ":new: DBSnapper 2.0 COMING SOON"
 
-    DBSnapper v2.0 has been released and is now available for download. This version brings a host of new improvements including **Database Subsetting**, which allows you to create smaller, more manageable relationally-complete snapshots of your database. [Download DBSnapper v2.0](https://github.com/dbsnapper/dbsnapper/releases)
+    The DBSnapper v2.0 release is right around the corner! This version brings a host of new improvements including **Database Subsetting**, which allows you to create smaller, more manageable relationally-complete snapshots of your database. 
+    
+    **We are actively updating the documentation to reflect the new changes so stay tuned for the release announcement!**
 <!-- prettier-ignore-end -->
 
 <p align="center">
