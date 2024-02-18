@@ -36,4 +36,4 @@ Currently supported Cloud Storage engines include:
 
 ## On-prem and Private Cloud Compatible
 
-The lightweight DBSnapper CLI works on your local system or in your private cloud infrastructure. Integrating with the DBSnapper Cloud provides centralized configuration, storage, and sharing of your database snapshots.
+The lightweight DBSnapper Agent works on your local system or in your private cloud infrastructure. Integrating with the DBSnapper Cloud provides centralized configuration, storage, and sharing of your database snapshots.

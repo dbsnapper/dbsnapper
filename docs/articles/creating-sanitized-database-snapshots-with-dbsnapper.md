@@ -38,8 +38,9 @@ INSERT INTO users (first_name, last_name, email, password, pin) VALUES
 ('Fred', 'Smith', 'fsmith@dbsnapper.com', 'opensesame', '7890'),
 ('Sam', 'Jackson', 'sj@example.com', 'iamsam', '1234');
 ```
+
 !!! note
-    Yes, our passwords and pins are in the clear for simplicity in this example, of course you wouldn't do this in production, would you?
+Yes, our passwords and pins are in the clear for simplicity in this example, of course you wouldn't do this in production, would you?
 
 Our database so far
 
@@ -73,7 +74,7 @@ targets:
 As you can see in the highlighted section, we're specifying `example_app` as our source datbase and `example_app_dev` as our destination
 
 !!! danger
-    We can't stress this enough - the database `example_app_dev` in the example above will be automatically DROPPED and RECREATED when the `load` command is used!
+We can't stress this enough - the database `example_app_dev` in the example above will be automatically DROPPED and RECREATED when the `load` command is used!
 
 ### Checking our target
 
@@ -84,7 +85,7 @@ $ dbsnapper targets
 ```
 
 ```
-DBSnapper CLI v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
+DBSnapper Agent v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
 
 Listing all targets
 +-------------+----------+--------+----------------------------------+--------+--------------------------------------+-------+----------+
@@ -105,7 +106,7 @@ $ dbsnapper build example_app
 ```
 
 ```
-DBSnapper CLI v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
+DBSnapper Agent v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
 
 DB Source Host:  localhost:15432
 START: Build Snapshot for target: example_app
@@ -123,7 +124,7 @@ $ dbsnapper target example_app
 ```
 
 ```
-DBSnapper CLI v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
+DBSnapper Agent v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
 
 Listing snapshots for target: example_app
 +-------+-------------------------+------------------------+----------------------------+--------+-------------+
@@ -144,7 +145,7 @@ $ dbsnapper load example_app 0
 ```
 
 ```
-DBSnapper CLI v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
+DBSnapper Agent v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
 
 START: Loading Target: example_app, ORIGINAL snapshot index: 0, Snapshot Name: 1651695547_example_app, Snapshot File: /Users/joescharf/.dbsnapper/1651695547_example_app.zip, Dest URL: postgresql://postgres:postgres@localhost:15432/example_app_dev?sslmode=disable
   Step 1: Drop and recreate the database
@@ -154,7 +155,7 @@ FINISH: Loading Snapshot for Target: example_app, Snapshot File: /Users/joeschar
 
 ### Checking our new database
 
-Another success.  Let's switch to the database and take a look at the data in the `users` table:
+Another success. Let's switch to the database and take a look at the data in the `users` table:
 
 ```
 example_app_dev=# \c example_app_dev
@@ -170,9 +171,9 @@ example_app_dev=# select * from users;
 (4 rows)
 ```
 
-Great. So far we've made an exact copy of our `example_app` source database which now resides at `example_app_dev`. 
+Great. So far we've made an exact copy of our `example_app` source database which now resides at `example_app_dev`.
 
-But we have a problem. Passing around a database snapshot with all this personal information (PII) and sensitive authentication data (passwords, pins) is a security issue! Eventually something will git misplaced or misused, so we'll need to deal with that. 
+But we have a problem. Passing around a database snapshot with all this personal information (PII) and sensitive authentication data (passwords, pins) is a security issue! Eventually something will git misplaced or misused, so we'll need to deal with that.
 
 ## Sanitizing the snapshot
 
@@ -197,7 +198,7 @@ update users u
 set email = first_name || '_' || last_name || '@example.com';
 
 -- sanitize password and pin
-update users u 
+update users u
 set password = 'genericpassword',
 pin = '0000';
 ```
@@ -238,7 +239,6 @@ targets:
     query_file: "example_app.san.sql"
 ```
 
-
 ### Perform the sanitization
 
 Now we're ready to run the `sanitize` command against the `example_app` target:
@@ -248,7 +248,7 @@ $ dbsnapper sanitize example_app 0
 ```
 
 ```
-DBSnapper CLI v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
+DBSnapper Agent v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
 
 START: Sanitize example_app[0], Target: example_app, SnapshotName: 1651695547_example_app, Source: /Users/joescharf/.dbsnapper/1651695547_example_app.zip, Dest: /Users/joescharf/.dbsnapper/1651695547_example_app.san.zip
 Step 1: Loading database to ephemeral DB url: postgres://circumvent:erythrodextrin-udometry-movement@forninst/rathite
@@ -277,7 +277,7 @@ $ dbsnapper target example_app
 ```
 
 ```
-DBSnapper CLI v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
+DBSnapper Agent v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
 
 Listing snapshots for target: example_app
 +-------+-------------------------+------------------------+----------------------------+--------+--------------------------------+
@@ -297,8 +297,8 @@ Like we did above, we'll once again, load the snapshot to our `example_app_dev` 
 $ dbsnapper load example_app 0
 ```
 
-``` linenums="1" hl_lines="3"
-DBSnapper CLI v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
+```linenums="1" hl_lines="3"
+DBSnapper Agent v0.11.0+2b8aaba4.2022-05-03T21:58:59Z
 
 START: Loading Target: example_app, SANITIZED snapshot index: 0, Snapshot Name: 1651695547_example_app.san, Snapshot File: /Users/joescharf/.dbsnapper/1651695547_example_app.san.zip, Dest URL: postgresql://postgres:postgres@localhost:15432/example_app_dev?sslmode=disable
   Step 1: Drop and recreate the database
@@ -306,17 +306,17 @@ START: Loading Target: example_app, SANITIZED snapshot index: 0, Snapshot Name: 
 FINISH: Loading Snapshot for Target: example_app, Snapshot File: /Users/joescharf/.dbsnapper/1651695547_example_app.san.zip`
 ```
 
-In line 3 above we're loading the __SANITIZED__ snapshot at index 0. The `load` command automatically loads the sanitized snapshot for an index if one exists.
+In line 3 above we're loading the **SANITIZED** snapshot at index 0. The `load` command automatically loads the sanitized snapshot for an index if one exists.
 
 !!! note
-    If a sanitized snapshot exists, but you'd like to load the original snapshot, you can use the `--original` flag to force this behavior:
-    `dbsnapper load example_app 0 --original`
+If a sanitized snapshot exists, but you'd like to load the original snapshot, you can use the `--original` flag to force this behavior:
+`dbsnapper load example_app 0 --original`
 
 ### Checking the sanitized database
 
 Our sanitized database is now loaded, let's check it to see if it worked:
 
-``` hl_lines="8"
+```hl_lines="8"
 postgres=# \c example_app_dev
 psql (13.1, server 12.6 (Debian 12.6-1.pgdg100+1))
 You are now connected to database "example_app_dev" as user "postgres".
@@ -328,6 +328,7 @@ example_app_dev=# \dt
  public | users          | table | postgres
 (2 rows)
 ```
+
 There are our tables, with the new `dbsnapper_info` table that holds the sanitization timestamp entry.
 
 ```

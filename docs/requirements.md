@@ -1,10 +1,10 @@
 # Requirements
 
-Below are the requirements for the DBSnapper CLI.
+Below are the requirements for the DBSnapper Agent.
 
 ## Supported Platforms
 
-You can find the latest builds at the [DBSnapper CLI Releases page](https://github.com/dbsnapper/dbsnapper/releases).
+You can find the latest builds at the [DBSnapper Agent Releases page](https://github.com/dbsnapper/dbsnapper/releases).
 
 - **MacOS**: Latest versions of MacOS are supported.
 

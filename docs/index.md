@@ -1,10 +1,9 @@
 ---
-title: Home
-icon: material/home
-description: DBSnapper simplifies the process of creating database snapshots from production data that can be used for development and testing.
+title: Welcome
+description: DBSnapper simplifies the process of creating de-identified database snapshots that can be used for real-world development, testing, and AI model training.
 ---
 
-# DBSnapper: Streamline Development with Sanitized Production Data <!-- omit in toc -->
+# Welcome
 
 <!-- prettier-ignore-start -->
 !!! tip ":new: DBSnapper 2.0 COMING SOON"

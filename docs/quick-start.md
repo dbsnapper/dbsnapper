@@ -1,8 +1,13 @@
+---
+title: Quick start
+description: How to quickly get started with the DBSnapper Agent and use it to build and load a database snapshot.
+---
+
 # Quick Start
 
-In this example we will create and restore a database snapshots.
+In this example we will create and restore a database snapshot.
 
-## Initialize the default `dbsnapper` configuration
+## Initialize the configuration file
 
 Run the `config init` command to create an example configuration at `~/.config/dbsnapper/dbsnapper.yml`
 
@@ -15,7 +20,7 @@ dbsnapper config init
 
     ```yaml
     secret_key: d3d234bc83dd4efe7b7329855ba0acc2
-    working_directory: /Users/joescharf/.dbsnapper
+    working_directory: /Users/snappy/.dbsnapper
     docker:
       images:
         postgres: postgres:latest
@@ -35,7 +40,7 @@ dbsnapper config check
 
     ```sh
     Checking DBSnapper Configuration
-      ✅ Config file ( /Users/joescharf/app/dbsnapper/cli/dbsnapper.yml ) found and loaded
+      ✅ Config file ( /Users/snappy/app/dbsnapper/cli/dbsnapper.yml ) found and loaded
       🔵 Postgres Local Engine (pglocal)
         ✅ psql found at /Applications/Postgres.app/Contents/Versions/latest/bin/psql
         ✅ pg_dump found at /Applications/Postgres.app/Contents/Versions/latest/bin/pg_dump
@@ -67,11 +72,13 @@ Add one or more databse `targets` to configuration file. Here we define an `app`
 
 <!-- prettier-ignore-start -->
 !!! example "Defining an app target definition"
+
     ```yaml
     targets:
       app:
-        src_url: postgresql://postgres:postgres@localhost:15432/app?sslmode=disable
-        dst_url: postgresql://postgres:postgres@localhost:15432/app_snap?sslmode=disable
+        snapshot:
+          src_url: postgresql://postgres:postgres@localhost:15432/app?sslmode=disable
+          dst_url: postgresql://postgres:postgres@localhost:15432/app_snap?sslmode=disable
     ```
 <!-- prettier-ignore-end -->
 
@@ -100,12 +107,6 @@ dbsnapper build app
 ```
 
 This will connect to the database using the native dump utility and will create a dump of all data in the database.
-
-When this is finished you can list all snapshots for the `app` target with:
-
-```sh
-dbsnapper target app
-```
 
 ## List snapshots for a target
 

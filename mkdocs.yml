@@ -21,7 +21,10 @@ theme:
     - search.suggest
     - search.highlight
     - search.share
-    - navigation.sections
+    # - navigation.sections
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
   palette:
     - media: "(prefers-color-scheme: light)" # Light mode
       scheme: default
@@ -65,15 +68,17 @@ extra:
       link: https://twitter.com/dbsnapper
 
 nav:
-  - Home: index.md
+  - Welcome: index.md
   - How it Works: how-it-works.md
   - Get Started:
       - requirements.md
       - installation.md
       - quick-start.md
       - Configuration Settings: configuration.md
-  # - Snapshot:
-  #     - snapshot/overview.md
+  - Snapshot:
+      - snapshot/introduction.md
+      - snapshot/configuration.md
+      - snapshot/build_and_load.md
   # - Subset:
   #     - subset/overview.md
   # - Sanitize:
@@ -111,6 +116,7 @@ markdown_extensions:
   - meta
   - footnotes
   - attr_list
+  - def_list
   - toc:
       permalink: true
 

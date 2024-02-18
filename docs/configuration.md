@@ -27,7 +27,6 @@ The config file specifies your targets along with system settings such as workin
         snapshot:
           src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
           dst_url: mysql://root:mysql@localhost:3306/sakila_snap?tls=false
-        query_file: ""
         # Subsetting configuration
         subset:
           src_url: mysql://root:mysql@localhost:13306/sakila?tls=false

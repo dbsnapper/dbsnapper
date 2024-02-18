@@ -1,20 +1,22 @@
 # Installation
 
-Installing the DBSnapper CLI is straightforward and can be done using various methods, depending on your operating system and preferences. Here are the primary ways to install DBSnapper:
+The DBSnapper Agent is available for Mac and Linux with several options to easliy install onto your system.
+
+## MacOS Universal Binary
+
+MacOS users can install the Universal Mac package available on the [DBSnapper Agent Releases Page](https://github.com/dbsnapper/dbsnapper/releases). This package is designed to be compatible with various MacOS versions and hardware architectures, including both Intel and Apple Silicon chips
 
 ## Homebrew tap
 
-For MacOS users, the simplest method is via Homebrew, a popular package manager. Just open your terminal and run the following command:
+Get the latest release with <a href="https://brew.sh" target="_blank">Homebrew</a>
 
 ```sh
 brew install dbsnapper/tap/dbsnapper
 ```
 
-This command installs the dbsnapper tool directly on your MacOS system, making it readily available for use.
-
 ## Debian, RPM, and APK Packages
 
-For Linux users, `dbsnapper` can be installed using the `.deb`, `.rpm`, or `.apk` packages, depending on your Linux distribution and architecture. You can download these packages from the [DBSnapper CLI Releases page](https://github.com/dbsnapper/dbsnapper/releases).
+For Linux users, `dbsnapper` can be installed using the `.deb`, `.rpm`, or `.apk` packages, depending on your Linux distribution and architecture. You can download these packages from the <a href="https://github.com/dbsnapper/dbsnapper/releases" target="_blank">DBSnapper Agent Releases page</a>.
 
 Here's an example of how you can install dbsnapper using a Debian package:
 
@@ -56,7 +58,7 @@ Which will output some useful information about your environment and the dbsnapp
 
 ```sh
 root@snappy:/# dbsnapper config check
-DBSnapper CLI v1.2.2+df088f77.2024-02-12T18:02:24Z
+DBSnapper Agent v1.2.2+df088f77.2024-02-12T18:02:24Z
 DBSnapper Cloud: Standalone Mode
 
 Checking DBSnapper Configuration
