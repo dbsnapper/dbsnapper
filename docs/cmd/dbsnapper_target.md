@@ -1,8 +1,11 @@
-# dbsnapper target
+---
+title: "dbsnapper target"
+description: "DBSnapper Agent Command Reference: 'dbsnapper target' - Used to list snapshots for a target"
+---
+Used to list snapshots for a target
 
-List snapshots for a target
+### Synopsis
 
-## Synopsis
 
  The `target` command lists all snapshots for a `target_name`.
 
@@ -15,14 +18,9 @@ Specify the `--cloud` flag to only list cloud snapshots.
 dbsnapper target target_name [flags]
 ```
 
-## Options
+### Options
 
 ```
   -c, --cloud   Only display cloud snapshots
-  -h, --help    help for target
 ```
-
-## SEE ALSO
-
-* [dbsnapper](dbsnapper.md)	 - Easy database snapshots for development and testing
 

@@ -14,7 +14,7 @@ The config file specifies your targets along with system settings such as workin
 <!-- prettier-ignore-end -->
 
 <!-- prettier-ignore-start -->
-!!! example "Example configuration file"
+!!! example "`~/.config/dbsnapper/dbnsapper.yml` example"
 
     ```yaml linenums="1"
     authtoken: 1234567890abcdef1234567890abcdef....
@@ -93,7 +93,7 @@ docker: `images`
 :   Docker images to use for database engines
 
 docker: images: `<image_name>: <value>`
-:   specifies the docker image to use for a given database engine. In the example above the `mysql` and `postgres` docker images have been defined. See [Database Engines](/database-engines/introduction) for more information.
+:   specifies the docker image to use for a given database engine. In the example above the `mysql` and `postgres` docker images have been defined. See [Database Engines](database-engines/introduction.md) for more information.
 
 ### Targets
 

@@ -1,18 +1,15 @@
-# dbsnapper targets
+---
+title: "dbsnapper targets"
+description: "DBSnapper Agent Command Reference: 'dbsnapper targets' - Use to list all targets"
+---
+Use to list all targets
 
-List all targets
+### Synopsis
+
+
+Use to list all targets
 
 ```
-dbsnapper targets [flags]
+dbsnapper targets
 ```
-
-## Options
-
-```
-  -h, --help   help for targets
-```
-
-## SEE ALSO
-
-* [dbsnapper](dbsnapper.md)	 - Easy database snapshots for development and testing
 

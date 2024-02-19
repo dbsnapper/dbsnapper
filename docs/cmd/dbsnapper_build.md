@@ -1,8 +1,11 @@
-# dbsnapper build
-
+---
+title: "dbsnapper build"
+description: "DBSnapper Agent Command Reference: 'dbsnapper build' - Build a database snapshot"
+---
 Build a database snapshot
 
-## Synopsis
+### Synopsis
+
 
 The `build` command creates a database snapshot.	
 
@@ -13,16 +16,6 @@ The snapshot is built from the connection string specified in the `src_url` para
 
 
 ```
-dbsnapper build target_name [flags]
+dbsnapper build target_name
 ```
-
-## Options
-
-```
-  -h, --help   help for build
-```
-
-## SEE ALSO
-
-* [dbsnapper](dbsnapper.md)	 - Easy database snapshots for development and testing
 

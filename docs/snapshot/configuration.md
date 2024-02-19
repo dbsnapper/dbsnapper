@@ -10,7 +10,7 @@ The DBSnapper Agent is configured using a YAML file, which is created when you r
 Referring to our sample configuration file, the highlighted lines show the configuration options for a snapshot:
 
 <!-- prettier-ignore-start -->
-!!! example "Example configuration file"
+!!! example "`~/.config/dbsnapper/dbnsapper.yml` example"
 
     ```yaml linenums="1" hl_lines="13-15"
     authtoken: 1234567890abcdef1234567890abcdef....
@@ -78,6 +78,6 @@ As you can see, the configuration options are quite simple, consisting of a data
 
 !!! danger "Danger: Destination database `dst_url` will be DROPPED and RECREATED"
 
-    Any connection string provided in the `dst_url` attribute will be overwritten when certain commands are used such as [`load`](/cmd/dbsnapper_load) which loads a snapshot to the destination database.
+    Any connection string provided in the `dst_url` attribute will be overwritten when certain commands are used such as [`load`](../cmd/dbsnapper_load.md) which loads a snapshot to the destination database.
 
 <!-- prettier-ignore-end -->

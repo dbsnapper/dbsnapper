@@ -1,8 +1,11 @@
-# dbsnapper config init
-
+---
+title: "dbsnapper config init"
+description: "DBSnapper Agent Command Reference: 'dbsnapper config init' - Generate dbsnapper configuration file and create working directory"
+---
 Generate dbsnapper configuration file and create working directory
 
-## Synopsis
+### Synopsis
+
 
 The `dbsnapper config init` command generates, a dbsnapper configuration file and working directory. 
 	
@@ -10,16 +13,6 @@ It also generates a `secret_key`used to encrypt sensitive data in the configurat
 
 
 ```
-dbsnapper config init [flags]
+dbsnapper config init
 ```
-
-## Options
-
-```
-  -h, --help   help for init
-```
-
-## SEE ALSO
-
-* [dbsnapper config](dbsnapper_config.md)	 - Configuration commands
 

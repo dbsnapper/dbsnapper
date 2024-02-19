@@ -9,7 +9,7 @@ Snapshotting your database is a fundamental feature of DBSnapper, allowing you t
 
 ## Overview
 
-DBSnapper provides the [`build`](/cmd/dbsnapper_build) and [`load`](/cmd/dbsnapper_load) commands to create and restore a snapshot of your database.
+DBSnapper provides the [`build`](../cmd/dbsnapper_build.md) and [`load`](../cmd/dbsnapper_load.md) commands to create and restore a snapshot of your database.
 
 ### `build` command steps
 

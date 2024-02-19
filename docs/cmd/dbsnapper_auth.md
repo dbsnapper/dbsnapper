@@ -1,19 +1,11 @@
 ---
-search:
-  exclude: true
+title: "dbsnapper auth"
+description: "DBSnapper Agent Command Reference: 'dbsnapper auth' - Login to DBSnapper Cloud"
 ---
-# dbsnapper auth
-
 Login to DBSnapper Cloud
 
-## Options
+### Synopsis
 
-```
-  -h, --help   help for auth
-```
 
-## SEE ALSO
-
-* [dbsnapper](dbsnapper.md)	 - Easy database snapshots for development and testing
-* [dbsnapper auth token](dbsnapper_auth_token.md)	 - Add DBSnapper Cloud Api Token
+Login to DBSnapper Cloud
 

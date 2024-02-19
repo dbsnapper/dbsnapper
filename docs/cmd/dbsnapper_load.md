@@ -1,8 +1,11 @@
-# dbsnapper load
-
+---
+title: "dbsnapper load"
+description: "DBSnapper Agent Command Reference: 'dbsnapper load' - Load a target snapshot to a database"
+---
 Load a target snapshot to a database
 
-## Synopsis
+### Synopsis
+
 
 The `dbsnapper load` command loads a snapshot to a database and takes a `target_name` and `snapshot_index` as arguments.
 	
@@ -25,14 +28,9 @@ The snapshot is loaded to the database specified in the `dst_url` parameter of t
 dbsnapper load target_name snapshot_index [flags]
 ```
 
-## Options
+### Options
 
 ```
-  -h, --help       help for load
   -o, --original   Use the original snapshot instead of the sanitized version.
 ```
-
-## SEE ALSO
-
-* [dbsnapper](dbsnapper.md)	 - Easy database snapshots for development and testing
 
