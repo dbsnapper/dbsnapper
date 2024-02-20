@@ -7,9 +7,16 @@ Add DBSnapper Cloud Api Token
 ### Synopsis
 
 
-Add DBSnapper Cloud Api Token
+This comand adds the DBSnapper Cloud API token to your configuration file. 
+	You can find this token on the Get Started page of the DBSnapper Cloud app.
 
 ```
-dbsnapper auth token api_token
+dbsnapper auth token <api_token>
+```
+
+### Examples
+
+```
+dbsnapper auth token hNsdelkjcxgoiuwalkmcgoi...
 ```
 

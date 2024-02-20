@@ -32,6 +32,10 @@ The config file specifies your targets along with system settings such as workin
         snapshot:
           src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
           dst_url: mysql://root:mysql@localhost:3306/sakila_snap?tls=false
+        # Sanitization configuration
+        sanitize:
+          dst_url: mysql://root:mysql@localhost:3306/sakila_sanitized?tls=false
+          query_file: "sakila.san.sql"
         # Subsetting configuration
         subset:
           src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
@@ -53,9 +57,6 @@ The config file specifies your targets along with system settings such as workin
           excluded_relationships:
             - fk_table: sakila.store
               ref_table: sakila.staff
-        # Sanitization configuration
-        sanitize:
-          query_file: sakila-sanitize.sql
     ```
 <!-- prettier-ignore-end -->
 
@@ -144,5 +145,5 @@ targets: <target_name\>: `name`
 <!-- prettier-ignore-start -->
 !!! danger
 
-    A database specified on the `dst_url` will be DROPPED and RECREATED when the `load` command is used
+    A database specified on the `dst_url` will be DROPPED and RECREATED when the `load` and `sanitize` commands are used
 <!-- prettier-ignore-end -->

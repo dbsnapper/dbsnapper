@@ -16,6 +16,12 @@ The snapshot is built from the connection string specified in the `src_url` para
 
 
 ```
-dbsnapper build target_name
+dbsnapper build <target_name>
+```
+
+### Examples
+
+```
+dbsnapper build sakila
 ```
 

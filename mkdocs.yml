@@ -49,9 +49,6 @@ plugins:
         - "cmd/dbsnapper_config.md"
         - "configuration/secrets-encryption.md"
         - "configuration/target-definitions.md"
-        - "subset/overview.md"
-        - "snapshot/overview.md"
-        - "sanitize/overview.md"
       exclude_unreferenced: true
 
 extra:
@@ -81,8 +78,10 @@ nav:
       - Build and Load: snapshot/build_and_load.md
   # - Subset:
   #     - subset/overview.md
-  # - Sanitize:
-  #     - sanitize/overview.md
+  - Sanitize:
+      - Introduction: sanitize/introduction.md
+      - Configuration: sanitize/configuration.md
+      - Sanitize: sanitize/sanitize.md
   - Share:
       - DBSnapper Cloud: dbsnapper-cloud/introduction.md
   - Database Engines:
