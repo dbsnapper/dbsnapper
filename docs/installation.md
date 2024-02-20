@@ -6,7 +6,7 @@ The DBSnapper Agent is available for Mac and Linux with several options to easli
 
 MacOS users can install the Universal Mac package available on the [DBSnapper Agent Releases Page](https://github.com/dbsnapper/dbsnapper/releases). This package is designed to be compatible with various MacOS versions and hardware architectures, including both Intel and Apple Silicon chips
 
-## Homebrew tap
+## Homebrew Tap
 
 Get the latest release with <a href="https://brew.sh" target="_blank">Homebrew</a>
 
@@ -29,23 +29,23 @@ Here's an example of how you can install dbsnapper using a Debian package:
 
     `ARCH` with your system architecture, and
 
-    `PKG_MGR` with your package extension.
+    `PKG_MGR_EXT` with your package extension.
 <!-- prettier-ignore-end -->
 
 This following example installs the `dbsnapper` package version 1.2.1 for a Linux system with an AMD64 architecture using the Debian package manager.
 
 ```sh
 TAG=1.2.1 && \
-ARCH=Linux_amd64 && \
-PKG_MGR=deb && \
+ARCH=linux_x86_64 && \
+PKG_MGR_EXT=deb && \
 
-wget https://github.com/dbsnapper/dbsnapper/releases/download/v"$TAG"/dbsnapper_"$TAG"_"$ARCH"."$PKG_MGR"
+wget https://github.com/dbsnapper/dbsnapper/releases/download/v"$TAG"/dbsnapper_"$ARCH"."$PKG_MGR_EXT"
 ```
 
 2. **Install with `dpkg`**: Once the download is complete, you can install the package using dpkg:
 
 ```sh
-dpkg -i dbsnapper_"$TAG"_"$ARCH"."$PKG_MGR"
+dpkg -i dbsnapper_"$ARCH"."$PKG_MGR"
 ```
 
 3. **Verify Installation**: After installation, you can verify that dbsnapper is installed by running the following command:
