@@ -21,3 +21,11 @@ The following databases are supported at this time:
 - **MySQL**: DBSnapper supports both local and Docker-based MySQL databases.
 
 See the [Database Engines](database-engines/introduction.md) documentation for more information on how to configure and use these database engines.
+
+## Supported Cloud Storage Providers
+
+The [DBSnapper Cloud](dbsnapper-cloud/introduction.md) extends the capabilities of the DBSnapper Agent by providing a support for cloud storage in a "Bring Your Own Cloud Storage" arrangement. The DBSnapper Agent supports the following cloud storage providers:
+
+- **Amazon S3**: DBSnapper supports the [Amazon Simple Storage Service (S3)](https://aws.amazon.com/s3/) cloud storage platform.
+
+- **Cloudflare R2**: DBSnapper supports [Cloudflare R2](https://developers.cloudflare.com/r2/) cloud storage platform.

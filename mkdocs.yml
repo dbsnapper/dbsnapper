@@ -66,8 +66,8 @@ extra:
 
 nav:
   - Welcome: index.md
-  - How it Works: how-it-works.md
   - Get Started:
+      - How it Works: how-it-works.md
       - requirements.md
       - installation.md
       - quick-start.md
