@@ -72,6 +72,7 @@ nav:
       - installation.md
       - quick-start.md
       - Configuration Settings: configuration.md
+      - Philosophy: philosophy.md
   - Snapshot:
       - Introduction: snapshot/introduction.md
       - Configuration: snapshot/configuration.md
