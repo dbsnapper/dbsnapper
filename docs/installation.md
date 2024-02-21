@@ -2,7 +2,7 @@
 
 The DBSnapper Agent is available for Mac and Linux with several options to easliy install onto your system.
 
-## Docker Images`
+## Docker Images
 
 One of the easiest ways to get started with DBSnapper is to use the Docker image. The DBSnapper Agent is available as a Docker image on the [DBSnapper Agent Docker Releases](https://github.com/dbsnapper/dbsnapper/pkgs/container/dbsnapper) Page. You can pull the latest image using the following command:
 
@@ -13,7 +13,7 @@ docker pull ghcr.io/dbsnapper/dbsnapper:latest
 And run an interactive shell with the following command:
 
 ```sh
-docker run -it ghcr.io/dbsnapper/dbsnapper:latest /bin/sh
+docker run -it ghcr.io/dbsnapper/dbsnapper:latest /bin/bash
 ```
 
 ## MacOS Universal Binary
