@@ -142,8 +142,6 @@ Listing ALL snapshots for target: amazon-rds-postgres
 
 ---
 
-````bash title="Command output" linenums="1"
-
 ## Optional: Test EC2 <-> RDS Connection
 
 To ensure we're able to connect to the Amazon RDS database from our EC2 Instance, we can use the `psql` command to connect to the database and list the available tables.
@@ -178,7 +176,7 @@ rds_backup_tutorial=> \dt
 (16 rows)
 
 rds_backup_tutorial=>
-````
+```
 
 ## Optional: Install Docker Community Edition
 

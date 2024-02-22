@@ -16,6 +16,7 @@ We're excited to announce the release of **DBSnapper v2.0**, which introduces a 
 ### Additional Improvements
 
 - Improved support for MySQL databases.
+- Support for PostgreSQL COPY protocol for fast data copy operations.
 - Simplified the sanitization command, eliminating the use of ephemeral database containers,
 - Released [Docker images](https://github.com/dbsnapper/dbsnapper/pkgs/container/dbsnapper) for easier installation and use.
 - An extensive refactoring and testing of the codebase to improve performance, quality, and maintainability.
