@@ -3,22 +3,30 @@ title: Welcome
 description: DBSnapper simplifies the process of creating de-identified database snapshots that can be used for real-world development, testing, and AI model training.
 ---
 
-# Welcome
-
-<!-- prettier-ignore-start -->
-!!! tip ":new: DBSnapper 2.0 COMING SOON"
-
-    The DBSnapper v2.0 release is right around the corner! This version brings a host of new improvements including **Database Subsetting**, which allows you to create smaller, more manageable relationally-complete snapshots of your database. 
-    
-    **We are actively updating the documentation to reflect the new changes so stay tuned for the release announcement!**
-<!-- prettier-ignore-end -->
-
 <p align="center">
   <img src="static/dbs-turtle-tagline-light.png#only-light" width="60%">
   <img src="static/dbs-turtle-tagline-dark.png#only-dark" width="60%">
 </p>
 
+# Welcome
+
+<!-- prettier-ignore-start -->
+!!! tip ":new: DBSnapper v2.0 Released!"
+
+    **DBSnapper v2.0 has been released!** This version brings a host of new improvements including **Database Subsetting**, which allows you to create smaller, more manageable relationally-complete snapshots of your database. 
+    
+    This release introduces some backwards-incompatible changes to the configuration file and some commands. If you are upgrading from a previous version, you will need to update your configuration file to the new format. See the [Configuration Settings](configuration.md) documentation for more information.
+
+    You can read more about the v2.0 release in the [Release Notes](release-notes.md).
+<!-- prettier-ignore-end -->
+
 DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to the traditional, often cumbersome methods of creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
+
+<!-- prettier-ignore-start -->
+!!! note "Documentation Update in Progress"
+
+    We are actively updating the documentation to reflect the new changes in DBSnapper v2.0. If you have any questions or need assistance, please reach out to us on our <a href="https://github.com/dbsnapper/dbsnapper/discussions" target="_blank">GitHub Dicussions</a> page. or email us at <a href="mailto:contact@dbsnapper.com">contact@dbsnapper.com</a>.
+<!-- prettier-ignore-end -->
 
 ## Snapshotting - Simplified database backups
 

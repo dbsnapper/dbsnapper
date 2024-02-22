@@ -127,5 +127,5 @@ dbsnapper load app 0
 <!-- prettier-ignore-start -->
 !!! danger "Danger: Destination database `dst_url` will be DROPPED and RECREATED"
 
-    Remember, the database specifid on `dst_url` will be DROPPED and a new empty database with the same name will be CREATED prior to loading the data from the snapshot!
+    Remember, the database specified on `dst_url` will be DROPPED and a new empty database with the same name will be CREATED prior to loading the data from the snapshot!
 <!-- prettier-ignore-end -->

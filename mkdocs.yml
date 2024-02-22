@@ -109,6 +109,7 @@ nav:
       - cmd/dbsnapper_target.md
   - Articles:
       - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
+  - Release Notes: release-notes.md
 
 markdown_extensions:
   # Python Markdown

@@ -1,6 +1,6 @@
 # Installation
 
-The DBSnapper Agent is available for Mac and Linux with several options to easliy install onto your system.
+The DBSnapper Agent is available for Mac and Linux with several ways to quickly install the Agent on your system.
 
 ## Docker Images
 
