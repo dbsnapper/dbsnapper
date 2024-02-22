@@ -20,6 +20,20 @@ Here's our target definition on the DBSnapper Cloud. We've simply provided the c
 
 ![Target Definition for Amazon RDS](../static/amazon-rds-postgres%20target%20screenshot.png)
 
+## TL;DR Backup in Four Commands
+
+```bash title="Amazon RDS Backup in four commands" linenums="1"
+# Launch interactive DBSnapper Container from EC2 instance
+docker run -it ghcr.io/dbsnapper/dbsnapper:latest /bin/bash
+
+# Create our configuration and connect to the DBSnapper Cloud
+dbsnapper config init
+dbsnapper auth token <YOUR_DBSNAPPER_CLOUD_AUTH_TOKEN>
+
+# Build the snapshot and upload to object storage
+dbsnapper build amazon-rds-postgres
+```
+
 ## Launch an EC2 Instance
 
 To easily gain access to the Amazon RDS database, we'll launch an EC2 instance in the same VPC as the RDS database. This will allow us to run DBSnapper and connect to the RDS database without exposing the database to the public internet.
