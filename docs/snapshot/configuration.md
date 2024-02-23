@@ -3,7 +3,7 @@ title: Snapshot Configuration
 description: How to configure the DBSnapper Agent to snapshot a database.
 ---
 
-# Configuration
+# Snapshot Configuration
 
 The DBSnapper Agent is configured using a YAML file, which is created when you run `dbsnapper config init` In this file you can specify multiple target configurations, each target being a set of options for a database you want to snapshot.
 

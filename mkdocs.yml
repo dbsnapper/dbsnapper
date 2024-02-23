@@ -77,8 +77,9 @@ nav:
       - Introduction: snapshot/introduction.md
       - Configuration: snapshot/configuration.md
       - Build and Load: snapshot/build_and_load.md
-  # - Subset:
-  #     - subset/overview.md
+  - Subset:
+      - Introduction: subset/introduction.md
+      - Configuration: subset/configuration.md
   - Sanitize:
       - Introduction: sanitize/introduction.md
       - Configuration: sanitize/configuration.md
