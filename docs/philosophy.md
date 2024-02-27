@@ -17,7 +17,7 @@ At DBSnapper, we hold a strong belief that the security and privacy of data shou
 
 ### Data Provenance: Your Data, Your Control
 
-We've built DBSnapper with a key principle in mind – you should have full control over your data at all times. Here's how we ensure this:
+We built DBSnapper with a key principle in mind – you should have full control over your data at all times. Here's how we ensure this:
 
   - **Data Provenance**: We've designed the DBSnapper Agent to give you full control over your data. We don't require access to your database, or keep copies of your data. When using the DBSnapper Cloud, we ensure your database and storage credentials are encrypted and stored securely.
 
