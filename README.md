@@ -1,7 +1,7 @@
 <p align="center">
   <img alt="DBSnapper Logo" src="https://docs.dbsnapper.com/static/logo.png?v=3&s=200" height="140" />
   <h3 align="center">DBSnapper</h3>
-  <p align="center">Database snapshots made easy and useful</p>
+  <p align="center">Subset, Snapshot, Sanitize, Share</p>
 </p>
 
 ---
