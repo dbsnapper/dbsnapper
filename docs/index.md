@@ -4,7 +4,7 @@ description: DBSnapper simplifies the process of creating de-identified database
 ---
 
 <p align="center">
-  <img src="static/dbs-turtle-tagline-light.png#only-light" width="60%">
+  <img src="static/dbs-v2-launch.png#only-light" width="90%">
   <img src="static/dbs-turtle-tagline-dark.png#only-dark" width="60%">
 </p>
 
@@ -22,11 +22,15 @@ description: DBSnapper simplifies the process of creating de-identified database
 
 DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to the traditional, often cumbersome methods of creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
 
-<!-- prettier-ignore-start -->
-!!! note "Documentation Update in Progress"
+## :new: Subsetting - Smaller snapshots, relationally complete
 
-    We are actively updating the documentation to reflect the new changes in DBSnapper v2.0. If you have any questions or need assistance, please reach out to us on our <a href="https://github.com/dbsnapper/dbsnapper/discussions" target="_blank">GitHub Dicussions</a> page. or email us at <a href="mailto:contact@dbsnapper.com">contact@dbsnapper.com</a>.
-<!-- prettier-ignore-end -->
+DBSnapper 2.0 introduces **Database Subsetting**. This feature allows you to create smaller, more manageable relationally-complete snapshots of your database. This is particularly useful when you want to create a snapshot of a large database, but only need a subset of the data for development or testing purposes.
+
+- **Efficient Data Management**: Instead of working with the entire database, which can be cumbersome and resource-intensive, you can select just the relevant parts you need. This leads to quicker operations, lower resource usage, and more efficient data handling.
+
+- **Maintains Data Integrity**: Despite working with a smaller dataset, the integrity and relational structure of the original database are preserved. This is crucial when developing or testing applications, as it ensures that any interactions with the subset reflect real-world scenarios.
+
+- **Customizable to Specific Needs**: DBSnapper 2.0 provides flexibility in defining the criteria for subsetting. Whether it's specific tables, rows, or a particular set of data, you can tailor the subset to meet the exact needs of your project.
 
 ## Snapshotting - Simplified database backups
 
@@ -40,17 +44,7 @@ DBSnapper's snapshotting capability is not just about capturing data; it's a str
 
 - **Training AI Models**: For AI and machine learning initiatives, having access to diverse, real-world data sets is crucial. DBSnapper's ability to provide de-identified snapshots of real operational data can significantly enhance the training process of AI models, leading to more accurate responses.
 
-## :new: Subsetting - Smaller snapshots, relationally complete
-
-DBSnapper 2.0 introduces **Database Subsetting**. This feature allows you to create smaller, more manageable relationally-complete snapshots of your database. This is particularly useful when you want to create a snapshot of a large database, but only need a subset of the data for development or testing purposes.
-
-- **Efficient Data Management**: Instead of working with the entire database, which can be cumbersome and resource-intensive, you can select just the relevant parts you need. This leads to quicker operations, lower resource usage, and more efficient data handling.
-
-- **Maintains Data Integrity**: Despite working with a smaller dataset, the integrity and relational structure of the original database are preserved. This is crucial when developing or testing applications, as it ensures that any interactions with the subset reflect real-world scenarios.
-
-- **Customizable to Specific Needs**: DBSnapper 2.0 provides flexibility in defining the criteria for subsetting. Whether it's specific tables, rows, or a particular set of data, you can tailor the subset to meet the exact needs of your project.
-
-## Sanitize - De-identification and sensitive data removal
+## Sanitization - De-identification and sensitive data removal
 
 DBSnapper enables you to de-identify and sanitize your production data, removing sensitive information such as personal details, financial data, and other confidential information. This is crucial for ensuring compliance with data protection regulations and maintaining the privacy and security of your users.
 
