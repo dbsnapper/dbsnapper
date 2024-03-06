@@ -10,7 +10,6 @@
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-blue)](https://go.dev/)
 [![read-the-docs](https://img.shields.io/badge/Read%20the-Documentation-informational)](https://docs.dbsnapper.com)
 
-![X (formerly Twitter) URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2Fdbsnapper&label=Follow%20us%20on%20Twitter)
 
 
 DBSnapper allows development teams to safely develop against production data and use it for real-world development, testing, and model training. Create Snapshots of databases (Subset snapshots if needed), Sanitize them for development use, and Share them with your team.
