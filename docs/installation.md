@@ -2,9 +2,13 @@
 
 The DBSnapper Agent is available for Mac and Linux with several ways to quickly install the Agent on your system.
 
+## Releases Page
+
+Our releases are available on the [DBSnapper Agent Releases](https://github.com/dbsnapper/dbsnapper/releases) Page. You can download the latest release and view release notes from this page.
+
 ## Docker Images
 
-One of the easiest ways to get started with DBSnapper is to use the Docker image. The DBSnapper Agent is available as a Docker image on the [DBSnapper Agent Docker Releases](https://github.com/dbsnapper/dbsnapper/pkgs/container/dbsnapper) Page. You can pull the latest image using the following command:
+One of the easiest ways to get started with DBSnapper is to use the Docker image. The DBSnapper Agent is available as a Docker image on the [DBSnapper Agent Packages](https://github.com/dbsnapper/dbsnapper/pkgs/container/dbsnapper) Page. You can pull the latest image using the following command:
 
 ```sh
 docker pull ghcr.io/dbsnapper/dbsnapper:latest
@@ -49,7 +53,7 @@ Here's an example of how you can install dbsnapper using a Debian package:
 This following example installs the `dbsnapper` package version 1.2.1 for a Linux system with an AMD64 architecture using the Debian package manager.
 
 ```sh
-TAG=1.2.1 && \
+TAG=2.0.3 && \
 ARCH=linux_x86_64 && \
 PKG_MGR_EXT=deb && \
 
@@ -72,32 +76,33 @@ Which will output some useful information about your environment and the dbsnapp
 
 ```sh
 root@snappy:/# dbsnapper config check
-DBSnapper Agent v1.2.2+df088f77.2024-02-12T18:02:24Z
+
+DBSnapper Agent - Version: 2.0.3 (9e8b3abde4e0) Build Date: 2024-03-05T21:33:39Z
 DBSnapper Cloud: Standalone Mode
 
 Checking DBSnapper Configuration
-  ❌ Error reading config file: Config File "dbsnapper" Not Found in "[/root/.config/dbsnapper /root]"
+  ✅ Config file ( /Users/joescharf/app/dbsnapper/agent/dbsnapper.yml ) found and loaded
   🔵 Postgres Local Engine (pglocal)
-    ✅ psql found at /usr/bin/psql
-    ✅ pg_dump found at /usr/bin/pg_dump
-    ✅ pg_restore found at /usr/bin/pg_restore
+    ✅ psql found at /Applications/Postgres.app/Contents/Versions/latest/bin/psql
+    ✅ pg_dump found at /Applications/Postgres.app/Contents/Versions/latest/bin/pg_dump
+    ✅ pg_restore found at /Applications/Postgres.app/Contents/Versions/latest/bin/pg_restore
   🔵 MySQL Local Engine (mylocal)
-    ✅ mysqldump found at /usr/bin/mysqldump
-    ✅ mysql found at /usr/bin/mysql
+    ✅ mysqldump found at /opt/homebrew/bin/mysqldump
+    ✅ mysql found at /opt/homebrew/bin/mysql
   🔵 Postgres Docker Engine (pgdocker)
-    ❌ Error connecting to docker: error during connect: Get "http://docker:2375/_ping": dial tcp: lookup docker on 127.0.0.11:53: no such host
-    ❌ docker.images not set in config file
-    ❌ docker.images.postgres not set in config file
+    ✅ Docker client connected
+    ✅ docker.images set in config file
+    ✅ docker.images.postgres set in config file
+      ✅ Found Docker image: postgres:latest
   🔵 Mysql Docker Engine (mydocker)
-    ❌ Error connecting to docker: error during connect: Get "http://docker:2375/_ping": dial tcp: lookup docker on 127.0.0.11:53: no such host
-    ❌ docker.images not set in config file
-    ❌ docker.images.mysql not set in config file
-  ⚠️ One or more database engines are not configured
+    ✅ Docker client connected
+    ✅ docker.images set in config file
+    ✅ docker.images.mysql set in config file
+      ✅ Found Docker image: mysql:8.0-oracle
+  ✅ All supported database engines configured
   ⚠️  DBSnapper Cloud not configured - get an account at https://dbsnapper.com
 
-  ⚠️  Configuration has warnings
-
-  root@snappy:/#
+  ✅ Configuration OK
 ```
 
 Continue to the [Quick Start](quick-start.md) guide to configure DBSnapper and create your first snapshot.
