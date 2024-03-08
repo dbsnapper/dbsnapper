@@ -13,3 +13,9 @@ Use to list all targets
 dbsnapper targets
 ```
 
+### Options
+
+```
+  -u, --update   Update the db info for all targets (default true)
+```
+

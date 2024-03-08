@@ -8,13 +8,7 @@ description: DBSnapper configuration file and description of settings
 The config file specifies your targets along with system settings such as working directory and secret encryption key.
 
 <!-- prettier-ignore-start -->
-!!! warning "DBSnapper 2.0 Changes"
-
-    DBSnapper 2.0 has introduced some backwards-incompatible changes to the configuration file to support new and future features. The new configuration file is a YAML file with the following structure:
-<!-- prettier-ignore-end -->
-
-<!-- prettier-ignore-start -->
-!!! example "`~/.config/dbsnapper/dbnsapper.yml` example"
+!!! example "`~/.config/dbsnapper/dbnsapper.yml`"
 
     ```yaml linenums="1"
     authtoken: 1234567890abcdef1234567890abcdef....
@@ -57,6 +51,26 @@ The config file specifies your targets along with system settings such as workin
           excluded_relationships:
             - fk_table: sakila.store
               ref_table: sakila.staff
+    ```
+<!-- prettier-ignore-end -->
+
+<!-- prettier-ignore-start -->
+!!! tip "New for v2.1.0 - Connection String Templates"
+
+    All connection string URLs now support templating. This allows you to access environment variables in the connection string URLs. For example, you can now use the following connection string URL for a Postgres database:
+
+    ```yaml
+    snapshot:
+      src_url: postgres://{{`DB_USER` | env}}:{{`DB_PASSWORD` | env}}@localhost:5432/{{`DB_NAME` | env}}
+    ```
+
+    In this example we are indicating we want the username, password, and database name to be read from the `DB_USER`, `DB_PASSWORD`, and `DB_NAME` environment variables, respectively.
+
+    Templates conform to Go Templates syntax. Specify the `env` function to read the value from the environment.
+
+    ```yaml
+    {{`ENV_VAR` | env}} # substitute the value of the ENV_VAR environment variable
+    {{`CONSTANT`}} # substitute the supplied `CONSTANT` value
     ```
 <!-- prettier-ignore-end -->
 
