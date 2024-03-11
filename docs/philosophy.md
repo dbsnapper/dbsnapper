@@ -19,7 +19,7 @@ At DBSnapper, we hold a strong belief that the security and privacy of data shou
 
 We built DBSnapper with a key principle in mind – you should have full control over your data at all times. Here's how we ensure this:
 
-  - **Data Provenance**: We've designed the DBSnapper Agent to give you full control over your data. We don't require access to your database, or keep copies of your data. When using the DBSnapper Cloud, we ensure your database and storage credentials are encrypted and stored securely.
+  - **Data Security**: We've designed the DBSnapper Agent to give you full control over your data. We don't require access to your database outside of your approved infrastructure or keep copies of your data. When using the DBSnapper Cloud, we ensure sensitive information is encrypted at rest and in transit, and provide features like connection string templating to retrieve credentials from environment variables as an alternative to providing them to our service.
 
   - **Bring Your Own Cloud Storage**: Rather than forcing you to use our cloud object storage, we allow you to use your own provider, ensuring your data stays within your approved PaaS vendor, and reducing the overall cost of the solution.
 
@@ -30,7 +30,7 @@ We built DBSnapper with a key principle in mind – you should have full control
 
 Simplicity was another key design goal, ensuring the ease of installation and use, regardless of the user's environment. To achieve this, we've consciously limited dependencies, focusing on creating a tool that's as lightweight and flexible as possible.
 
-- **Minimized Dependencies**: We've chosen Golang as the development language for its ability to create statically linked binaries that can be easily distributed and run on different operating systems and platforms.
+- **Minimized Dependencies**: We've chosen Go as the development language for its ability to create statically linked binaries that can be easily distributed and run on different operating systems and platforms.
 
 - **Database Tools**: While we rely on database tools for some of the operations, we're careful to minimize the areas in which these tools are used.
 
