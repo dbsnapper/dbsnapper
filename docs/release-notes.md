@@ -10,6 +10,15 @@ description: DBSnapper release notes - notable changes and updates
 
 <!-- prettier-ignore-start -->
 
+## v2.2.0 - Separate Storage Profiles for Unsanitized and Sanitized Snapshots
+
+You can now specify different storage profiles for unsanitized (original) and sanitized snapshots, allowing you to store them in different buckets or cloud providers if desired. 
+This will allow sharing only the sanitized snapshot cloud storage buckets with developers, while keeping the unsanitized snapshots private.
+
+Up next is additional sharing functionality for accessing and loading the sanitized snapshots.
+
+[Download the v2.2.0 release](https://github.com/dbsnapper/dbsnapper/releases/tag/v2.2.0) for your platform.
+
 ## v2.1.0 - Connection String URL Templates
 
 All connection string URLs now support templating. This allows you to access environment variables in the connection string URLs. For example, you can now use the following connection string URL for a Postgres database:
