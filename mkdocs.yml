@@ -85,7 +85,7 @@ nav:
       - Configuration: sanitize/configuration.md
       - Sanitize: sanitize/sanitize.md
   - Share:
-      - Introduction: dbsnapper-cloud/introduction.md
+      - Introduction: share/introduction.md
   - DBSnapper Cloud:
       - Introduction: dbsnapper-cloud/introduction.md
       - Targets:

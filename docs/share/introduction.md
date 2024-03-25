@@ -1,26 +1,17 @@
 ---
-title: Cloud Storage Engines
-description: How to use your own private cloud storage provider to store your database snapshots.
+title: Sharing Snapshots
+description: Sharing database snapshots with DBSnapper.
 ---
 
 # Introduction
 
-DBSnapper provides support for several Cloud Storage Engines that allow you to use your own private cloud storage provider to store your database snapshots keeping them in your control and secure.
+One of the key DBSnapper features is the ability to easily share sanitized database snapshots with your team, developers, testers, and other stakeholders. Sharing snapshots is useful for providing sanitized data for development, testing, and other purposes without exposing sensitive information.
 
-Cloud storage engine configurations can be specified on the DBSnapper Cloud and in the configuration file under the `storage_profiles` section. These storage engines can be used with sharing targets to retrieve shared snapshots from cloud storage.
+By utilizing your own private cloud storage providers, you can securely store your snapshots in your own approved infrastructure and use the DBSnapper Agent and Cloud to facilitate easy sharing.
 
-<p align="center">
-  <img alt="Cloud Storage Engines" src="/static/dbsnapper-storage-engines.png"  />
-</p>
+## Sharing Architecture
 
-## Supported Cloud Storage Engines
-
-Currently supported Cloud Storage engines include:
-
-- Amazon S3
-- Cloudflare R2
-- Minio
-- Digital Ocean Spaces
+![DBSnapper Sharing Architecture](/static/vpc-s3-horiz.svg)
 
 ## Getting Started
 
