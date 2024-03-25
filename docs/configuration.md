@@ -7,6 +7,8 @@ description: DBSnapper configuration file and description of settings
 
 The config file specifies your targets along with system settings such as working directory and secret encryption key.
 
+## Sample Configuration
+
 <!-- prettier-ignore-start -->
 !!! example "`~/.config/dbsnapper/dbnsapper.yml`"
 
@@ -51,6 +53,87 @@ The config file specifies your targets along with system settings such as workin
           excluded_relationships:
             - fk_table: sakila.store
               ref_table: sakila.staff
+      
+      # New for 2.3.0: Sharing Targets
+      dvdrental-share:
+        name: dvdrental-share
+        share:
+          dst_url: postgres://postgres:postgres@localhost:5432/dvdrental_share
+          storage_profile_name: s3-from-awscli-profile
+
+
+    # Storage profiles for sharing configurations
+    storage_profiles:
+      # All Profiles:
+      # Leave access_key and secret_key to use a profile
+      # Leave the awscli_profile empty to use the default profile
+      # If the endpoint is specified in the profile it will override the
+      # endpoint specified in this configuration.
+
+      # S3
+      s3-from-credentials:
+        provider: s3
+        awscli_profile:
+        access_key: <access_key>
+        secret_key: <secret_key>
+        region: <region>
+        bucket: dbsnapper-test-s3
+        prefix:
+
+      s3-from-awscli-profile:
+        provider: s3
+        awscli_profile: dbsnapper_credentials
+        bucket: dbsnapper-test-s3
+        prefix:
+
+      # R2
+      # Uses the account ID to create the endpoint url.
+      # Can be omitted if the r2 endpoint_url is specified in the awscli config.
+      # Or set the following Env Variables and leave the awscli_profile empty:
+      # AWS_ACCESS_KEY
+      # AWS_SECRET_KEY"
+      # AWS_ENDPOINT_URL"
+      r2-from-credentials:
+        provider: r2
+        awscli_profile:
+        access_key: <access_key>
+        secret_key: <secret_key>
+        account_id: <account_id>
+        bucket: dbsnapper-test-r2
+        prefix:
+
+      r2-from-awscli-profile:
+        provider: r2
+        awscli_profile: r2_production
+        account_id: # optional if enpoint_url set in profile
+        bucket: dbsnapper-test-r2
+        prefix: 
+
+      r2-from-env-or-default-awscli_profile:
+        provider: r2
+        bucket: dbsnapper-test-r2
+        prefix: sanitized
+
+      # Minio
+      minio-from-credentials:
+        provider: minio
+        awscli_profile:
+        access_key: <access_key>
+        secret_key: <secret_key>
+        endpoint: http://localhost:9000
+        bucket: dbsnapper-test-minio
+        prefix:
+
+      # Digital Ocean Spaces
+      # Endpoint shold be set to the endpoint of the spaces region i.e. nyc3 below
+      dospaces-from-credentials:
+        provider: dospaces
+        awscli_profile:
+        access_key: <access_key>
+        secret_key: <secret_key>
+        endpoint: https://nyc3.digitaloceanspaces.com
+        bucket: dbsnapper-test-do
+        prefix:
     ```
 <!-- prettier-ignore-end -->
 
@@ -74,7 +157,7 @@ The config file specifies your targets along with system settings such as workin
     ```
 <!-- prettier-ignore-end -->
 
-## Supported configuration attributes
+## Configuration details by section
 
 ```yaml linenums="1"
 authtoken: 1234567890abcdef1234567890abcdef....
@@ -282,3 +365,50 @@ excluded_relationships:
 
     Each `excluded_relationships` entry is defined by the `fk_table` and `ref_table` attributes.
 <!-- prettier-ignore-end -->
+
+## Sharing Target
+
+Added in v2.3.0, a sharing target allows you to specify a target definition that can be used to access shared snapshots on a cloud storage provider.
+
+### Sharing sanitized snapshots
+
+In v.2.2.0, we added the ability to specify different cloud storage locations for original (unsanitized) and sanitized snapshots. This allows you to securely share sanitized snapshots with developers and other third parties while keeping the unsanitized snapshots private. You specify the different storage locations in the on the target settings page of the DBSnapper Cloud.
+
+### Accessing the share
+
+To access the shared snapshots, you need to create a new target definition in your configuration file. The target definition should include the `share` section with the `dst_url` and `storage_profile_name` attributes.
+
+<!-- prettier-ignore-start -->
+!!! example "Specifying a Sharing Target"
+
+    ```yaml
+    # New for 2.3.0: Sharing Targets
+    dvdrental-share:
+      name: dvdrental-share
+      share:
+        dst_url: postgres://postgres:postgres@localhost:5432/dvdrental_share
+        storage_profile_name: s3-dbsnapper-sanitized
+    ```
+<!-- prettier-ignore-end -->
+
+The example above shows a sharing target named `dvdrental-share`. The `dst_url` attribute specifies the connection string that will be used when loading any of the shared snapshots.
+
+The `storage_profile_name` attribute specifies the name of a storage profile that will be used to access the shared snapshots. In the example above we are using the `s3-dbsnapper-sanitized` storage profile to access the shared snapshots. This storage profile must be defined in the `storage_profiles` section of the configuration file.
+
+<!-- prettier-ignore-start -->
+!!! example "Storage profile configuration"
+
+    ```yaml
+    storage_profiles:
+      s3-dbsnapper-sanitized
+        provider: s3
+        awscli_profile:
+        access_key: <access_key>
+        secret_key: <secret_key>
+        region: <region>
+        bucket: dbsnapper-sanitized
+        prefix:
+    ```
+<!-- prettier-ignore-end -->
+
+The example above shows the configuration for the `s3-dbsnapper-sanitized` storage profile. This storage profile specifies the connection details for the cloud storage provider where the shared snapshots are stored. It also specifies the `bucket` and `prefix` where the shared snapshots are stored.

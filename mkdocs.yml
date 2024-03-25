@@ -94,6 +94,7 @@ nav:
       - database-engines/mysql-docker.md
   - Cloud Storage Engines:
       - cloud-storage-engines/introduction.md
+      - cloud-storage-engines/configuration.md
       - cloud-storage-engines/cloudflare-r2.md
       - cloud-storage-engines/amazon-s3.md
   - Command Line Usage:
