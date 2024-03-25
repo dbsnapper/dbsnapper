@@ -85,7 +85,12 @@ nav:
       - Configuration: sanitize/configuration.md
       - Sanitize: sanitize/sanitize.md
   - Share:
-      - DBSnapper Cloud: dbsnapper-cloud/introduction.md
+      - Introduction: dbsnapper-cloud/introduction.md
+  - DBSnapper Cloud:
+      - Introduction: dbsnapper-cloud/introduction.md
+      - Targets:
+          - All Targets: dbsnapper-cloud/targets.md
+
   - Database Engines:
       - database-engines/introduction.md
       - database-engines/postgresql-local.md
