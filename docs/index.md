@@ -4,22 +4,17 @@ description: DBSnapper simplifies the process of creating de-identified database
 ---
 
 <p align="center">
-  <img src="static/dbs-v2-launch.png#only-light" width="90%">
-  <img src="static/dbs-turtle-tagline-dark.png#only-dark" width="60%">
+  <img src="/static/dbs-v2-launch.png#only-light" alt="Introducing DBSnapper 2.0" width="90%">
+  <img src="/static/dbs-turtle-tagline-dark.png#only-dark" alt="Introducing DBSnapper 2.0" width="60%">
+</p>
+
+<p align="center">
+  <img src="/static/tui/dbs-ui-all-targets.png" alt="DBSnapper Agent User Interface" width="80%">
+  <br/>
+  <small>DBSnapper Agent User Interface - All Targets</small>
 </p>
 
 # Welcome
-
-<!-- prettier-ignore-start -->
-!!! tip ":new: DBSnapper v2.0 Released!"
-
-    **DBSnapper v2.0 has been released!** This version brings a host of new improvements including **Database Subsetting**, which allows you to create smaller, more manageable relationally-complete snapshots of your database. 
-    
-    This release introduces some backwards-incompatible changes to the configuration file and some commands. If you are upgrading from a previous version, you will need to update your configuration file to the new format. See the [Configuration Settings](configuration.md) documentation for more information.
-
-    You can read more about the DBSnapper 2.0 release on the [DBSnapper Blog](https://dbsnapper.com/blog/introducing-dbsnapper-v2)
-    
-<!-- prettier-ignore-end -->
 
 DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to the traditional, often cumbersome methods of creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
 

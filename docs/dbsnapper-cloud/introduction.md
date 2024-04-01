@@ -5,14 +5,16 @@ description: The DBSnapper Cloud Platform provides additional capabilities for b
 
 # Introduction
 
-![DBSnapper Cloud](/static/dbsnapper-cloud.jpeg)
+<p align="center">
+  <img alt="DBSnapper Cloud" src="/static/dbsnapper-cloud.jpeg" width="90%" />
+</p>
 
 The [DBSnapper Cloud](https://dbsnapper.com) extends the capabilities of our standalone CLI with new options for storing sanitized snapshots in private cloud storage and sharing them with your team. Up until now, each DBSnapper setup required creating a maintaining a local configuration file and snapshots were created on local storage, with no support for making them available in a centralized location. With the DBSnapper Cloud, you can speed up your workflow with a centralized configuration and make snapshots accessible to your team or development pipelines.
 
 ## DBSnapper Cloud Processing Pipeline
 
 <p align="center">
-  <img alt="DBSnapper Cloud Flow" src="/static/flow.png"  />
+  <img alt="DBSnapper Cloud Processing Pipeline" src="/static/flow.png" width="90%" />
 </p>
 
 The DBSnapper Cloud brings everything together and provides a processing pipeline to create, store, and share sanitized database snapshots.

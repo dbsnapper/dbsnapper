@@ -2,6 +2,12 @@
 
 The DBSnapper Agent is available for Mac and Linux with several ways to quickly install the Agent on your system.
 
+<p align="center">
+  <img src="../static/tui/dbs-ui-all-targets.png" alt="DBSnapper Agent User Interface" width="90%">
+  <br/>
+  <small>DBSnapper Agent User Interface</small>
+</p>
+
 ## Releases Page
 
 Our releases are available on the [DBSnapper Agent Releases](https://github.com/dbsnapper/dbsnapper/releases) Page. You can download the latest release and view release notes from this page.

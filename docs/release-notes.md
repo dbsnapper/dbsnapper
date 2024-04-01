@@ -10,6 +10,17 @@ description: DBSnapper release notes - notable changes and updates
 
 <!-- prettier-ignore-start -->
 
+
+## v2.3.0 - New User Interface, Share Targets, Storage Engines Improvements, and More
+
+A Terminal User Interface (TUI) has been added to the DBSnapper Agent, making it more even easier to use. See all your targets, drill down into their snapshots, and load them all from the new UI.
+
+[Sharing Targets](configuration.md/#sharing-target) have been added to DBSnapper. Leveraging the ability to specify different storage profiles for original and sanitized snapshots, you can now create a _share target_ in your configuration file, that will allow you to list and load sanitized snapshots from a shared storage location. This is useful for sharing sanitized snapshots with developers, testers, and other stakeholders.
+
+[New Storage Engines](cloud-storage-engines/introduction.md) have been added. In addition to our support for AWS S3 and CloudFlare R2, we have added support for <a href="https://min.io/" target="_blank">Minio</a> and <a href="https://www.digitalocean.com/products/spaces" target="_blank">Digital Ocean Spaces</a>
+
+Storage Engines now support retrieving credentials from <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html" target="_blank"> the AWS CLI shared configuration</a>. It is now possible to retrieve S3 compatible storage engine credentials from environment variables, or you can specify an `awscli_profile` in your storage profile configuration to use the credentials from the specified AWS CLI profile. More information on this can be found in the [Storage Engine Configuration](cloud-storage-engines/configuration.md/#aws-shared-configuration) documentation.
+
 ## v2.2.0 - Separate Storage Profiles for Unsanitized and Sanitized Snapshots
 
 You can now specify different storage profiles for unsanitized (original) and sanitized snapshots, allowing you to store them in different buckets or cloud providers if desired. 
