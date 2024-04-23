@@ -15,6 +15,7 @@ description: DBSnapper release notes - notable changes and updates
 This release is bringing back the ability to use ephemeral containers for sanitization. This streamlines the sanitization process, leveraging containers to spin up a temporary database that can be used to sanitize the unsanitized snapshot data.
 
 The `sanitize` command now behaves as follows:
+
 1. It will create a new unsanitized and sanitized snapshot set if no snapshots exist for a target or the `-n` flag is set.
 2. Will use an ephemeral container to sanitize the data if the `sanitize: dst_url` is not specified in the configuration file, or the `-e` flag is set. 
 
