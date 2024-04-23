@@ -8,8 +8,8 @@ Simplifies the process of creating de-identified database snapshots that can be 
 
 
 DBSnapper is a database snapshot creation and management tool for developers. 
-DBSnapper makes it easy to snapshot, subset, sanitize and share your database to speed up application development and testing with real-world data.
-
-You can specify your database targets and other configuration properties in the `~/.config/dbsnapper/dbsnapper.yml` configuration file.
-
+	DBSnapper makes it easy to snapshot, subset, sanitize and share your database to speed up application development and testing with real-world data.
+	
+	You can specify your database targets and other configuration properties in the `~/.config/dbsnapper/dbsnapper.yml` configuration file.
+	
 
