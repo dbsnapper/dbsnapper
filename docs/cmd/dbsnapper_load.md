@@ -31,6 +31,7 @@ dbsnapper load target_name snapshot_index [flags]
 ### Options
 
 ```
-  -o, --original   Use the original snapshot instead of the sanitized version.
+      --destdb string   Destination Database URL Override - Will Overwrite any existing destination database!!!
+  -o, --original        Use the original snapshot instead of the sanitized version.
 ```
 

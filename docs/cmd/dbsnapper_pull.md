@@ -20,7 +20,7 @@ The `snapshot_index` is the index number of the snapshot to load.
 	
 
 ```
-dbsnapper pull target_name snapshot_index [flags]
+dbsnapper pull <target_name> [snapshot_index] [flags]
 ```
 
 ### Options

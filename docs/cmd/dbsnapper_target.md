@@ -21,6 +21,9 @@ dbsnapper target target_name [flags]
 ### Options
 
 ```
-  -c, --cloud   Only display cloud snapshots
+      --destdb string   Destination Database URL Override - Will Overwrite any existing destination database!!!
+      --noui            Disable the Terminal UI
+  -o, --original        Use the original snapshot instead of the sanitized version.
+  -u, --update          Update the db info for all targets (default true)
 ```
 
