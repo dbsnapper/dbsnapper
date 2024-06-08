@@ -4,8 +4,7 @@ description: DBSnapper simplifies the process of creating de-identified database
 ---
 
 <p align="center">
-  <img src="/static/dbs-v2-launch.png#only-light" alt="Introducing DBSnapper 2.0" width="90%">
-  <img src="/static/dbs-turtle-tagline-dark.png#only-dark" alt="Introducing DBSnapper 2.0" width="60%">
+  <img src="/static/dbs-docs.jpg" alt="DBSnapper" width="90%">
 </p>
 
 <p align="center">
@@ -18,7 +17,23 @@ description: DBSnapper simplifies the process of creating de-identified database
 
 DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to the traditional, often cumbersome methods of creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
 
-## :new: Subsetting - Smaller snapshots, relationally complete
+## Features
+
+In addition to the main features of Subsetting, Snapshotting, Sanitization, and Sharing, DBSnapper offers a range of features that simplify database workload snapshotting and sharing. Here are some of the key features of DBSnapper:
+
+- **SSO**: Single Sign-On (SSO) support enables seamless authentication and snapshot sharing with your team members.
+- **Github Actions Compatible**: DBSnapper works well with Github Actions allowing you to integrate database snapshotting into your CI/CD pipelines.
+- **Bring Your Own Storage**: Use your preferred cloud storage provider (i.e. Amazon S3 / Cloudflare R2) for storing snapshots securely in your private infrastructure.
+- **Database Support**: DBSnapper supports Postgresql and MySQL databases with more database support coming soon.
+- **Ephemeral Sanitization**: Run sanitization operations without the need to setup a temporary sanitization database or schema.
+- **Templating Engine**: Use the built-in templating engine to allow sensitive data to be passed as environment variables.
+- **Docker Enabled**: DBSnapper leverages Docker for access to database vendor tools and utilities, ephemeral sanitization, and other operations.
+- **Zero-Config Operation**: Execute complex database workload operations in a single command without the need for complex configuration files and prerequisite setup steps.
+- **Private-cloud First**: DBSnapper is designed to work in private cloud environments, ensuring that your data remains within your infrastructure.
+
+Now for a closer look at the main features of DBSnapper:
+
+### Subsetting - Smaller snapshots, relationally complete
 
 DBSnapper 2.0 introduces **Database Subsetting**. This feature allows you to create smaller, more manageable relationally-complete snapshots of your database. This is particularly useful when you want to create a snapshot of a large database, but only need a subset of the data for development or testing purposes.
 
@@ -28,7 +43,7 @@ DBSnapper 2.0 introduces **Database Subsetting**. This feature allows you to cre
 
 - **Customizable to Specific Needs**: DBSnapper 2.0 provides flexibility in defining the criteria for subsetting. Whether it's specific tables, rows, or a particular set of data, you can tailor the subset to meet the exact needs of your project.
 
-## Snapshotting - Simplified database backups
+### Snapshotting - Simplified database backups
 
 DBSnapper offers an efficient and powerful solution for snapshotting databases that simplifies the snapshotting process for different database platforms.
 
@@ -36,11 +51,11 @@ DBSnapper's snapshotting capability is not just about capturing data; it's a str
 
 - **Real-world Test Cases**: Utilizing de-identified data snapshots, you can create more effective and realistic test cases. This helps in identifying potential issues in a more accurate production-like environment.
 
-- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be integrated into CI/CD pipelines, automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
+- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be easily [intergrated into CI/CD pipelines such as Github Actions](/docs/articles/dbsnapper-github-actions-amazon-ecs.md), automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
 
-- **Training AI Models**: For AI and machine learning initiatives, having access to diverse, real-world data sets is crucial. DBSnapper's ability to provide de-identified snapshots of real operational data can significantly enhance the training process of AI models, leading to more accurate responses.
+- **Training AI Models**: For AI and machine learning initiatives, having access to diverse, real-world data sets is crucial. DBSnapper's ability to provide de-identified snapshots of real operational data can significantly enhance the training process of AI models, leading to more accurate models.
 
-## Sanitization - De-identification and sensitive data removal
+### Sanitization - De-identification and sensitive data removal
 
 DBSnapper enables you to de-identify and sanitize your production data, removing sensitive information such as personal details, financial data, and other confidential information. This is crucial for ensuring compliance with data protection regulations and maintaining the privacy and security of your users.
 
@@ -50,9 +65,11 @@ DBSnapper enables you to de-identify and sanitize your production data, removing
 
 - **Maintaining Data Utility Post-Sanitization**: Despite the removal of sensitive data, the utility and integrity of the dataset are preserved, making it suitable for development, testing, and analysis without compromising privacy.
 
-## Share - Securely distribute snapshots via DBSnapper Cloud
+### Share - Securely distribute snapshots via DBSnapper Cloud
 
 The sharing aspect of DBSnapper is made possible through the DBSnapper Cloud, a critical feature for secure storage and distribution of database snapshots. It's designed for seamless collaboration within your team or for integration with automated processes.
+
+- **SSO-Aware Team Sharing**: DBSnapper Cloud supports Single Sign-On (SSO), and is SSO-Group aware, allowing you to easily share snapshots with your team members, using the groups you've already set up in your SSO provider.
 
 - **Flexibility of Storage Choices**: With DBSnapper, you have the flexibility to 'Bring Your Own Cloud Storage Provider'. This means you can choose the cloud storage that best aligns with your company’s policies and data management strategies, ensuring that your data remains within your approved PaaS vendor.
 
