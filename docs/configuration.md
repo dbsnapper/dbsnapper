@@ -3,9 +3,7 @@ title: Configuration Settings
 description: DBSnapper configuration file and description of settings
 ---
 
-# Configuration Settings
-
-The config file specifies your targets along with system settings such as working directory and secret encryption key.
+The DBSnapper configuration file specifies your local targets along with system settings such as working directory, DBSnapper Cloud authentication token, defaults, overrides, and much more. This file is located at `~/.config/dbsnapper/dbsnapper.yml` by default.
 
 ## Sample Configuration
 
@@ -60,6 +58,16 @@ The config file specifies your targets along with system settings such as workin
         share:
           dst_url: postgres://postgres:postgres@localhost:5432/dvdrental_share
           storage_profile_name: s3-from-awscli-profile
+
+    # New for 2.6.0: Overrides - Sanitization Query and Destination Database     
+    override:
+      san_query: RFJPUCBUQUJMRSBJRiBFWElTVFMgZGJzbmFwcGVyX2luZm87CkNSRUFURSBUQUJMRSBkYnNuYXBwZXJfaW5mbyAoY3JlYXRlZF9hdCB0aW1lc3RhbXAsIHRhZ3MgdGV4dCBbXSk7CklOU0VSVCBJTlRPIGRic25hcHBlcl9pbmZvIChjcmVhdGVkX2F0LCB0YWdzKQpWQUxVRVMgKE5PVygpLCAne3F1ZXJ5OnNhbl9xdWVyeV9vdmVycmlkZSwgbG9jYXRpb246Y2xvdWR9Jyk7
+      dst_db_url: postgres://postgres:postgres@localhost:15432/dbsnapper_dst_db_override
+
+    # New for 2.7.0: Default Destination Database for Team Sharing
+    defaults:
+      shared_target_dst_db_url: postgres://postgres:postgres@localhost:15432/dbsnapper_dst_db_default
+
 
 
     # Storage profiles for sharing configurations
@@ -137,25 +145,13 @@ The config file specifies your targets along with system settings such as workin
     ```
 <!-- prettier-ignore-end -->
 
-<!-- prettier-ignore-start -->
-!!! tip "New for v2.1.0 - Connection String Templates"
+## Environment Variable Support
 
-    All connection string URLs now support templating. This allows you to access environment variables in the connection string URLs. For example, you can now use the following connection string URL for a Postgres database:
+DBSnapper can be configured exclusively through environment variables if you don't want to rely on a configuration file. All configuration options can be represented as environment variables through a specific naming convention involving prefixing the environment variable with `DBSNAPPER` and replacing periods with two underscores `__`. Some examples include:
 
-    ```yaml
-    snapshot:
-      src_url: postgres://{{`DB_USER` | env}}:{{`DB_PASSWORD` | env}}@localhost:5432/{{`DB_NAME` | env}}
-    ```
-
-    In this example we are indicating we want the username, password, and database name to be read from the `DB_USER`, `DB_PASSWORD`, and `DB_NAME` environment variables, respectively.
-
-    Templates conform to Go Templates syntax. Specify the `env` function to read the value from the environment.
-
-    ```yaml
-    {{`ENV_VAR` | env}} # substitute the value of the ENV_VAR environment variable
-    {{`CONSTANT`}} # substitute the supplied `CONSTANT` value
-    ```
-<!-- prettier-ignore-end -->
+- `docker.images.postgres` -> `DBSNAPPER_DOCKER__IMAGES__POSTGRES: postgres:latest` # Sets the docker image to use for the postgres containers
+- `defaults.shared_target_dst_db_url` -> `DBSNAPPER_DEFAULTS__SHARED_TARGET_DST_DB_URL: <connstring>` # Sets the default destination database URL for shared targets
+- `override.san_query` -> `DBSNAPPER_OVERRIDE__SAN_QUERY: <base-64-encoded-value>` # Sets a query to use for sanitization overriding any existing queries.
 
 ## Configuration details by section
 
@@ -366,7 +362,25 @@ excluded_relationships:
     Each `excluded_relationships` entry is defined by the `fk_table` and `ref_table` attributes.
 <!-- prettier-ignore-end -->
 
-## Sharing Target
+## Connection String Templates (v2.1.0)
+
+All connection string URLs now support templating. This allows you to access environment variables in the connection string URLs. For example, you can now use the following connection string URL for a Postgres database:
+
+```yaml
+snapshot:
+  src_url: postgres://{{`DB_USER` | env}}:{{`DB_PASSWORD` | env}}@localhost:5432/{{`DB_NAME` | env}}
+```
+
+In this example we are indicating we want the username, password, and database name to be read from the `DB_USER`, `DB_PASSWORD`, and `DB_NAME` environment variables, respectively.
+
+Templates conform to Go Templates syntax. Specify the `env` function to read the value from the environment.
+
+```yaml
+{{`ENV_VAR` | env}} # substitute the value of the ENV_VAR environment variable
+{{`CONSTANT`}} # substitute the supplied `CONSTANT` value
+```
+
+## Sharing Target (v2.3.0)
 
 Added in v2.3.0, a sharing target allows you to specify a target definition that can be used to access shared snapshots on a cloud storage provider.
 
@@ -412,3 +426,39 @@ The `storage_profile_name` attribute specifies the name of a storage profile tha
 <!-- prettier-ignore-end -->
 
 The example above shows the configuration for the `s3-dbsnapper-sanitized` storage profile. This storage profile specifies the connection details for the cloud storage provider where the shared snapshots are stored. It also specifies the `bucket` and `prefix` where the shared snapshots are stored.
+
+## Overrides (v2.6.0)
+
+Added in v2.6.0, the `override` section allows you to specify a custom sanitization query and destination database for a target. This is useful when you want to override the default sanitization query and destination database for a target.
+
+<!-- prettier-ignore-start -->
+```yaml title="Override configuration settings" linenums="1"
+# New for 2.6.0: Overrides - Sanitization Query and Destination Database     
+override:
+  san_query: RFJPUCBUQUJMRSBJRiBFWElTVFMgZGJzbmFwcGVyX2luZm87CkNSRUFURSBUQUJMRSBkYnNuYXBwZXJfaW5mbyAoY3JlYXRlZF9hdCB0aW1lc3RhbXAsIHRhZ3MgdGV4dCBbXSk7CklOU0VSVCBJTlRPIGRic25hcHBlcl9pbmZvIChjcmVhdGVkX2F0LCB0YWdzKQpWQUxVRVMgKE5PVygpLCAne3F1ZXJ5OnNhbl9xdWVyeV9vdmVycmlkZSwgbG9jYXRpb246Y2xvdWR9Jyk7
+  dst_db_url: postgres://postgres:postgres@localhost:15432/dbsnapper_dst_db_override
+```
+<!-- prettier-ignore-end -->
+
+### Sanitization Query Override
+
+The `san_query` attribute allows you to specify a custom sanitization query for a target. This query will be used instead of the default sanitization query specified in the `sanitize` section of the target.
+
+The `san_query` attribute must be base64 encoded.
+
+### Destination Database Override
+
+The `dst_db_url` attribute allows you to provide a destination database connection string that will be used for any operation that requires a destination database. This is useful when you want to override the destination database location configured in the target definition.
+
+## Defaults (v2.7.0)
+
+<!-- prettier-ignore-start -->
+```yaml title="Default configuration settings" linenums="1"
+
+    # New for 2.7.0: Default Destination Database for Team Sharing
+    defaults:
+      shared_target_dst_db_url: postgres://postgres:postgres@localhost:15432/dbsnapper_dst_db_default
+```
+<!-- prettier-ignore-end -->
+
+Similar to the `override` section, the `defaults` section allows you to specify a default destination database for shared team snapshots. Snapshots shared with a team do not use the destination database specified in the target definition. Instead, each team member must set a default shared target destination database in their configuration file.
