@@ -115,6 +115,7 @@ nav:
       - cmd/dbsnapper_targets.md
       - cmd/dbsnapper_target.md
   - Articles:
+      - articles/dbsnapper-github-actions-amazon-ecs.md
       - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
       - articles/backup-amazon-rds-with-dbsnapper.md
   - Release Notes: release-notes.md
