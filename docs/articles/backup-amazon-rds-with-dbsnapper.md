@@ -22,6 +22,28 @@ Here's our target definition on the DBSnapper Cloud. We've simply provided the c
 
 ## TL;DR Backup in Four Commands
 
+<!-- prettier-ignore-start -->
+!!! tip "Update: You can now do this in a SINGLE command"
+
+    (copied from the [DBSnapper Quick Start Guide](/docs/quick-start.md))
+
+    Just use the latest version of the DBSnapper container image, provide the minimum required `DBSNAPPER_SECRET_KEY` and `DBSNAPPER_AUTHTOKEN` environment variables necessary to run DBSnapper in Cloud mode, without a configuration file.
+
+    ```sh
+    docker run -v /var/run/docker.sock:/var/run/docker.sock -e DBSNAPPER_SECRET_KEY=XXX -e DBSNAPPER_AUTHTOKEN=YYY --rm --network dbsnapper --pull always ghcr.io/dbsnapper/dbsnapper:latest dbsnapper build dvdrental-cloud
+    ```
+
+    This command does the following:
+
+    1. It pulls the latest version of the [DBSnapper Agent container image](https://ghcr.io/dbsnapper/dbsnapper) from the GitHub Container Registry,
+    2. It mounts the host Docker socket. This is optional, but necessary for ephemeral sanitization operations requiring Docker-in-Docker (DinD) support.
+    3. Passes the `DBSNAPPER_SECRET_KEY` and `DBSNAPPER_AUTHTOKEN` environment variables to the container
+    4. Runs the `dbsnapper build dvdrental-cloud` command to build a snapshot of the `dvdrental-cloud` target defined in the DBSnapper Cloud.
+    5. If a storage profile is defined in the DBSnapper Cloud, the snapshot will be uploaded to the configured storage provider.
+
+
+<!-- prettier-ignore-end -->
+
 ```bash title="Amazon RDS Backup in four commands" linenums="1"
 # Launch interactive DBSnapper Container from EC2 instance
 docker run -it ghcr.io/dbsnapper/dbsnapper:latest /bin/bash

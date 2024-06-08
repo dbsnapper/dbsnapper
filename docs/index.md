@@ -24,6 +24,7 @@ In addition to the main features of Subsetting, Snapshotting, Sanitization, and 
 - **SSO**: Single Sign-On (SSO) support enables seamless authentication and snapshot sharing with your team members.
 - **Github Actions Compatible**: DBSnapper works well with Github Actions allowing you to integrate database snapshotting into your CI/CD pipelines.
 - **Bring Your Own Storage**: Use your preferred cloud storage provider (i.e. Amazon S3 / Cloudflare R2) for storing snapshots securely in your private infrastructure.
+- **Presigned Upload and Downloads from Cloud Storage**: Securely upload and download snapshots from your cloud storage provider using presigned URLs.
 - **Database Support**: DBSnapper supports Postgresql and MySQL databases with more database support coming soon.
 - **Ephemeral Sanitization**: Run sanitization operations without the need to setup a temporary sanitization database or schema.
 - **Templating Engine**: Use the built-in templating engine to allow sensitive data to be passed as environment variables.

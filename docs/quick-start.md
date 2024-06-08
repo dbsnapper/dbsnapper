@@ -3,7 +3,23 @@ title: Quick start
 description: How to quickly get started with the DBSnapper Agent and use it to build and load a database snapshot.
 ---
 
-# Quick Start
+## Really Quick Start (update)
+
+Just use the latest version of the DBSnapper container image, provide the minimum required `DBSNAPPER_SECRET_KEY` and `DBSNAPPER_AUTHTOKEN` environment variables necessary to run DBSnapper in Cloud mode, without a configuration file.
+
+```sh
+docker run -v /var/run/docker.sock:/var/run/docker.sock -e DBSNAPPER_SECRET_KEY=XXX -e DBSNAPPER_AUTHTOKEN=YYY --rm --network dbsnapper --pull always ghcr.io/dbsnapper/dbsnapper:latest dbsnapper build dvdrental-cloud
+```
+
+This command does the following:
+
+1. It pulls the latest version of the [DBSnapper Agent container image](https://ghcr.io/dbsnapper/dbsnapper) from the GitHub Container Registry,
+2. It mounts the host Docker socket. This is optional, but necessary for ephemeral sanitization operations requiring Docker-in-Docker (DinD) support.
+3. Passes the `DBSNAPPER_SECRET_KEY` and `DBSNAPPER_AUTHTOKEN` environment variables to the container
+4. Runs the `dbsnapper build dvdrental-cloud` command to build a snapshot of the `dvdrental-cloud` target defined in the DBSnapper Cloud.
+5. If a storage profile is defined in the DBSnapper Cloud, the snapshot will be uploaded to the configured storage provider.
+
+## Quick Start
 
 In this example we will create and restore a database snapshot.
 
@@ -27,7 +43,7 @@ dbsnapper config init
     ```
 <!-- prettier-ignore-end -->
 
-## Check the configuration and environment
+### Check the configuration and environment
 
 Next, we can check our configuration and required dependencies. This runs some checks to verify the configuration file is valid and reports on the database tools found in the path as well as Docker engine and database image availability.
 
@@ -66,7 +82,7 @@ dbsnapper config check
     ```
 <!-- prettier-ignore-end -->
 
-## Add target definitions
+### Add target definitions
 
 Add one or more databse `targets` to configuration file. Here we define an `app` target with a `src_url` specifying the source database and a `dst_url` specifying the destination database
 
@@ -88,7 +104,7 @@ Add one or more databse `targets` to configuration file. Here we define an `app`
     A database specified on the `dst_url` will be DROPPED and RECREATED when the `load` command is used
 <!-- prettier-ignore-end -->
 
-## List targets
+### List targets
 
 Now that we have a target defined, we can list all targets with:
 
@@ -104,7 +120,7 @@ This command will also check the size and connectivity status for each target de
   <small>DBSnapper Agent UI - All Targets</small>
 </p>
 
-## Build a snapshot
+### Build a snapshot
 
 Now we're ready to create our first snapshot of the `app` target which can be done with the `build` command:
 
@@ -114,7 +130,7 @@ dbsnapper build app
 
 This will connect to the database using the native dump utility and will create a dump of all data in the database.
 
-## List snapshots for a target
+### List snapshots for a target
 
 Once you've successfully built a snapshot, you can list all the sanpshots for a target with the following command (note the singular `target` command):
 
@@ -129,7 +145,7 @@ dbsnapper target app
 
 </p>
 
-## Load a snapshot
+### Load a snapshot
 
 If a `dst_url` is defined in the target definition, you can load a snapshot to the destination using the index on the snapshot list.
 
