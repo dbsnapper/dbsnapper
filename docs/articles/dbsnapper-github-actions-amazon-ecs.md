@@ -192,7 +192,7 @@ runner-ecs:
 
 - [`actions/checkout@v4`](https://github.com/actions/checkout/tree/releases/v4.0.0) - This action checks out the repository so that we can access the ECS task definition file.
 - [`aws-actions/configure-aws-credentials@v4`](https://github.com/aws-actions/configure-aws-credentials/tree/v4) - This action configures the AWS credentials for the actions to use. It uses the OIDC connector to authenticate with AWS.
-- [`restackio/update-json-file-action@main`](https://github.com/restackio/update-json-file-action/tree/main/) - This action updates the ECS task definition JSON file with the container command that provides the `--url` of the GitHub organization and the `--token` registration token to register the self-hosted runner. The main branch includes an updated version of node used in the action. We use this instead of [`amazon-ecs-render-task-definition`](https://github.com/aws-actions/amazon-ecs-render-task-definition/tree/v1) because it improperly parses the provided command string, causing issues with the runner registration [per this pull request](https://github.com/aws-actions/amazon-ecs-render-task-definition/pull/290).
+- [`restackio/update-json-file-action@main`](https://github.com/restackio/update-json-file-action/tree/main/) - This action updates the ECS task definition JSON file with the container command that provides the `--url` of the GitHub organization and the `--token` registration token to register the self-hosted runner. The main branch includes an updated version of node used in the action. We use this instead of [`amazon-ecs-render-task-definition`](https://github.com/aws-actions/amazon-ecs-render-task-definition/tree/v1) because it improperly parses the provided command string, causing issues with the runner registration [per this issue comment](https://github.com/aws-actions/amazon-ecs-render-task-definition/issues/252#issuecomment-1687259661).
 
 ### Description
 
@@ -227,7 +227,7 @@ Finally, on line 39, we use the `aws ecs update-service` command (from the aws-c
 
 ### Task Definition File
 
-To launch an ECS task via github actions and the `aws-actions/amazon-ecs-deploy-task-definition@v1` action, we need to provide a task definition file. This file is a JSON file that defines the properties of the task that we want to run. We can create this file using the ECS task definition wizard in the AWS console and then copy the task definition JSON to a file in our repository. In this example, we're using the `ECS_TASK_DEFINITION` environment variable to specify the path to the task definition file.
+To launch an ECS task via github actions and the `aws-actions/amazon-ecs-deploy-task-definition@v1` action, we need to provide a task definition file. This file is a JSON file that defines the properties of the task that we want to run. We can create this file using the ECS task definition wizard in the AWS console and then copy the task definition JSON to a file in our repository, or we can just use the sample proided below modified for your environment. In our workflow example, we're using the `ECS_TASK_DEFINITION` environment variable to specify the path to the task definition file.
 
 ```json title="ecs_task_definition_github_runner.json" linenums="1"
 {
@@ -297,7 +297,7 @@ dbsnapper:
 - `secrets.DBSNAPPER_AUTHTOKEN` - Your DBSnapper Cloud Auth Token used to authenticate to the DBSnapper API.
 - [`DBSnapper Debian Package`](https://github.com/dbsnapper/dbsnapper/releases/latest) - The latest release of the DBSnapper Agent. Download the `.deb` package that matches your architecture. We use the `dbsnapper_linux_x86_64.deb` package in this example.
 
-### Discussion
+### Description
 
 The steps prior to this one were necessary to setup a self-hosted runner in our private infrastructure with access to the workloads in our network. In this step, we're finally able to run the DBSnapper Agent commands to snapshot and sanitize the database.
 
