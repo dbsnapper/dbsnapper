@@ -5,7 +5,7 @@ description: Learn how to use DBSnapper with GitHub Actions self-hosted runners 
 
 ## Overview
 
-**Note:** This is Part 1 of a multi-part series on using DBSnapper with GitHub Actions and Amazon ECS. [Go here to read **Part 2 - A Simplified Approach with Third-Party Runners**](dbsnapper-github-actions-ecs-simplified.md)
+**Note:** This is Part 1 of a multi-part series on using DBSnapper with GitHub Actions and Amazon ECS. [Go here to read **Part 2 - A Simplified Approach with Third-Party Runners**](dbsnapper-github-actions-ecs-simplified.md) which includes the results of the workflow execution.
 
 <!-- prettier-ignore-start -->
 !!! note "Update: New DBSnapper GitHub Action"
@@ -296,6 +296,12 @@ dbsnapper:
       uses: dbsnapper/install-dbsnapper-agent-action@v1
       with:
         version: latest
+    - name: Install Database Utilities
+      # Get the latest version of the postgres client
+      # https://www.postgresql.org/download/linux/ubuntu/
+      run: |
+        sudo apt-get update && sudo apt-get install -y postgresql-common && sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y && sudo apt-get update && sudo apt-get install -y postgresql-client-16
+
     - name: Run DBSnapper build command
       run: dbsnapper build dvdrental-prod
 ```
@@ -340,9 +346,14 @@ Starting on line 8 we use the new [DBSnapper GitHub Action](https://github.com/m
     ...doesn't support using docker from a self-hosted runner at this time. See the following issues for more information:
 
     - https://github.com/actions/runner/issues/406⁠
-    - https://github.com/actions/runner/issues/367⁠
+    - https://github.com/actions/runner/issues/367⁠    
 
-    
+<!-- prettier-ignore-end -->
+
+<!-- prettier-ignore-start -->
+!!! note "Database Utilities Needed"
+
+    When using the [DBSnapper container image](https://github.com/dbsnapper/dbsnapper/pkgs/container/dbsnapper), the Agent and database utilities are already included in the image. Since GitHub Actions doesn't support Docker containers, we need to install the tools by hand. In this case, we install the PostgreSQL client on line 17 to support the snapshot of our Postgresql RDS database. If you are using a different database, you will need to install the appropriate client.
 
 <!-- prettier-ignore-end -->
 
@@ -486,6 +497,12 @@ jobs:
         uses: dbsnapper/install-dbsnapper-agent-action@v1
         with:
           version: latest
+      - name: Install Database Utilities
+        # Get the latest version of the postgres client
+        # https://www.postgresql.org/download/linux/ubuntu/
+        run: |
+          sudo apt-get update && sudo apt-get install -y postgresql-common && sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y && sudo apt-get update && sudo apt-get install -y postgresql-client-16
+
       - name: Run DBSnapper build command
         run: dbsnapper build dvdrental-prod
 

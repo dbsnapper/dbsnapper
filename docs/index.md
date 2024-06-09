@@ -18,7 +18,7 @@ description: DBSnapper simplifies the process of creating de-identified database
     
 <!-- prettier-ignore-end -->
 
-<p class="img-box"">
+<p class="img-box">
   <img src="/static/cloud/targets-with-shared-targets.jpg" alt="DBSnapper Cloud - All Targets Page" width="80%">
   <br/>
   <small>DBSnapper Cloud Targets page including Shared Team Targets.</small>
