@@ -9,6 +9,15 @@ description: DBSnapper simplifies the process of creating de-identified database
 
 # Welcome to DBSnapper
 
+<!-- prettier-ignore-start -->
+!!! note "Latest News"
+
+    - We've release new articles on using DBSnapper with GitHub Actions and Amazon ECS. Check out [Part 1](articles/dbsnapper-github-actions-amazon-ecs.md) and the simplified approach in [Part 2](articles/dbsnapper-github-actions-ecs-simplified.md) for more information. 
+    - We've released a GitHub Action to the GitHub Marketplace. The [Install DBSnapper Agent GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) simplifies downloading the DBSnapper Agent to the runner.
+    - [Version 2.7.0 has been released](release-notes.md#v270---team-sharing-for-sso-groups) which supports SSO and Shared Team Targets.
+    
+<!-- prettier-ignore-end -->
+
 <p class="img-box"">
   <img src="/static/cloud/targets-with-shared-targets.jpg" alt="DBSnapper Cloud - All Targets Page" width="80%">
   <br/>

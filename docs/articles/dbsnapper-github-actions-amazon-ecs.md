@@ -1,9 +1,11 @@
 ---
-title: Using DBSnapper with GitHub Actions and Amazon ECS
+title: "Part 1: Using DBSnapper with GitHub Actions and Amazon ECS"
 description: Learn how to use DBSnapper with GitHub Actions self-hosted runners and AWS ECS Fargate to snapshot RDS databases.
 ---
 
 ## Overview
+
+**Note:** This is Part 1 of a multi-part series on using DBSnapper with GitHub Actions and Amazon ECS. [Go here to read **Part 2 - A Simplified Approach with Third-Party Runners**](dbsnapper-github-actions-ecs-simplified.md)
 
 <!-- prettier-ignore-start -->
 !!! note "Update: New DBSnapper GitHub Action"
@@ -31,7 +33,7 @@ The motivation behind this article is to describe an automated way to snapshot a
 
 We will need the following GitHub Secrets configured for the GitHub Action:
 
-- `FG_PAT`' - [Fine-Grained GitHub Personal Access Token (PAT)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with `repo:actions:(read/write)` and `org:self-hosted-runners:(read/write)` scopes.
+- `FG_PAT` - [Fine-Grained GitHub Personal Access Token (PAT)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with `repo:actions:(read/write)` and `org:self-hosted-runners:(read/write)` scopes.
 - `DBSNAPPER_AUTHTOKEN` - Your DBSnapper Cloud Auth Token used to authenticate to the DBSnapper API.
 - `DBSNAPPER_SECRET_KEY` - Your DBSnapper config secret key used to encrypt certain configuration values.
 

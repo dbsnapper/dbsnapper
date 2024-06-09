@@ -1,9 +1,11 @@
 ---
-title: Updated - Using DBSnapper, GitHub Actions, and ECS - A Simplified Approach
+title: "Part 2: Using DBSnapper, GitHub Actions, and ECS - A Simplified Approach"
 description: Following on our previous article, we've simplified the process to use DBSnapper with GitHub Actions and ECS.
 ---
 
 ## Overview
+
+**Note:** This is Part 2 of a multi-part series on using DBSnapper with GitHub Actions and Amazon ECS. [Go here to read **Part 1**](dbsnapper-github-actions-amazon-ecs.md).
 
 <!-- prettier-ignore-start -->
 !!! note "Third Party GitHub Runners"
