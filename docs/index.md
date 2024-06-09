@@ -22,7 +22,7 @@ DBSnapper revolutionizes the way development teams handle database snapshotting,
 In addition to the main features of Subsetting, Snapshotting, Sanitization, and Sharing, DBSnapper offers a range of features that simplify database workload snapshotting and sharing. Here are some of the key features of DBSnapper:
 
 - **SSO**: Single Sign-On (SSO) support enables seamless authentication and snapshot sharing with your team members.
-- **Github Actions Compatible**: DBSnapper works well with Github Actions allowing you to integrate database snapshotting into your CI/CD pipelines.
+- **Github Actions Compatible**: DBSnapper works well with Github Actions allowing you to integrate database snapshotting into your CI/CD pipelines. A GitHub Action is available on the Marketplace that will [Install the DBSnapper Agent](https://github.com/marketplace/actions/install-dbsnapper-agent) on your Github runner.
 - **Bring Your Own Storage**: Use your preferred cloud storage provider (i.e. Amazon S3 / Cloudflare R2) for storing snapshots securely in your private infrastructure.
 - **Presigned Upload and Downloads from Cloud Storage**: Securely upload and download snapshots from your cloud storage provider using presigned URLs.
 - **Database Support**: DBSnapper supports Postgresql and MySQL databases with more database support coming soon.

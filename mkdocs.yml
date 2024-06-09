@@ -88,8 +88,8 @@ nav:
       - Introduction: share/introduction.md
   - DBSnapper Cloud:
       - Introduction: dbsnapper-cloud/introduction.md
-      - Targets:
-          - All Targets: dbsnapper-cloud/targets.md
+      - Targets: dbsnapper-cloud/targets.md
+      - Storage Profiles: dbsnapper-cloud/storage_profiles.md
 
   - Database Engines:
       - database-engines/introduction.md
