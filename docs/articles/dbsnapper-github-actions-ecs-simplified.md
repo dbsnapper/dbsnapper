@@ -12,7 +12,7 @@ description: Following on our previous article, we've simplified the process to 
 
 <!-- prettier-ignore-end -->
 
-The previous version of this article used the official GitHub Actions runner to run the DBSnapper Agent in an Amazon ECS Fargate Task. We've found that there are third-party runners that provide additional capabilities that the official runner doesn't yet support. We will present the simplified approach using the [myoung34 GitHub Runner](https://hub.docker.com/r/myoung34/github-runner) in this article. We will be brief in our explanation of the steps, as they are similar to the [previous article](dbsnapper-github-actions-amazon-ecs.md).
+The [previous version of this article](dbsnapper-github-actions-amazon-ecs.md) used the official GitHub Actions runner to run the DBSnapper Agent in an Amazon ECS Fargate Task. We've found that there are third-party runners that provide additional capabilities that the official runner doesn't yet support. We will present the simplified approach using the [myoung34 GitHub Runner](https://hub.docker.com/r/myoung34/github-runner) in this article. We will be brief in our explanation of the steps, as they are similar to the [previous article](dbsnapper-github-actions-amazon-ecs.md).
 
 ### Using the myoung34 GitHub Runner
 
