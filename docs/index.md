@@ -7,13 +7,13 @@ description: DBSnapper simplifies the process of creating de-identified database
   <img src="/static/dbs-docs.jpg" alt="DBSnapper" width="90%">
 </p>
 
-<p align="center">
-  <img src="/static/tui/dbs-ui-all-targets.png" alt="DBSnapper Agent User Interface" width="80%">
-  <br/>
-  <small>DBSnapper Agent User Interface - All Targets</small>
-</p>
+# Welcome to DBSnapper
 
-# Welcome
+<p align="center">
+  <img src="/static/cloud/targets-with-shared-targets.jpg" alt="DBSnapper Cloud - All Targets Page" width="70%">
+  <br/>
+  <small>DBSnapper Cloud Targets page including Shared Team Targets.</small>
+</p>
 
 DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to the traditional, often cumbersome methods of creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
 
