@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="DBSnapper Logo" src="https://docs.dbsnapper.com/static/dbs-v2-launch-bg-wht.png?v=3&s=200" height="240" />
+  <img alt="DBSnapper Logo" src="https://docs.dbsnapper.com/static/dbs-docs.jpg?v=3&s=200" height="300" />
   <h3 align="center">DBSnapper</h3>
   <p align="center">Subset, Snapshot, Sanitize, Share</p>
 </p>
