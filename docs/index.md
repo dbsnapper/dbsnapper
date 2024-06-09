@@ -22,7 +22,7 @@ DBSnapper revolutionizes the way development teams handle database snapshotting,
 In addition to the main features of Subsetting, Snapshotting, Sanitization, and Sharing, DBSnapper offers a range of features that simplify database workload snapshotting and sharing. Here are some of the key features of DBSnapper:
 
 - **SSO**: Single Sign-On (SSO) support enables seamless authentication and snapshot sharing with your team members.
-- **Github Actions Compatible**: DBSnapper works well with Github Actions allowing you to integrate database snapshotting into your CI/CD pipelines. A GitHub Action is available on the Marketplace that will [Install the DBSnapper Agent](https://github.com/marketplace/actions/install-dbsnapper-agent) on your Github runner.
+- **GitHub Actions Compatible**: DBSnapper works well with GitHub Actions allowing you to integrate database snapshotting into your CI/CD pipelines. A GitHub Action is available on the Marketplace that will [Install the DBSnapper Agent](https://github.com/marketplace/actions/install-dbsnapper-agent) on your GitHub runner.
 - **Bring Your Own Storage**: Use your preferred cloud storage provider (i.e. Amazon S3 / Cloudflare R2) for storing snapshots securely in your private infrastructure.
 - **Presigned Upload and Downloads from Cloud Storage**: Securely upload and download snapshots from your cloud storage provider using presigned URLs.
 - **Database Support**: DBSnapper supports Postgresql and MySQL databases with more database support coming soon.
@@ -52,7 +52,7 @@ DBSnapper's snapshotting capability is not just about capturing data; it's a str
 
 - **Real-world Test Cases**: Utilizing de-identified data snapshots, you can create more effective and realistic test cases. This helps in identifying potential issues in a more accurate production-like environment.
 
-- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be easily [intergrated into CI/CD pipelines such as Github Actions](articles/dbsnapper-github-actions-amazon-ecs.md), automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
+- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be easily [intergrated into CI/CD pipelines such as GitHub Actions](articles/dbsnapper-github-actions-amazon-ecs.md), automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
 
 - **Training AI Models**: For AI and machine learning initiatives, having access to diverse, real-world data sets is crucial. DBSnapper's ability to provide de-identified snapshots of real operational data can significantly enhance the training process of AI models, leading to more accurate models.
 

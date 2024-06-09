@@ -8,7 +8,7 @@ description: Learn how to use DBSnapper with GitHub Actions self-hosted runners 
 <!-- prettier-ignore-start -->
 !!! note "Update: New DBSnapper GitHub Action"
 
-    We've updated this article to use our new [Install DBSnapper Agent Github Action](https://github.com/marketplace/actions/install-dbsnapper-agent) that makes it simple to install the DBSnapper Agent onto a Github Actions runner. These changes can be found in [Step 4](#step-4---execute-the-dbsnapper-agent-commands).
+    We've updated this article to use our new [Install DBSnapper Agent GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) that makes it simple to install the DBSnapper Agent onto a GitHub Actions runner. These changes can be found in [Step 4](#step-4---execute-the-dbsnapper-agent-commands).
 
 <!-- prettier-ignore-end -->
 
@@ -25,9 +25,9 @@ The motivation behind this article is to describe an automated way to snapshot a
 ### Other requirements
 
 - We use GitHub's OIDC Provider to provide AWS credentials needed for the actions. We used the instructions given in the [aws-actions/configure-aws-credentials OIDC Section](https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file#oidc) to setup the federation between GitHub and AWS, using the [CloudFormation Template](https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file#configuring-iam-to-trust-github) to speed things up.
-- We use the [Github official `actions-runner` container](https://github.com/actions/runner/pkgs/container/actions-runner) for our self-hosted runner.
+- We use the [GitHub official `actions-runner` container](https://github.com/actions/runner/pkgs/container/actions-runner) for our self-hosted runner.
 
-### Github Secrets:
+### GitHub Secrets:
 
 We will need the following GitHub Secrets configured for the GitHub Action:
 
@@ -37,7 +37,7 @@ We will need the following GitHub Secrets configured for the GitHub Action:
 
 ### Overview of the steps
 
-1. Setup the Github Actions workflow basics.
+1. Setup the GitHub Actions workflow basics.
 2. Get a Registration token to register a self-hosted runner.
 3. Launch an Amazon ECS Fargate Task to run the self-hosted runner.
 4. Execute the DBSnapper Agent snapshot and sanitization commands.
@@ -58,8 +58,8 @@ permissions:
 
 # Some necessary environment variables
 env:
-  ORGANIZATION: dbsnapper # Your Github Organization
-  ORGANIZATION_URL: https://github.com/dbsnapper # Your Github Organization URL
+  ORGANIZATION: dbsnapper # Your GitHub Organization
+  ORGANIZATION_URL: https://github.com/dbsnapper # Your GitHub Organization URL
   AWS_REGION: us-east-1
   AWS_IAM_ROLE: arn:aws:iam::<acct_id>:role/<name of role> # From OIDC Federation
   ECS_CLUSTER: dbsnapper
@@ -289,7 +289,7 @@ dbsnapper:
     DBSNAPPER_SECRET_KEY: ${{ secrets.DBSNAPPER_SECRET_KEY }}
     DBSNAPPER_AUTHTOKEN: ${{ secrets.DBSNAPPER_AUTHTOKEN }}
   steps:
-    # Updated to use the new DBSnapper Github Action
+    # Updated to use the new DBSnapper GitHub Action
     - name: Install DBSnapper Agent
       uses: dbsnapper/install-dbsnapper-agent-action@v1
       with:
@@ -327,7 +327,7 @@ We set our environment variables starting on line 4. In this example, we set the
 
 #### Install and Run DBSnapper
 
-Starting on line 8 we use the new [DBSnapper Github Action](https://github.com/marketplace/actions/install-dbsnapper-agent) to install the latest version of the DBSnapper Agent. This action takes into account the operating system and architecture of the runner and installs the appropriate version of the DBSnapper Agent.
+Starting on line 8 we use the new [DBSnapper GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) to install the latest version of the DBSnapper Agent. This action takes into account the operating system and architecture of the runner and installs the appropriate version of the DBSnapper Agent.
 
 ~~Starting on line 8, we run commands to update our apt repository, install `curl`, and use `curl` to download the latest release of the DBSnapper Agent. We then use `dpkg` to install the `.deb` package.~~
 
@@ -389,7 +389,7 @@ In this article, we've shown how to use GitHub Actions to trigger a snapshot and
 
 ## Full Workflow
 
-Here is the full Github Actions workflow that we've described in this article. Be sure to replace any placeholders with your own values.
+Here is the full GitHub Actions workflow that we've described in this article. Be sure to replace any placeholders with your own values.
 
 ```yaml title="DBSnapper Build Snapshot - Full Workflow" linenums="1"
 name: "DBSnapper Build Snapshot"
@@ -404,8 +404,8 @@ permissions:
 
 # Some necessary environment variables
 env:
-  ORGANIZATION: dbsnapper # Your Github Organization
-  ORGANIZATION_URL: https://github.com/dbsnapper # Your Github Organization URL
+  ORGANIZATION: dbsnapper # Your GitHub Organization
+  ORGANIZATION_URL: https://github.com/dbsnapper # Your GitHub Organization URL
   AWS_REGION: us-east-1
   AWS_IAM_ROLE: arn:aws:iam::<acct_id>:role/<name of role> # From OIDC Federation
   ECS_CLUSTER: dbsnapper
@@ -479,7 +479,7 @@ jobs:
       DBSNAPPER_SECRET_KEY: ${{ secrets.DBSNAPPER_SECRET_KEY }}
       DBSNAPPER_AUTHTOKEN: ${{ secrets.DBSNAPPER_AUTHTOKEN }}
     steps:
-      # Updated to use the new DBSnapper Github Action
+      # Updated to use the new DBSnapper GitHub Action
       - name: Install DBSnapper Agent
         uses: dbsnapper/install-dbsnapper-agent-action@v1
         with:
