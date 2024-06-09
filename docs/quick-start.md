@@ -114,7 +114,7 @@ dbsnapper targets
 
 This command will also check the size and connectivity status for each target defined in the configuration file.
 
-<p align="center">
+<p class="img-box">
   <img src="/static/tui/dbs-ui-all-targets.png" alt="DBSnapper Agent UI - All Targets" width="90%">
   <br/>
   <small>DBSnapper Agent UI - All Targets</small>
@@ -138,11 +138,10 @@ Once you've successfully built a snapshot, you can list all the sanpshots for a 
 dbsnapper target app
 ```
 
-<p align="center">
-  <img src="/static/tui/dbs-ui-target-snapshots.png" alt="DBSnapper Agent UI - Target Snapshots" width="90%">
+<p class="img-box crop">
+  <img src="/static/tui/dbs-ui-target-snapshots.png" alt="DBSnapper Agent UI - Target Snapshots">
     <br/>
   <small>DBSnapper Agent UI - Target Snapshots Example</small>
-
 </p>
 
 ### Load a snapshot

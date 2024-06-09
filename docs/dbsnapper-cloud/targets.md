@@ -7,20 +7,20 @@ description: The Targets page allows you to define and manage the target setting
 
 A **Target** is a configuration that defines the settings for creating, storing, and sharing snapshots for a single database workload. The Targets page displays all the targets you've defined along with any Shared Team Targets that you have access to. The Shared Team Targets require your organization to be using SSO as it leverages the organization's SSO groups to manage access to the shared targets.
 
-<p align="center">
+<p class="img-box">
   <img src="/static/cloud/targets-with-shared-targets.jpg" alt="DBSnapper Cloud - All Targets" width="90%">
   <br/>
-  <small>DBSnapper Cloud Targets page including Shared Team Targets.</small>
+  <small>DBSnapper Cloud: Targets page including Shared Team Targets.</small>
 </p>
 
 ## Create / Edit Target
 
 To create a new target, click the `Add Target` button in the top right of the page. That will display a form similar to the Edit Targets page below where you can define the settings for the target.
 
-<p align="center">
+<p class="img-box">
   <img src="/static/cloud/targets-edit-target.jpg" alt="DBSnapper Cloud - Edit Target" width="90%">
   <br/>
-  <small>DBSnapper Edit Targets page.</small>
+  <small>DBSnapper Cloud: Edit Targets page.</small>
 </p>
 
 On this page, you can define the following settings for the target:

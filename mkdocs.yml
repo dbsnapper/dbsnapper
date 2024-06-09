@@ -115,6 +115,7 @@ nav:
       - cmd/dbsnapper_targets.md
       - cmd/dbsnapper_target.md
   - Articles:
+      - articles/dbsnapper-github-actions-ecs-simplified.md
       - articles/dbsnapper-github-actions-amazon-ecs.md
       - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
       - articles/backup-amazon-rds-with-dbsnapper.md
@@ -136,6 +137,7 @@ markdown_extensions:
       auto_title: false
   - pymdownx.inlinehilite
   - pymdownx.details
+  - pymdownx.tilde
   - pymdownx.superfences
   - pymdownx.tasklist:
       custom_checkbox: true

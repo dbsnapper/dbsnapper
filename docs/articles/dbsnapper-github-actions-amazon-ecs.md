@@ -1,11 +1,18 @@
 ---
-title: Use DBSnapper with GitHub Actions and Amazon ECS to Snapshot Amazon RDS Databases
-description: In this article we describe how to setup a GitHub Action to snapshot an Amazon RDS database using DBSnapper and Amazon ECS Fargate.
+title: Using DBSnapper with GitHub Actions and Amazon ECS
+description: Learn how to use DBSnapper with GitHub Actions self-hosted runners and AWS ECS Fargate to snapshot RDS databases.
 ---
 
 ## Overview
 
-The motivation behind this article is to provide an automated way to snapshot database workloads running on private infrastructure. In this article, we'll use GitHub Actions to trigger a snapshot and sanitization of an Amazon RDS database using DBSnapper and Amazon ECS Fargate.
+<!-- prettier-ignore-start -->
+!!! note "Update: New DBSnapper GitHub Action"
+
+    We've updated this article to use our new [Install DBSnapper Agent Github Action](https://github.com/marketplace/actions/install-dbsnapper-agent) that makes it simple to install the DBSnapper Agent onto a Github Actions runner. These changes can be found in [Step 4](#step-4---execute-the-dbsnapper-agent-commands).
+
+<!-- prettier-ignore-end -->
+
+The motivation behind this article is to describe an automated way to snapshot and sanitize database workloads running on private infrastructure. In this article, we'll use GitHub Actions and self-hosted runners to trigger a snapshot and sanitization of an Amazon RDS database using DBSnapper and Amazon ECS Fargate.
 
 ### Services and components used
 
@@ -282,11 +289,11 @@ dbsnapper:
     DBSNAPPER_SECRET_KEY: ${{ secrets.DBSNAPPER_SECRET_KEY }}
     DBSNAPPER_AUTHTOKEN: ${{ secrets.DBSNAPPER_AUTHTOKEN }}
   steps:
-    - name: Download and install DBSnapper release
-      run: |
-        sudo apt-get update && sudo apt-get install -y curl && \
-        curl -L -o dbsnapper.deb https://github.com/dbsnapper/dbsnapper/releases/download/v2.7.0/dbsnapper_linux_x86_64.deb && \
-        sudo dpkg -i dbsnapper.deb
+    # Updated to use the new DBSnapper Github Action
+    - name: Install DBSnapper Agent
+      uses: dbsnapper/install-dbsnapper-agent-action@v1
+      with:
+        version: latest
     - name: Run DBSnapper build command
       run: dbsnapper build dvdrental-prod
 ```
@@ -295,7 +302,7 @@ dbsnapper:
 
 - `secrets.DBSNAPPER_SECRET_KEY` - Your DBSnapper config secret key used to encrypt certain configuration values.
 - `secrets.DBSNAPPER_AUTHTOKEN` - Your DBSnapper Cloud Auth Token used to authenticate to the DBSnapper API.
-- [`DBSnapper Debian Package`](https://github.com/dbsnapper/dbsnapper/releases/latest) - The latest release of the DBSnapper Agent. Download the `.deb` package that matches your architecture. We use the `dbsnapper_linux_x86_64.deb` package in this example.
+- ~~[`DBSnapper Debian Package`](https://github.com/dbsnapper/dbsnapper/releases/latest) - The latest release of the DBSnapper Agent. Download the `.deb` package that matches your architecture. We use the `dbsnapper_linux_x86_64.deb` package in this example.~~
 
 ### Description
 
@@ -311,7 +318,7 @@ We set our environment variables starting on line 4. In this example, we set the
 
 <!-- prettier-ignore-start -->
 !!! note "DBSnapper Configuration via Environment Variables"
-    DBSnapper can be configured exclusively through environment variables if you don't want to rely on a configuration file. All the configuration options can be represented as environment variables through a specific naming convention involving prefixing the environment variable with `DBSNAPPER` and replacing periods with two underscores `__`. Some examples from the [DBSnapper Configuration Documentation](/docs/configuration.md) include:
+    DBSnapper can be configured exclusively through environment variables if you don't want to rely on a configuration file. All the configuration options can be represented as environment variables through a specific naming convention involving prefixing the environment variable with `DBSNAPPER` and replacing periods with two underscores `__`. Some examples from the [DBSnapper Configuration Documentation](../configuration.md) include:
 
     - `docker.images.postgres` -> `DBSNAPPER_DOCKER__IMAGES__POSTGRES: postgres:latest` # Sets the docker image to use for the postgres containers
     - `defaults.shared_target_dst_db_url` -> `DBSNAPPER_DEFAULTS__SHARED_TARGET_DST_DB_URL: <connstring>` # Sets the default destination database URL for shared targets
@@ -320,11 +327,21 @@ We set our environment variables starting on line 4. In this example, we set the
 
 #### Install and Run DBSnapper
 
-Starting on line 8, we run commands to update our apt repository, install `curl`, and use `curl` to download the latest release of the DBSnapper Agent. We then use `dpkg` to install the `.deb` package.
+Starting on line 8 we use the new [DBSnapper Github Action](https://github.com/marketplace/actions/install-dbsnapper-agent) to install the latest version of the DBSnapper Agent. This action takes into account the operating system and architecture of the runner and installs the appropriate version of the DBSnapper Agent.
+
+~~Starting on line 8, we run commands to update our apt repository, install `curl`, and use `curl` to download the latest release of the DBSnapper Agent. We then use `dpkg` to install the `.deb` package.~~
 
 <!-- prettier-ignore-start -->
 !!! question "Why Not use the DBSnapper Docker Image?"
-    At this point, it would have been convenient to use the [DBSnapper Docker image](https://ghcr.io/dbsnapper/dbsnapper) to run the DBSnapper commands. Unfortunately the GitHub Actions runner does not have Docker installed by default, so we would need to install Docker in the runner before we could use the Docker image. To avoid the additional complexity we decided to download and install the `.deb` package instead.
+    At this point, it would have been convenient to use the [DBSnapper Docker image](https://ghcr.io/dbsnapper/dbsnapper) to run the DBSnapper commands. Unfortunately GitHub Actions... ~~runner does not have Docker installed by default, so we would need to install Docker in the runner before we could use the Docker image. To avoid the additional complexity we decided to download and install the `.deb` package instead.~~
+    
+    ...doesn't support using docker from a self-hosted runner at this time. See the following issues for more information:
+
+    - https://github.com/actions/runner/issues/406⁠
+    - https://github.com/actions/runner/issues/367⁠
+
+    
+
 <!-- prettier-ignore-end -->
 
 On line 13, we run the `dbsnapper build dvdrental-prod` command which will use the `DBSNAPPER_AUTHTOKEN` to authenticate to the DBSnapper Cloud, create a snapshot of the database specified in the `dvdrental-prod` target, and store it in the cloud storage specified in the target configuration. Once this is complete and no additional steps are needed, the task will be cleaned up in the next step.
@@ -462,11 +479,11 @@ jobs:
       DBSNAPPER_SECRET_KEY: ${{ secrets.DBSNAPPER_SECRET_KEY }}
       DBSNAPPER_AUTHTOKEN: ${{ secrets.DBSNAPPER_AUTHTOKEN }}
     steps:
-      - name: Download and install DBSnapper release
-        run: |
-          sudo apt-get update && sudo apt-get install -y curl && \
-          curl -L -o dbsnapper.deb https://github.com/dbsnapper/dbsnapper/releases/download/v2.7.0/dbsnapper_linux_x86_64.deb && \
-          sudo dpkg -i dbsnapper.deb
+      # Updated to use the new DBSnapper Github Action
+      - name: Install DBSnapper Agent
+        uses: dbsnapper/install-dbsnapper-agent-action@v1
+        with:
+          version: latest
       - name: Run DBSnapper build command
         run: dbsnapper build dvdrental-prod
 

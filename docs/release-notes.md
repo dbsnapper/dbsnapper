@@ -25,7 +25,7 @@ You can combine both the `-n` and `-e` flags to create a new snapshot set and us
 
 A Terminal User Interface (TUI) has been added to the DBSnapper Agent, making it even easier to use. See all your targets, drill down into their snapshots, and load them all from the new UI.
 
-<p align="center">
+<p class="img-box">
   <img src="/static/tui/dbs-ui-all-targets.png" alt="DBSnapper Agent User Interface" width="90%">
   <br/>
   <small>DBSnapper Agent User Interface - All Targets</small>

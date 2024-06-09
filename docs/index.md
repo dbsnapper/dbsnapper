@@ -9,8 +9,8 @@ description: DBSnapper simplifies the process of creating de-identified database
 
 # Welcome to DBSnapper
 
-<p align="center">
-  <img src="/static/cloud/targets-with-shared-targets.jpg" alt="DBSnapper Cloud - All Targets Page" width="70%">
+<p class="img-box"">
+  <img src="/static/cloud/targets-with-shared-targets.jpg" alt="DBSnapper Cloud - All Targets Page" width="80%">
   <br/>
   <small>DBSnapper Cloud Targets page including Shared Team Targets.</small>
 </p>
@@ -52,7 +52,7 @@ DBSnapper's snapshotting capability is not just about capturing data; it's a str
 
 - **Real-world Test Cases**: Utilizing de-identified data snapshots, you can create more effective and realistic test cases. This helps in identifying potential issues in a more accurate production-like environment.
 
-- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be easily [intergrated into CI/CD pipelines such as Github Actions](/docs/articles/dbsnapper-github-actions-amazon-ecs.md), automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
+- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be easily [intergrated into CI/CD pipelines such as Github Actions](articles/dbsnapper-github-actions-amazon-ecs.md), automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
 
 - **Training AI Models**: For AI and machine learning initiatives, having access to diverse, real-world data sets is crucial. DBSnapper's ability to provide de-identified snapshots of real operational data can significantly enhance the training process of AI models, leading to more accurate models.
 

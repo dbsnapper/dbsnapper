@@ -7,10 +7,10 @@ description: The Storage Profiles page allows you to define and manage the stora
 
 A **Storage Profile** specifies the access credentials and storage bucket / prefix for storing a snapshot in a cloud storage provider.
 
-<p align="center">
+<p class="img-box">
   <img src="/static/cloud/storage-profiles-index.png" alt="DBSnapper Cloud - All Storage Profiles" width="90%">
   <br/>
-  <small>DBSnapper Cloud Storage Profiles page.</small>
+  <small>DBSnapper Cloud: Storage Profiles page.</small>
 </p>
 
 The Storage Profiles page displays all the storage profiles you've defined. These storage profiles are used in the create/edit Targets page, where you can specify different storage profiles for the unsanitized and sanitized snapshots.
@@ -19,10 +19,10 @@ The Storage Profiles page displays all the storage profiles you've defined. Thes
 
 To create a new Storage Profile, click the `New Storage Profile` button in the top right of the page. That will display a form similar to the Edit Storage Profile page below where you can define the settings for the Storage Profile.
 
-<p align="center">
+<p class="img-box">
   <img src="/static/cloud/storage-profiles-edit.png" alt="DBSnapper Cloud - Edit Storage Profile" width="90%">
   <br/>
-  <small>DBSnapper Edit Storage Profile page.</small>
+  <small>DBSnapper Cloud: Edit Storage Profile page.</small>
 </p>
 
 On this page, we are editing the storage profile settings for an Amazon S3 bucket. The following settings are available:

@@ -16,3 +16,30 @@
   font-size: 0.75rem;
   color: #0000009a;
 }
+
+.img-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px solid red; */
+}
+
+.img-box img {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 2px solid blue;
+  border-radius: 0.5rem;
+}
+
+.img-box small {
+}
+
+.crop {
+  overflow: hidden;
+  height: 360px;
+}
+.crop img {
+  margin: 237px 0 0 0px;
+  border: none;
+}

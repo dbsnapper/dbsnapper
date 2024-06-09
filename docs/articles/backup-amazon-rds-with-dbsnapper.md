@@ -25,7 +25,7 @@ Here's our target definition on the DBSnapper Cloud. We've simply provided the c
 <!-- prettier-ignore-start -->
 !!! tip "Update: You can now do this in a SINGLE command"
 
-    (copied from the [DBSnapper Quick Start Guide](/docs/quick-start.md))
+    (copied from the [DBSnapper Quick Start Guide](../quick-start.md))
 
     Just use the latest version of the DBSnapper container image, provide the minimum required `DBSNAPPER_SECRET_KEY` and `DBSNAPPER_AUTHTOKEN` environment variables necessary to run DBSnapper in Cloud mode, without a configuration file.
 
