@@ -25,7 +25,7 @@ At the next modal, select `OIDC - OpenID Connect` as the Sign-in method, Choose 
 
 On the next page, **New Web App Integration,** make sure `Authorization Code` and `Refresh Token` are selected.
 
-Provide the Sign-in redirect URIs as: `https://app.dbsnapper.com/auth/oidc/callback`
+Provide the Sign-in redirect URIs as: `https://app.dbsnapper.com/auth/okta/callback`
 
 Leave the Sign-out redirect URIs empty.
 
