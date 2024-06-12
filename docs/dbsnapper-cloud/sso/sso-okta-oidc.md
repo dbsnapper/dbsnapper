@@ -76,7 +76,7 @@ Add the settings from the Okta application you created in Step 1:
 - **Client Secret** - from the `General` tab of the Okta application
 - **Issuer** - from the `Sign On` tab of the Okta application
 
-Note that the **Organization Domain** and **Redirect URL** are pre-filled for your organization.
+Note that the **Organization Domain** and **Redirect URL** are pre-filled for your organization. Make sure the **Organization Domain** matches the email domain of your users' email addresses.
 
 <p class="img-box">
   <img src="/static/sso/sso-okta-step2-1-dbsnapper-new-sso-tenant.png" alt="Step 2.1 - Okta SSO - Create new SSO Tenant in DBSnapper" width="90%">
