@@ -12,8 +12,9 @@ description: DBSnapper simplifies the process of creating de-identified database
 <!-- prettier-ignore-start -->
 !!! note "Latest News"
 
-    - We've release new articles on using DBSnapper with GitHub Actions and Amazon ECS. Check out [Part 1](articles/dbsnapper-github-actions-amazon-ecs.md) and the simplified approach in [Part 2](articles/dbsnapper-github-actions-ecs-simplified.md) for more information. 
-    - We've released a GitHub Action to the GitHub Marketplace. The [Install DBSnapper Agent GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) simplifies downloading the DBSnapper Agent to the runner.
+    - Our **Terraform Provider** is now available on the [Terraform Registry](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest). You can now manage DBSnapper resources using the Terraform platform and Infrastructure as Code (IaC).
+    - We've released a **GitHub Action** to the GitHub Marketplace. The [Install DBSnapper Agent GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) simplifies downloading the DBSnapper Agent to the runner.
+    - We've released new articles on using DBSnapper with GitHub Actions and Amazon ECS. Check out [Part 1](articles/dbsnapper-github-actions-amazon-ecs.md) and the simplified approach in [Part 2](articles/dbsnapper-github-actions-ecs-simplified.md) for more information. 
     - [Version 2.7.0 has been released](release-notes.md#v270---team-sharing-for-sso-groups) which supports SSO and Shared Team Targets.
     
 <!-- prettier-ignore-end -->
@@ -26,13 +27,32 @@ description: DBSnapper simplifies the process of creating de-identified database
 
 DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to the traditional, often cumbersome methods of creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
 
-## Features
+## Sign Up for DBSnapper Cloud
+
+[Sign Up for the DBSnapper Cloud](https://app.dbsnapper.com/sign_up) and get started with a safer, simpler way to manage your database snapshots.
+
+## Releases and Integrations
+
+- [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/dbsnapper?label=DBSnapper%20Agent)](https://github.com/dbsnapper/dbsnapper/releases)
+  The DBSnapper Agent interacts with your databases and communicates with the DBSnapper Cloud.
+
+- [![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
+  The DBSnapper Terraform Provider allows you to manage DBSnapper resources using the Terraform platform and Infrastucture as Code.
+
+- [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent)
+  The DBSnapper Github Action allows you to include DBSnapper in your CI/CD pipelines for automated management of database snapshots.
+
+- **OKTA OIDC Integration**: DBSnapper supports [Okta OIDC](./dbsnapper-cloud/sso/sso-okta-oidc.md) for Single Sign-On (SSO) authentication and group sharing.
+
+## Features Overview
 
 In addition to the main features of Subsetting, Snapshotting, Sanitization, and Sharing, DBSnapper offers a range of features that simplify database workload snapshotting and sharing. Here are some of the key features of DBSnapper:
 
+- **Terraform Provider** - Manage DBSnapper resources using the Terraform platform and Infrastructure as Code.
+- **Database Subsetting**: Create smaller, relationally-complete snapshots of your database, allowing you to work with a subset of the data for development or testing purposes.
+- **Bring Your Own Storage**: Use your preferred cloud storage provider (i.e. Amazon S3 / Cloudflare R2) for storing snapshots securely in your private infrastructure.
 - **SSO**: Single Sign-On (SSO) support enables seamless authentication and snapshot sharing with your team members.
 - **GitHub Actions Compatible**: DBSnapper works well with GitHub Actions allowing you to integrate database snapshotting into your CI/CD pipelines. A GitHub Action is available on the Marketplace that will [Install the DBSnapper Agent](https://github.com/marketplace/actions/install-dbsnapper-agent) on your GitHub runner.
-- **Bring Your Own Storage**: Use your preferred cloud storage provider (i.e. Amazon S3 / Cloudflare R2) for storing snapshots securely in your private infrastructure.
 - **Presigned Upload and Downloads from Cloud Storage**: Securely upload and download snapshots from your cloud storage provider using presigned URLs.
 - **Database Support**: DBSnapper supports Postgresql and MySQL databases with more database support coming soon.
 - **Ephemeral Sanitization**: Run sanitization operations without the need to setup a temporary sanitization database or schema.
@@ -40,6 +60,8 @@ In addition to the main features of Subsetting, Snapshotting, Sanitization, and 
 - **Docker Enabled**: DBSnapper leverages Docker for access to database vendor tools and utilities, ephemeral sanitization, and other operations.
 - **Zero-Config Operation**: Execute complex database workload operations in a single command without the need for complex configuration files and prerequisite setup steps.
 - **Private-cloud First**: DBSnapper is designed to work in private cloud environments, ensuring that your data remains within your infrastructure.
+
+## Main Capabilities
 
 Now for a closer look at the main features of DBSnapper:
 
@@ -86,7 +108,3 @@ The sharing aspect of DBSnapper is made possible through the DBSnapper Cloud, a 
 - **Easy Access for Team Members**: Shared snapshots are easily accessible to authorized team members. This facilitates collaboration, as team members can work with the same data sets in a synchronized manner.
 
 - **Integration with Automated Processes**: The DBSnapper Cloud is designed for integration with automated processes, such as CI/CD pipelines, making it simpler to incorporate database snapshots into your development and deployment workflows.
-
-## Get Started
-
-Ready to get started with DBSnapper? Head over to the [Installation](installation.md) guide to install DBSnapper on your system. Once installed, you can follow the [Quick Start](quick-start.md) guide to create your first snapshot.
