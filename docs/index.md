@@ -42,7 +42,8 @@ DBSnapper revolutionizes the way development teams handle database snapshotting,
 - [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent)
   The DBSnapper Github Action allows you to include DBSnapper in your CI/CD pipelines for automated management of database snapshots.
 
-- **OKTA OIDC Integration**: DBSnapper supports [Okta OIDC](./dbsnapper-cloud/sso/sso-okta-oidc.md) for Single Sign-On (SSO) authentication and group sharing.
+- [![Static Badge](https://img.shields.io/badge/Okta_OIDC_SSO-Learn_More-blue)](./dbsnapper-cloud/sso/sso-okta-oidc.md)
+  DBSnapper supports [Okta OIDC](./dbsnapper-cloud/sso/sso-okta-oidc.md) for Single Sign-On (SSO) authentication and group sharing.
 
 ## Features Overview
 
