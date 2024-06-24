@@ -10,8 +10,9 @@ description: DBSnapper simplifies the process of creating de-identified database
 # Welcome to DBSnapper
 
 <!-- prettier-ignore-start -->
-!!! note "Latest News"
+!!! note "Latest News - VSCode Extension Released"
 
+    - Our **VSCode Extension** is now available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper). The extension complements the [DBSnapper platform](https://dbsnapper.com) and allows for an in-editor experience to load database snapshots.
     - Our **Terraform Provider** is now available on the [Terraform Registry](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest). You can now manage DBSnapper resources using the Terraform platform and Infrastructure as Code (IaC).
     - We've released a **GitHub Action** to the GitHub Marketplace. The [Install DBSnapper Agent GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) simplifies downloading the DBSnapper Agent to the runner.
     - We've released new articles on using DBSnapper with GitHub Actions and Amazon ECS. Check out [Part 1](articles/dbsnapper-github-actions-amazon-ecs.md) and the simplified approach in [Part 2](articles/dbsnapper-github-actions-ecs-simplified.md) for more information. 
@@ -35,6 +36,8 @@ DBSnapper revolutionizes the way development teams handle database snapshotting,
 
 - [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/dbsnapper?label=DBSnapper%20Agent)](https://github.com/dbsnapper/dbsnapper/releases)
   The DBSnapper Agent interacts with your databases and communicates with the DBSnapper Cloud.
+
+- ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension) - DBSnapper Extension for VSCode, allowing you load database snapshots directly from your editor.
 
 - [![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
   The DBSnapper Terraform Provider allows you to manage DBSnapper resources using the Terraform platform and Infrastucture as Code.
