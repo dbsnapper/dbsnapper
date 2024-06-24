@@ -13,8 +13,10 @@ By utilizing your own private cloud storage providers, you can securely store yo
 
 The DBSnapper sharing architecture is designed to allow you to create snapshots of your database and share the unsanitized and sanitized snapshots in separate locations. You can then share the sanitized cloud storage location with your team and they can use the DBSnapper agent to access and load these snapshots.
 
-<p align="center">
-  <img src="/static/vpc-s3-horiz.svg" alt="DBSnapper Sharing Architecture" width="90%">
+<p class="img-box">
+  <img src="/static/dbs-architecture.jpg" alt="DBSnapper Architecture" width="90%">
+  <br/>
+  <small>DBSnapper Architecture Overview</small>
 </p>
 
 ## Getting Started

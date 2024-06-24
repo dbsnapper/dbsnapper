@@ -1,12 +1,22 @@
 # How DBSnapper Works
 
+## Architecture Overview
+
+<p class="img-box">
+  <img src="/static/dbs-architecture.jpg" alt="DBSnapper Architecture" width="90%">
+  <br/>
+  <small>DBSnapper Architecture Overview</small>
+</p>
+
+The DBSnapper architecture is designed to provide a safe, secure, and fast way to create and share database snapshots. The architecture is built around a bring-your-own-infrastructure model, keeping data within your control at all times. Our focus on integrations ensures that DBSnapper can seamlessly fit into your existing workflows and tools, providing automation and ease of use for your team.
+
 ## Step 1: Snapshot Your Database
 
 <div style="text-align: center;">
   <img src="/static/hiw/hiw-snapshot-2x.png" style="width: 120px; float: left; margin-right: 10px;">
 </div>
 
-Begin by using the DBSnapper Command Line Interface (CLI) to create a snapshot of your database. This snapshot captures a point-in-time backup of the current state of your database. Use the DBSnapper cloud to upload the snapshots into your own private storage provider
+Begin by using the DBSnapper Agent to create a snapshot of your database. This snapshot captures a point-in-time backup of the current state of your database. Use the DBSnapper cloud to upload the snapshots into your own private storage provider
 
 ---
 
@@ -34,4 +44,4 @@ After sanitization, it's time to share the snapshot with your team. DBSnapper fa
 
 ## Get Started
 
-Ready to get started with DBSnapper? Head over to the [Installation](installation.md) guide to install DBSnapper on your system. Once installed, you can follow the [Quick Start](quick-start.md) guide to create your first snapshot.
+[Sign up](https://app.dbsnapper.com/sign_up) and get running with DBSnapper, add integrations to take advantage of automation, and start sharing database snapshots with your team today.

@@ -14,16 +14,13 @@ description: DBSnapper simplifies the process of creating de-identified database
 
     - Our **VSCode Extension** is now available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper). The extension complements the [DBSnapper platform](https://dbsnapper.com) and allows for an in-editor experience to load database snapshots.
     - Our **Terraform Provider** is now available on the [Terraform Registry](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest). You can now manage DBSnapper resources using the Terraform platform and Infrastructure as Code (IaC).
-    - We've released a **GitHub Action** to the GitHub Marketplace. The [Install DBSnapper Agent GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) simplifies downloading the DBSnapper Agent to the runner.
-    - We've released new articles on using DBSnapper with GitHub Actions and Amazon ECS. Check out [Part 1](articles/dbsnapper-github-actions-amazon-ecs.md) and the simplified approach in [Part 2](articles/dbsnapper-github-actions-ecs-simplified.md) for more information. 
-    - [Version 2.7.0 has been released](release-notes.md#v270---team-sharing-for-sso-groups) which supports SSO and Shared Team Targets.
     
 <!-- prettier-ignore-end -->
 
 <p class="img-box">
-  <img src="/static/cloud/targets-with-shared-targets.jpg" alt="DBSnapper Cloud - All Targets Page" width="80%">
+  <img src="/static/dbs-architecture.jpg" alt="DBSnapper Architecture" width="90%">
   <br/>
-  <small>DBSnapper Cloud Targets page including Shared Team Targets.</small>
+  <small>DBSnapper Architecture Overview</small>
 </p>
 
 DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to the traditional, often cumbersome methods of creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
