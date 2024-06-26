@@ -1,5 +1,5 @@
 ---
-title: "Useful Queries for Postgres and MySQL"
+title: "Useful Postgres and MySQL Queries"
 description: "Here are some of the queries we use in DBSnapper to get database schema and other information."
 ---
 
