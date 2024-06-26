@@ -121,7 +121,7 @@ nav:
       - cmd/dbsnapper_targets.md
       - cmd/dbsnapper_target.md
   - Articles:
-      - articles/useful-database-queries.md
+      - articles/useful-queries-postgres-mysql.md
       - articles/dbsnapper-github-actions-ecs-simplified.md
       - articles/dbsnapper-github-actions-amazon-ecs.md
       - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
