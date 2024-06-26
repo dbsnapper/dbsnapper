@@ -43,3 +43,12 @@
   margin: 237px 0 0 0px;
   border: none;
 }
+
+/* Code font size small  */
+pre code {
+  font-size: 0.8rem;
+}
+
+.md-typeset code {
+  font-size: 0.6rem;
+}
