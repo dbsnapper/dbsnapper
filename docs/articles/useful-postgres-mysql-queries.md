@@ -119,73 +119,170 @@ Here are some of the queries we use in DBSnapper to get database schema and othe
     === "Postgres"
 
         ```sql title="Query"
-        SELECT att.attname,
-          ty.typname,
-          NULL as typmaxlen,
+        SELECT c.table_schema,
+          c.table_name,
+          c.column_name,
+          typ.typname AS type_name,
+          CASE
+            WHEN c.data_type = 'USER-DEFINED' THEN c.udt_name
+            ELSE c.data_type
+          END AS data_type,
+          CASE
+            WHEN c.data_type IN ('character', 'character varying') THEN c.character_maximum_length
+            ELSE NULL
+          END AS data_type_char_max,
+          -- Added this line
+          tc.constraint_name AS constraint_name,
+          (
+            SELECT COUNT(*) > 0
+            FROM information_schema.key_column_usage cu
+              LEFT JOIN information_schema.table_constraints tc ON tc.constraint_name = cu.constraint_name
+            WHERE cu.column_name = c.column_name
+              AND cu.table_name = c.table_name
+              AND tc.constraint_type = 'PRIMARY KEY'
+          ) AS is_primary,
+          (
+            SELECT COUNT(*) > 0
+            FROM information_schema.key_column_usage cu
+              LEFT JOIN information_schema.table_constraints tc ON tc.constraint_name = cu.constraint_name
+            WHERE cu.column_name = c.column_name
+              AND cu.table_name = c.table_name
+              AND tc.constraint_type = 'FOREIGN KEY'
+          ) AS is_foreign,
+          (
+            SELECT COUNT(*) > 0
+            FROM information_schema.key_column_usage cu
+              LEFT JOIN information_schema.table_constraints tc ON tc.constraint_name = cu.constraint_name
+            WHERE cu.column_name = c.column_name
+              AND cu.table_name = c.table_name
+              AND tc.constraint_type = 'UNIQUE'
+          ) AS is_unique,
+          BOOL_OR(c.is_nullable = 'YES') AS is_nullable,
+          att.attgenerated AS att_generated,
+          att.attidentity AS att_identity,
+          COALESCE(
+            STRING_AGG(
+              enumlabel,
+              ','
+              ORDER BY enumsortorder
+            ),
+            ''
+          ) AS enum_values,
+          COALESCE(pd.description, '') AS comment
+        FROM information_schema.columns c
+          LEFT JOIN pg_type typ ON c.udt_name = typ.typname
+          LEFT JOIN pg_enum enu ON typ.oid = enu.enumtypid
+          LEFT JOIN pg_class cls ON c.table_name = cls.relname
+          LEFT JOIN pg_namespace ns ON cls.relnamespace = ns.oid
+          LEFT JOIN pg_description pd ON cls.oid = pd.objoid
+          LEFT JOIN pg_attribute att ON cls.oid = att.attrelid
+          LEFT JOIN information_schema.key_column_usage cu ON cu.column_name = c.column_name
+          AND cu.table_name = c.table_name
+          LEFT JOIN information_schema.table_constraints tc ON tc.constraint_name = cu.constraint_name
+        WHERE c.table_name = 'customer' -- REPLACE WITH YOUR TABLE NAME
+          AND c.table_schema = 'public' -- REPLACE WITH YOUR SCHEMA
+        GROUP BY c.column_name,
+          c.table_schema,
+          c.table_name,
+          typ.typname,
+          c.data_type,
+          c.udt_name,
+          c.ordinal_position,
+          pd.description,
           att.attgenerated,
-          att.attidentity
-        FROM pg_attribute att
-          JOIN pg_class cl ON cl.oid = att.attrelid
-          JOIN pg_type ty ON ty.oid = att.atttypid
-          JOIN pg_namespace ns ON ns.oid = cl.relnamespace
-        WHERE (
-            ('public' = '') IS NOT FALSE -- replace with your schema
-            OR ns.nspname = 'public' -- replace with your schema
-          )
-          AND cl.relname = 'customer' -- replace with your table name
-          AND att.attnum > 0
-          AND NOT att.attisdropped
-        ORDER BY att.attnum;
+          att.attidentity,
+          tc.constraint_name,
+          c.character_maximum_length
+        ORDER BY c.ordinal_position;       
         ```
 
         ```sql title="Output"
-          attname   |  typname  | typmaxlen | attgenerated | attidentity
-        -------------+-----------+-----------+--------------+-------------
-        customer_id | int4      |           |              |
-        store_id    | int2      |           |              |
-        first_name  | varchar   |           |              |
-        last_name   | varchar   |           |              |
-        email       | varchar   |           |              |
-        address_id  | int2      |           |              |
-        activebool  | bool      |           |              |
-        create_date | date      |           |              |
-        last_update | timestamp |           |              |
-        active      | int4      |           |              |
+        table_schema | table_name | column_name | type_name |          data_type          | data_type_char_max |     constraint_name      | is_primary | is_foreign | is_unique | is_nullable | att_generated | att_identity | enum_values | comment
+        --------------+------------+-------------+-----------+-----------------------------+--------------------+--------------------------+------------+------------+-----------+-------------+---------------+--------------+-------------+---------
+        public       | customer   | customer_id | int4      | integer                     |                    | customer_pkey            | t          | f          | f         | f           |               |              |             |
+        public       | customer   | store_id    | int2      | smallint                    |                    |                          | f          | f          | f         | f           |               |              |             |
+        public       | customer   | first_name  | varchar   | character varying           |                 45 |                          | f          | f          | f         | f           |               |              |             |
+        public       | customer   | last_name   | varchar   | character varying           |                 45 |                          | f          | f          | f         | f           |               |              |             |
+        public       | customer   | email       | varchar   | character varying           |                 50 |                          | f          | f          | f         | t           |               |              |             |
+        public       | customer   | address_id  | int2      | smallint                    |                    | customer_address_id_fkey | f          | t          | f         | f           |               |              |             |
+        public       | customer   | activebool  | bool      | boolean                     |                    |                          | f          | f          | f         | f           |               |              |             |
+        public       | customer   | create_date | date      | date                        |                    |                          | f          | f          | f         | f           |               |              |             |
+        public       | customer   | last_update | timestamp | timestamp without time zone |                    |                          | f          | f          | f         | t           |               |              |             |
+        public       | customer   | active      | int4      | integer                     |                    |                          | f          | f          | f         | t           |               |              |             |
         (10 rows)
         ```
 
     === "MySQL"
 
         ```sql title="Query"
-        SELECT c.table_schema as table_schema,
+        select c.table_schema as table_schema,
           c.table_name as table_name,
-          c.column_name AS attname,
-          c.data_type AS typname,
-          c.character_maximum_length AS typmaxlen,
-          k.constraint_name AS con_type
-        FROM information_schema.columns c
-          LEFT JOIN information_schema.key_column_usage k ON c.table_schema = k.table_schema
-          AND c.table_name = k.table_name
+          c.column_name as column_name,
+          c.data_type as type_name,
+          c.data_type as data_type,
+            c.character_maximum_length AS data_type_char_max,
+          k.constraint_name AS constraint_name,
+          (
+            select count(*) > 0
+            from information_schema.KEY_COLUMN_USAGE
+            where table_name = c.table_name
+              and column_name = c.column_name
+              and constraint_name = 'PRIMARY'
+          ) as is_primary,
+          (
+            select count(*) > 0
+            from information_schema.key_column_usage cu
+              left join information_schema.table_constraints tc on tc.constraint_name = cu.constraint_name
+            where cu.column_name = c.column_name
+              and cu.table_name = c.table_name
+              and tc.constraint_type = 'FOREIGN KEY'
+          ) as is_foreign,
+          (
+            select count(*) > 0
+            from information_schema.key_column_usage cu
+              left join information_schema.table_constraints tc on tc.constraint_name = cu.constraint_name
+            where cu.column_name = c.column_name
+              and cu.table_name = c.table_name
+              and tc.constraint_type = 'UNIQUE'
+          ) as is_unique,
+          IF(c.is_nullable = 'YES', 1, 0) as is_nullable,
+          case
+            when c.data_type = 'enum' then REPLACE(
+              REPLACE(
+                REPLACE(REPLACE(c.column_type, 'enum', ''), '\'', ''),
+                '(',
+                ''
+              ),
+              ')',
+              ''
+            )
+            else ''
+          end as enum_values,
+          c.column_comment as comment
+        from information_schema.columns c
+        LEFT JOIN information_schema.key_column_usage k ON c.table_schema = k.table_schema
+        AND c.table_name = k.table_name
           AND c.column_name = k.column_name
-        WHERE c.table_schema = 'sakila' -- replace with your schema
-          AND c.table_name = 'customer' -- replace with your table name
-        ORDER BY c.ordinal_position;
+        where c.table_name = 'customer' -- replace with your table name
+          and c.TABLE_SCHEMA = 'sakila' -- replace with your schema
+        order by c.ordinal_position;
         ```
 
         ```sql title="Output"
-        +--------------+------------+-------------+-----------+-----------+---------------------+
-        | table_schema | table_name | attname     | typname   | typmaxlen | con_type            |
-        +--------------+------------+-------------+-----------+-----------+---------------------+
-        | sakila       | customer   | customer_id | smallint  |      NULL | PRIMARY             |
-        | sakila       | customer   | store_id    | tinyint   |      NULL | fk_customer_store   |
-        | sakila       | customer   | first_name  | varchar   |        45 | NULL                |
-        | sakila       | customer   | last_name   | varchar   |        45 | NULL                |
-        | sakila       | customer   | email       | varchar   |        50 | NULL                |
-        | sakila       | customer   | address_id  | smallint  |      NULL | fk_customer_address |
-        | sakila       | customer   | active      | tinyint   |      NULL | NULL                |
-        | sakila       | customer   | create_date | datetime  |      NULL | NULL                |
-        | sakila       | customer   | last_update | timestamp |      NULL | NULL                |
-        +--------------+------------+-------------+-----------+-----------+---------------------+
+        +--------------+------------+-------------+-----------+-----------+--------------------+---------------------+------------+------------+-----------+-------------+-------------+---------+
+        | table_schema | table_name | column_name | type_name | data_type | data_type_char_max | constraint_name     | is_primary | is_foreign | is_unique | is_nullable | enum_values | comment |
+        +--------------+------------+-------------+-----------+-----------+--------------------+---------------------+------------+------------+-----------+-------------+-------------+---------+
+        | sakila       | customer   | customer_id | smallint  | smallint  |               NULL | PRIMARY             |          1 |          0 |         0 |           0 |             |         |
+        | sakila       | customer   | store_id    | tinyint   | tinyint   |               NULL | fk_customer_store   |          0 |          1 |         0 |           0 |             |         |
+        | sakila       | customer   | first_name  | varchar   | varchar   |                 45 | NULL                |          0 |          0 |         0 |           0 |             |         |
+        | sakila       | customer   | last_name   | varchar   | varchar   |                 45 | NULL                |          0 |          0 |         0 |           0 |             |         |
+        | sakila       | customer   | email       | varchar   | varchar   |                 50 | NULL                |          0 |          0 |         0 |           1 |             |         |
+        | sakila       | customer   | address_id  | smallint  | smallint  |               NULL | fk_customer_address |          0 |          1 |         0 |           0 |             |         |
+        | sakila       | customer   | active      | tinyint   | tinyint   |               NULL | NULL                |          0 |          0 |         0 |           0 |             |         |
+        | sakila       | customer   | create_date | datetime  | datetime  |               NULL | NULL                |          0 |          0 |         0 |           0 |             |         |
+        | sakila       | customer   | last_update | timestamp | timestamp |               NULL | NULL                |          0 |          0 |         0 |           1 |             |         |
+        +--------------+------------+-------------+-----------+-----------+--------------------+---------------------+------------+------------+-----------+-------------+-------------+---------+
+        9 rows in set (0.28 sec)
         ```
 
 <!-- prettier-ignore-end -->
