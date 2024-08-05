@@ -37,7 +37,7 @@ DBSnapper revolutionizes the way development teams handle database snapshotting,
 - ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension) - DBSnapper Extension for VSCode, allowing you load database snapshots directly from your editor.
 
 - [![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
-  The DBSnapper Terraform Provider allows you to manage DBSnapper resources using the Terraform platform and Infrastucture as Code.
+  The DBSnapper Terraform Provider allows you to manage DBSnapper resources using the Terraform platform and Infrastructure as Code.
 
 - [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent)
   The DBSnapper Github Action allows you to include DBSnapper in your CI/CD pipelines for automated management of database snapshots.
