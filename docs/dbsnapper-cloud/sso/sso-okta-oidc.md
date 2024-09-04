@@ -3,11 +3,17 @@ title: DBSnapper Cloud - Single Sign-On (SSO) with Okta OIDC
 description: Configure Single Sign-On for your DBSnapper organization with Okta OIDC
 ---
 
-In this guide, we will use Okta as the SSO provider and with the Open ID Connect (OIDC) protocol as our identity protocol.
+DBSnapper supports Single Sign-On (SSO) with Okta - this guide will walk you through the steps to configure Okta OIDC for your DBSnapper organization using the Okta Integration Network (OIN) catalog.
 
-## Step 1: Create a new Application in Okta
+## Supported Features
 
-Sign into your Okta account and navigate to Admin/Applications. Click on the `Create App Integration` button.
+- SP initiated Auth Flow: Yes
+- Open ID Connect (OIDC): Yes
+- Proof Key for Code Exchange (PKCE): Yes
+
+## Step 1: Add the DBSnapper Application from the OIN Catalog
+
+Sign into your Okta account and navigate to Admin/Applications. Click on the `Browse App Catalog` button.
 
 <p class="img-box">
   <img src="/static/sso/sso-okta-step1-1-create-app-integration.png" alt="Step 1.1 - Okta SSO - Applications" width="90%">
@@ -15,55 +21,20 @@ Sign into your Okta account and navigate to Admin/Applications. Click on the `Cr
   <small>Step 1.1 - Okta SSO - Applications</small>
 </p>
 
-At the next modal, select `OIDC - OpenID Connect` as the Sign-in method, Choose `Web Application` as the Application type, and click `Next`.
+Search for and add the DBSnapper application from the catalog.
 
 <p class="img-box">
-  <img src="/static/sso/sso-okta-step1-2-new-app-integration.png" alt="Step 1.2 - Okta SSO - New App Integration" width="90%">
+  <img src="/static/sso/sso-okta-step1-2-dbsnapper-oin-search.png" alt="Step 1.2 - Okta SSO - Add DBSnapper from Okta Integration Network (OIN)" width="90%">
   <br/>
-  <small>Step 1.2 - Okta SSO - New App Integration</small>
+  <small>Step 1.2 - Okta SSO - Add DBSnapper from Okta Integration Network (OIN)</small>
 </p>
 
-On the next page, **New Web App Integration,** make sure `Authorization Code` and `Refresh Token` are selected.
-
-Provide the Sign-in redirect URIs as: `https://app.dbsnapper.com/auth/okta/callback`
-
-Leave the Sign-out redirect URIs empty.
-
-Click `Save` to save the new application.
-
-<p class="img-box">
-  <img src="/static/sso/sso-okta-step1-3-new-web-app-integration.png" alt="Step 1.3 - Okta SSO - New Web App Integration" width="90%">
-  <br/>
-  <small>Step 1.3 - Okta SSO - New Web App Integration</small>
-</p>
-
-On the next scren, click on the Edit link to the right of the `Client Credentials` heading.
+---
 
 Take note of your application credentials which will be used in the DBSnapper Cloud SSO settings:
 
 - Client ID - a public identifier for the client application
 - Client Secret - Click to reveal the client secret and make note of it.
-
-The rest of the settings should match what is shown in the screenshot below:
-
-**Enable** `Proof Key for Code Exchange (PKCE)`: **Require PKCE as additional verification**
-
-<p class="img-box">
-  <img src="/static/sso/sso-okta-step1-4-edit-application.png" alt="Step 1.4 - Okta SSO - Edit Client Credentials Settings" width="90%">
-  <br/>
-  <small>Step 1.4 - Okta SSO - Edit Client Credentials Settings</small>
-</p>
-
-Click on the `Sign On` tab to edit the Issuer and Group claims settings.
-
-- **Issuer** - Change it from _Dynamic_ to _Okta URL ..._ and take note of this value
-- **Group claims** - Change it to match the screenshot below. `groups Matches regex .*` This will allow DBSnapper to use the groups claim for sharing snapshots with your team.
-
-<p class="img-box">
-  <img src="/static/sso/sso-okta-step1-5-sign-on-settings.png" alt="Step 1.5 - Okta SSO - Edit Sign On Settings" width="90%">
-  <br/>
-  <small>Step 1.5 - Okta SSO - Edit Sign On Settings</small>
-</p>
 
 ## Step 2: Configure DBSnapper for Okta OIDC
 
@@ -72,9 +43,9 @@ Sign into your DBSnapper Cloud account and navigate to the `Settings -> SSO` pag
 Add the settings from the Okta application you created in Step 1:
 
 - **Provider** - Okta - OIDC (the default)
-- **Client ID** - from the `General` tab of the Okta application
-- **Client Secret** - from the `General` tab of the Okta application
-- **Issuer** - from the `Sign On` tab of the Okta application
+- **Client ID** - From the DBSnapper application settings in Okta
+- **Client Secret** - From the DBSnapper application settings in Okta
+- **Issuer** - Your Okta domain URL (e.g. `https://example.okta.com`)
 
 Note that the **Organization Domain** and **Redirect URL** are pre-filled for your organization. Make sure the **Organization Domain** matches the email domain of your users' email addresses.
 

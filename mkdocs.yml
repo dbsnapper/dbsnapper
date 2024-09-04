@@ -95,7 +95,7 @@ nav:
       - Storage Profiles: dbsnapper-cloud/storage_profiles.md
       - Single Sign-On:
           - dbsnapper-cloud/sso/index.md
-          - How to Configure OIDC with Okta: dbsnapper-cloud/sso/sso-okta-oidc.md
+          - Single Sign-On (SSO) Integration with Okta: dbsnapper-cloud/sso/sso-okta-oidc.md
 
   - Database Engines:
       - database-engines/introduction.md
