@@ -10,6 +10,7 @@ DBSnapper supports Single Sign-On (SSO) with Okta - this guide will walk you thr
 - SP initiated Auth Flow: Yes
 - Open ID Connect (OIDC): Yes
 - Proof Key for Code Exchange (PKCE): Yes
+- Just-in-Time Provisioning: Yes
 
 ## Step 1: Add the DBSnapper Application from the OIN Catalog
 
