@@ -7,7 +7,7 @@ DBSnapper supports Single Sign-On (SSO) with Okta - this guide will walk you thr
 
 ## Supported Features
 
-- SP initiated Auth Flow: Yes
+- SP initiated Auth Flow: SSO Using OIDC initiated via DBSnapper Cloud
 - Open ID Connect (OIDC): Yes
 - Proof Key for Code Exchange (PKCE): Yes
 - Just-in-Time Provisioning: Yes
@@ -65,3 +65,7 @@ Click `Save` to save the new SSO Tenant for your organization. You should see yo
 </p>
 
 Congratulations you have successfully configured Okta OIDC for your DBSnapper organization.
+
+## Usage Instructions
+
+- For SP Initiated Auth, visit the DBSnapper Cloud [sign in page](https://app.dbsnapper.com/sign_in) enter your email address, click Next, and then and click on the `Signn in with SSO` button.
