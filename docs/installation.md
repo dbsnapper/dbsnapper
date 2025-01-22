@@ -1,4 +1,4 @@
-# Installation
+# DBSnapper Agent Installation
 
 The DBSnapper Agent is available for Mac and Linux with several ways to quickly install the Agent on your system.
 

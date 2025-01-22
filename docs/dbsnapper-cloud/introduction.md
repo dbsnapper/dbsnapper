@@ -3,13 +3,61 @@ title: DBSnapper Cloud Platform - Introduction
 description: The DBSnapper Cloud Platform provides additional capabilities for building, managing, and sharing sanitized database snapshots.
 ---
 
-# Introduction
+# Introduction to DBSnapper Cloud
 
-<p align="center">
-  <img alt="DBSnapper Cloud" src="/static/dbsnapper-cloud.jpeg" width="90%" />
-</p>
+**DBSnapper Cloud** extends your database management capabilities beyond the local CLI, providing a secure, collaborative platform for managing and sharing database snapshots across your organization. <sup><a href="https://docs.dbsnapper.com">1</a></sup>
 
-The [DBSnapper Cloud](https://dbsnapper.com) extends the capabilities of our standalone CLI with new options for storing sanitized snapshots in private cloud storage and sharing them with your team. Up until now, each DBSnapper setup required creating a maintaining a local configuration file and snapshots were created on local storage, with no support for making them available in a centralized location. With the DBSnapper Cloud, you can speed up your workflow with a centralized configuration and make snapshots accessible to your team or development pipelines.
+## Why DBSnapper Cloud?
+
+### Key Benefits
+
+- **Centralized Management**: Streamline database snapshot management across teams and environments
+- **Enhanced Collaboration**: Share sanitized database snapshots securely with team members
+- **Automated Workflows**: Seamlessly integrate with CI/CD pipelines and development processes
+- **Enterprise-Grade Security**: Built-in SSO integration and granular access controls
+
+### Feature Comparison
+
+| Feature                   | CLI Only | DBSnapper Cloud |
+| ------------------------- | :------: | :-------------: |
+| Local Snapshots           |    ✅    |       ✅        |
+| Database Subsetting       |    ✅    |       ✅        |
+| Data Sanitization         |    ✅    |       ✅        |
+| Team Sharing              |    ❌    |       ✅        |
+| SSO Integration           |    ❌    |       ✅        |
+| Cloud Storage Integration | Limited  |      Full       |
+| Access Control            |  Basic   |    Advanced     |
+| Audit Logging             |    ❌    |       ✅        |
+
+## Common Use Cases
+
+1.  **Development Environments**
+
+    - Quickly provision development databases with sanitized production data
+    - Maintain consistency across team environments
+
+2.  **Testing and QA**
+
+    - Create reproducible test environments
+    - Share consistent datasets across QA teams
+
+3.  **CI/CD Integration**
+
+    - Automate database provisioning in automated CI/CD pipelines
+    - Ensure consistent and up-to-date test data across builds
+
+4.  **Compliance and Security**
+
+    - Maintain GDPR and CCPA compliance with sanitized data
+    - Control access through role-based SSO permissions
+
+## Getting Started
+
+1.  [Sign up for DBSnapper Cloud](https://app.dbsnapper.com/sign_up) for DBSnapper Cloud
+2.  Install the [DBSnapper Agent](../installation.md) on your local system
+3.  Configure Storage Profiles and Targets
+4.  Set up your SSO provider for team access (optional)
+5.  Create your first cloud-managed snapshot
 
 ## DBSnapper Cloud Processing Pipeline
 
@@ -18,29 +66,3 @@ The [DBSnapper Cloud](https://dbsnapper.com) extends the capabilities of our sta
 </p>
 
 The DBSnapper Cloud brings everything together and provides a processing pipeline to create, store, and share sanitized database snapshots.
-
-## Database Engines
-
-DBSnapper provides a library of Database Engines that ensure compatibility between different database vendors.
-
-Currently supported engines include:
-
-- PostgreSQL Local installation
-- MySQL Local installation
-- PostgreSQL Docker Image
-- Mysql Docker Image
-
-More Database Engines are being created and will be added to the application in the future.
-
-## Cloud Storage Engines
-
-DBSnapper provides a library of Cloud Storage Engines that allow you to use your own private cloud storage provider to store your database snapshots.
-
-Currently supported Cloud Storage engines include:
-
-- Cloudflare R2
-- Amazon S3
-
-## On-prem and Private Cloud Compatible
-
-The lightweight DBSnapper Agent works on your local system or in your private cloud infrastructure. Integrating with the DBSnapper Cloud provides centralized configuration, storage, and sharing of your database snapshots.
