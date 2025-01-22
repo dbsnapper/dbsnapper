@@ -5,7 +5,7 @@ description: The DBSnapper Cloud Platform provides additional capabilities for b
 
 # Introduction to DBSnapper Cloud
 
-**DBSnapper Cloud** extends your database management capabilities beyond the local CLI, providing a secure, collaborative platform for managing and sharing database snapshots across your organization. <sup><a href="https://docs.dbsnapper.com">1</a></sup>
+**DBSnapper Cloud** extends your database management capabilities beyond the local CLI, providing a secure, collaborative platform for managing and sharing database snapshots across your organization.
 
 ## Why DBSnapper Cloud?
 
