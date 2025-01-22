@@ -23,7 +23,7 @@ description: DBSnapper simplifies the process of creating de-identified database
   <small>DBSnapper Architecture Overview</small>
 </p>
 
-DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to the traditional, often cumbersome methods of creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
+DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to traditional, often cumbersome methods for creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
 
 ## Sign Up for DBSnapper Cloud
 
@@ -34,13 +34,13 @@ DBSnapper revolutionizes the way development teams handle database snapshotting,
 - [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/dbsnapper?label=DBSnapper%20Agent)](https://github.com/dbsnapper/dbsnapper/releases)
   The DBSnapper Agent interacts with your databases and communicates with the DBSnapper Cloud.
 
-- ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension) - DBSnapper Extension for VSCode, allowing you load database snapshots directly from your editor.
+- ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension) - DBSnapper Extension for VSCode, allowing you to load database snapshots directly from your editor.
 
 - [![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
   The DBSnapper Terraform Provider allows you to manage DBSnapper resources using the Terraform platform and Infrastructure as Code.
 
 - [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent)
-  The DBSnapper Github Action allows you to include DBSnapper in your CI/CD pipelines for automated management of database snapshots.
+  The DBSnapper GitHub Action allows you to include DBSnapper in your CI/CD pipelines for automated management of database snapshots.
 
 - [![Static Badge](https://img.shields.io/badge/Okta_OIDC_SSO-Learn_More-blue)](./dbsnapper-cloud/sso/sso-okta-oidc.md)
   DBSnapper supports [Okta OIDC](./dbsnapper-cloud/sso/sso-okta-oidc.md) for Single Sign-On (SSO) authentication and group sharing.
@@ -55,7 +55,7 @@ In addition to the main features of Subsetting, Snapshotting, Sanitization, and 
 - **SSO**: Single Sign-On (SSO) support enables seamless authentication and snapshot sharing with your team members.
 - **GitHub Actions Compatible**: DBSnapper works well with GitHub Actions allowing you to integrate database snapshotting into your CI/CD pipelines. A GitHub Action is available on the Marketplace that will [Install the DBSnapper Agent](https://github.com/marketplace/actions/install-dbsnapper-agent) on your GitHub runner.
 - **Presigned Upload and Downloads from Cloud Storage**: Securely upload and download snapshots from your cloud storage provider using presigned URLs.
-- **Database Support**: DBSnapper supports Postgresql and MySQL databases with more database support coming soon.
+- **Database Support**: DBSnapper supports PostgreSQL and MySQL databases with more database support coming soon.
 - **Ephemeral Sanitization**: Run sanitization operations without the need to setup a temporary sanitization database or schema.
 - **Templating Engine**: Use the built-in templating engine to allow sensitive data to be passed as environment variables.
 - **Docker Enabled**: DBSnapper leverages Docker for access to database vendor tools and utilities, ephemeral sanitization, and other operations.
@@ -84,7 +84,7 @@ DBSnapper's snapshotting capability is not just about capturing data; it's a str
 
 - **Real-world Test Cases**: Utilizing de-identified data snapshots, you can create more effective and realistic test cases. This helps in identifying potential issues in a more accurate production-like environment.
 
-- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be easily [intergrated into CI/CD pipelines such as GitHub Actions](articles/dbsnapper-github-actions-amazon-ecs.md), automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
+- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be easily [integrated into CI/CD pipelines such as GitHub Actions](articles/dbsnapper-github-actions-amazon-ecs.md), automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
 
 - **Training AI Models**: For AI and machine learning initiatives, having access to diverse, real-world data sets is crucial. DBSnapper's ability to provide de-identified snapshots of real operational data can significantly enhance the training process of AI models, leading to more accurate models.
 
@@ -92,7 +92,7 @@ DBSnapper's snapshotting capability is not just about capturing data; it's a str
 
 DBSnapper enables you to de-identify and sanitize your production data, removing sensitive information such as personal details, financial data, and other confidential information. This is crucial for ensuring compliance with data protection regulations and maintaining the privacy and security of your users.
 
-- **Data Provenance During Sanitization**: The DBSnapper tools are designed to give you can full-control over your data, ensuring that no sensitive or proprietary data leaves your environment.
+- **Data Provenance During Sanitization**: The DBSnapper tools are designed to give you full control over your data, ensuring that no sensitive or proprietary data leaves your environment.
 
 - **Adherence to GDPR and Other Regulations**: In the era of stringent data protection laws like the GDPR, CCPA, and others, DBSnapper's sanitization feature ensures that your data handling practices are compliant, reducing the risk of legal complications and hefty fines.
 
@@ -106,6 +106,6 @@ The sharing aspect of DBSnapper is made possible through the DBSnapper Cloud, a 
 
 - **Flexibility of Storage Choices**: With DBSnapper, you have the flexibility to 'Bring Your Own Cloud Storage Provider'. This means you can choose the cloud storage that best aligns with your company’s policies and data management strategies, ensuring that your data remains within your approved PaaS vendor.
 
-- **Easy Access for Team Members**: Shared snapshots are easily accessible to authorized team members. This facilitates collaboration, as team members can work with the same data sets in a synchronized manner.
+- **Easy Access for Team Members**: Shared snapshots are easily accessible to authorized team members. This facilitates collaboration, as team members can work with the same datasets in a synchronized manner.
 
 - **Integration with Automated Processes**: The DBSnapper Cloud is designed for integration with automated processes, such as CI/CD pipelines, making it simpler to incorporate database snapshots into your development and deployment workflows.
