@@ -10,10 +10,11 @@ description: DBSnapper simplifies the process of creating de-identified database
 # Welcome to DBSnapper
 
 <!-- prettier-ignore-start -->
-!!! note "Latest News - VSCode Extension Released"
+!!! note "Latest Updates"
 
-    - Our **VSCode Extension** is now available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper). The extension complements the [DBSnapper platform](https://dbsnapper.com) and allows for an in-editor experience to load database snapshots.
-    - Our **Terraform Provider** is now available on the [Terraform Registry](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest). You can now manage DBSnapper resources using the Terraform platform and Infrastructure as Code (IaC).
+    - **VSCode Extension** - Available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper) for in-editor database snapshot management
+    - **Terraform Provider** - Manage DBSnapper resources with [Infrastructure as Code](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
+    - **GitHub Actions** - Automate database snapshots in your CI/CD pipelines
     
 <!-- prettier-ignore-end -->
 
@@ -24,6 +25,14 @@ description: DBSnapper simplifies the process of creating de-identified database
 </p>
 
 DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to traditional, often cumbersome methods for creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
+
+## Quick Start
+
+Ready to get started? Here's your path to creating your first database snapshot:
+
+1. **[Install DBSnapper](installation.md)** - Get the CLI tool set up
+2. **[Quick Start Guide](quick-start.md)** - Create your first snapshot in minutes
+3. **[Sign up for DBSnapper Cloud](https://app.dbsnapper.com/sign_up)** - Share snapshots with your team
 
 ## Sign Up for DBSnapper Cloud
 
@@ -45,36 +54,47 @@ DBSnapper revolutionizes the way development teams handle database snapshotting,
 - [![Static Badge](https://img.shields.io/badge/Okta_OIDC_SSO-Learn_More-blue)](./dbsnapper-cloud/sso/sso-okta-oidc.md)
   DBSnapper supports [Okta OIDC](./dbsnapper-cloud/sso/sso-okta-oidc.md) for Single Sign-On (SSO) authentication and group sharing.
 
-## Features Overview
+## Key Features
 
-In addition to the main features of Subsetting, Snapshotting, Sanitization, and Sharing, DBSnapper offers a range of features that simplify database workload snapshotting and sharing. Here are some of the key features of DBSnapper:
+DBSnapper provides comprehensive database snapshot management with these core capabilities:
 
-- **Terraform Provider** - Manage DBSnapper resources using the Terraform platform and Infrastructure as Code.
-- **Database Subsetting**: Create smaller, relationally-complete snapshots of your database, allowing you to work with a subset of the data for development or testing purposes.
-- **Bring Your Own Storage**: Use your preferred cloud storage provider (i.e. Amazon S3 / Cloudflare R2) for storing snapshots securely in your private infrastructure.
-- **SSO**: Single Sign-On (SSO) support enables seamless authentication and snapshot sharing with your team members.
-- **GitHub Actions Compatible**: DBSnapper works well with GitHub Actions allowing you to integrate database snapshotting into your CI/CD pipelines. A GitHub Action is available on the Marketplace that will [Install the DBSnapper Agent](https://github.com/marketplace/actions/install-dbsnapper-agent) on your GitHub runner.
-- **Presigned Upload and Downloads from Cloud Storage**: Securely upload and download snapshots from your cloud storage provider using presigned URLs.
-- **Database Support**: DBSnapper supports PostgreSQL and MySQL databases with more database support coming soon.
-- **Ephemeral Sanitization**: Run sanitization operations without the need to setup a temporary sanitization database or schema.
-- **Templating Engine**: Use the built-in templating engine to allow sensitive data to be passed as environment variables.
-- **Docker Enabled**: DBSnapper leverages Docker for access to database vendor tools and utilities, ephemeral sanitization, and other operations.
-- **Zero-Config Operation**: Execute complex database workload operations in a single command without the need for complex configuration files and prerequisite setup steps.
-- **Private-cloud First**: DBSnapper is designed to work in private cloud environments, ensuring that your data remains within your infrastructure.
+### 🗄️ **Database Support & Storage**
 
-## Main Capabilities
+- **PostgreSQL and MySQL** databases with more engines coming soon
+- **Bring Your Own Storage** - Use Amazon S3, Cloudflare R2, or your preferred cloud storage
+- **Presigned URLs** for secure upload and download operations
 
-Now for a closer look at the main features of DBSnapper:
+### 🔒 **Security & Compliance**
 
-### Subsetting - Smaller snapshots, relationally complete
+- **Data Sanitization** - Remove or mask sensitive information
+- **SSO Integration** - Okta OIDC support with group-based sharing
+- **Private-cloud First** - Your data stays in your infrastructure
 
-DBSnapper 2.0 introduces **Database Subsetting**. This feature allows you to create smaller, more manageable relationally-complete snapshots of your database. This is particularly useful when you want to create a snapshot of a large database, but only need a subset of the data for development or testing purposes.
+### ⚙️ **Developer Experience**
 
-- **Efficient Data Management**: Instead of working with the entire database, which can be cumbersome and resource-intensive, you can select just the relevant parts you need. This leads to quicker operations, lower resource usage, and more efficient data handling.
+- **Zero-Config Operation** - Complex operations in a single command
+- **Terraform Provider** - Infrastructure as Code support
+- **GitHub Actions** - CI/CD pipeline integration
+- **VSCode Extension** - In-editor snapshot management
+- **Docker-Enabled** - Leverages containerization for database tools
 
-- **Maintains Data Integrity**: Despite working with a smaller dataset, the integrity and relational structure of the original database are preserved. This is crucial when developing or testing applications, as it ensures that any interactions with the subset reflect real-world scenarios.
+### 📊 **Advanced Capabilities**
 
-- **Customizable to Specific Needs**: DBSnapper 2.0 provides flexibility in defining the criteria for subsetting. Whether it's specific tables, rows, or a particular set of data, you can tailor the subset to meet the exact needs of your project.
+- **Database Subsetting** - Create smaller, relationally-complete snapshots
+- **Ephemeral Sanitization** - No need for temporary databases
+- **Templating Engine** - Environment variable support for sensitive data
+
+## Core Capabilities
+
+### 📦 Subsetting - Smaller snapshots, relationally complete
+
+Create smaller, more manageable relationally-complete snapshots of your database. Perfect for development and testing when you only need a subset of production data.
+
+**Key Benefits:**
+
+- **Efficient Data Management** - Work with relevant data only, reducing resource usage
+- **Maintains Data Integrity** - Preserves relational structure and referential integrity
+- **Customizable Criteria** - Define specific tables, rows, or data sets to include
 
 ### Snapshotting - Simplified database backups
 
