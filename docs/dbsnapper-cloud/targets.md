@@ -1,45 +1,170 @@
 ---
-title: DBSnapper Cloud Platform - Targets Page
-description: The Targets page allows you to define and manage the target settings that are used to create, store, and share your database snapshots.
+title: Targets
+description: Configure and manage database snapshot targets in DBSnapper Cloud for centralized team collaboration and automated workflows.
 ---
 
-## All Targets
+Targets are the foundation of DBSnapper Cloud's database snapshot management. A **target** defines the complete configuration for creating, sanitizing, storing, and sharing snapshots for a specific database workload.
 
-A **Target** is a configuration that defines the settings for creating, storing, and sharing snapshots for a single database workload. The Targets page displays all the targets you've defined along with any Shared Team Targets that you have access to. The Shared Team Targets require your organization to be using SSO as it leverages the organization's SSO groups to manage access to the shared targets.
+## Overview
 
-<p class="img-box">
-  <img src="/static/cloud/targets-with-shared-targets.jpg" alt="DBSnapper Cloud - All Targets" width="90%">
-  <br/>
-  <small>DBSnapper Cloud: Targets page including Shared Team Targets.</small>
-</p>
+Each target encapsulates:
 
-## Create / Edit Target
+- **Source database connection** - Where to snapshot data from
+- **Destination database connection** - Where to load snapshots (optional)
+- **Storage configurations** - Cloud storage for both raw and sanitized snapshots
+- **Sanitization rules** - Data privacy and security transformations
+- **Team sharing settings** - Access control for collaborative workflows
 
-To create a new target, click the `Add Target` button in the top right of the page. That will display a form similar to the Edit Targets page below where you can define the settings for the target.
+Targets enable teams to standardize database snapshot processes while maintaining security and compliance requirements.
 
-<p class="img-box">
-  <img src="/static/cloud/targets-edit-target.jpg" alt="DBSnapper Cloud - Edit Target" width="90%">
-  <br/>
-  <small>DBSnapper Cloud: Edit Targets page.</small>
-</p>
+## Managing Targets
 
-On this page, you can define the following settings for the target:
+### Viewing All Targets
 
-### Target Details
+The Targets page displays all your configured targets along with any shared team targets you have access to. Shared team targets are available when your organization uses SSO integration, leveraging SSO groups to manage access permissions.
 
-- **Target Name**: A unique name for the target.
+![DBSnapper Cloud - All Targets](static/cloud/targets-with-shared-targets.jpg "DBSnapper Cloud Targets page showing personal and shared team targets")
 
-### Snapshot Details
+Each target shows:
 
-- **Snapshot Database Source URL**: This is the connection string URL of the database you want to snapshot.
-- **Snapshot Database Destination URL** (Optional) - This is the connection string URL of the database where you want to load the snapshot. Remember, any database specified as a destination URL will be DROPPED and RECREATED when a snapshot is loaded.
-- **Snapshot Storage Profile (unsanitized)**: The storage profile (defined on the **Storage Profiles** page) where the _unsanitized_ snapshot will be stored.
+- **Target name** and database type
+- **Connection status** and last snapshot date
+- **Storage configuration** and sharing permissions
+- **Quick actions** for building snapshots or viewing details
 
-### Sanitization Details
+### Creating and Editing Targets
 
-- **Sanitization Database Destination URL**: (Optional) - This is the connection string URL of the database you want to use to sanitize the snapshot. This database is used as a temporary database to sanitize the snapshot before it is dumped and stored in in the **Snapshot Storage Profile (sanitized)** location. If you leave this field empty, you can use ephemeral sanitization which will use an ephemeral Docker container to perform the sanitization operation.
-- **Sharing: Share with SSO Groups** (Optional) - If your organization is enrolled in SSO, and you want to share this target's snapshots with other members of your team, you can provide a comma-delimited list of groups that should have access to the snapshots. This will allow members of the specified groups to load the **sanitized** snapshots for this target.
-- **Snapshot Storage Profile (sanitized)**: The storage profile (defined on the **Storage Profiles** page) where the _sanitized_ snapshot will be stored. Specifying different storage locations for the sanitized and unsanitized snapshots allows you to control access to the sanitized snapshots.
-- **Sanitization Query**: The SQL query that will be used to sanitize the snapshot. This query can be used to remove any sensitive data from the snapshot before it is stored in the **Snapshot Storage Profile (sanitized)** location.
+Click the **Add Target** button to create a new target or select an existing target to modify its configuration.
 
-##
+![DBSnapper Cloud - Edit Target](/static/cloud/targets-edit-target.jpg "DBSnapper Cloud target configuration form")
+
+## Target Configuration
+
+When creating or editing a target, you'll configure several key components that define how snapshots are created, processed, and shared.
+
+### Basic Information
+
+**Target Name**
+: A unique, descriptive name for this target (e.g., "production-users-db", "staging-analytics")
+
+### Database Connections
+
+**Source Database URL** _(Required)_
+: The connection string for the database you want to snapshot
+
+```text
+postgresql://username:password@host:port/database?sslmode=require
+mysql://username:password@host:port/database
+```
+
+**Destination Database URL** _(Optional)_
+: Where snapshots will be loaded for development/testing
+
+!!! warning "Destructive Operation"
+
+    The destination database will be **completely dropped and recreated** when loading snapshots. Never use production databases as destinations.
+
+### Storage Configuration
+
+**Unsanitized Storage Profile** _(Required)_
+: [Storage profile](storage_profiles.md) where raw database snapshots are stored. These contain original production data and should have restricted access.
+
+**Sanitized Storage Profile** _(Optional)_
+: [Storage profile](storage_profiles.md) where sanitized snapshots are stored. These can be shared more broadly since sensitive data has been removed.
+
+!!! tip "Security Best Practice"
+
+    Use separate storage profiles for unsanitized and sanitized snapshots to implement proper access controls.
+
+### Data Sanitization
+
+**Sanitization Database URL** _(Optional)_
+: Temporary database used for sanitization processing. If not specified, DBSnapper uses ephemeral Docker containers.
+
+**Sanitization Query** _(Optional)_
+: SQL commands to remove or mask sensitive data during the sanitization process
+
+```sql
+-- Example sanitization query
+UPDATE users SET
+  email = CONCAT('user', id, '@example.com'),
+  phone = '555-0000',
+  ssn = NULL;
+
+DELETE FROM audit_logs WHERE created_at < NOW() - INTERVAL 30 DAY;
+```
+
+### Team Collaboration
+
+**SSO Group Sharing** _(Optional)_
+: Comma-separated list of SSO groups that can access sanitized snapshots from this target
+
+```text
+developers,qa-team,data-analysts
+```
+
+!!! note "SSO Required"
+
+    Team sharing requires your organization to have [SSO integration](sso/index.md) configured.
+
+## Working with Targets
+
+### Using the DBSnapper Agent
+
+Once targets are configured in DBSnapper Cloud, you can use them with the DBSnapper Agent CLI:
+
+```bash
+# Build a snapshot using a cloud-configured target
+dbsnapper build my-production-target
+
+# Load a sanitized snapshot
+dbsnapper load my-production-target latest
+
+# Pull snapshots from cloud storage
+dbsnapper pull my-production-target
+```
+
+### Team Workflow Example
+
+1. **DevOps Engineer** creates target with production database connection and sanitization rules
+2. **Development Team** uses the target to create sanitized snapshots for local development
+3. **QA Team** accesses shared sanitized snapshots for consistent testing environments
+4. **Data Team** uses sanitized snapshots for analytics without exposing sensitive data
+
+### Security Considerations
+
+- **Connection Strings**: Use environment variable templating to avoid storing credentials in target configurations
+- **Access Control**: Leverage SSO groups to manage team access to sensitive targets
+- **Storage Separation**: Use different storage profiles for unsanitized vs sanitized snapshots
+- **Audit Trail**: Monitor target usage through DBSnapper Cloud's audit logging
+
+## Best Practices
+
+### Target Naming
+
+Use descriptive, consistent naming conventions:
+
+- Include environment: `prod-users-db`, `staging-analytics`
+- Include purpose: `users-db-for-testing`, `analytics-weekly-snapshot`
+- Avoid spaces and special characters
+
+### Connection Security
+
+- **Use read-only users** for source database connections when possible
+- **Enable SSL/TLS** for all database connections
+- **Use connection pooling** for high-frequency snapshot operations
+- **Test connectivity** before saving target configurations
+
+### Sanitization Strategy
+
+- **Start simple** with basic field masking, then iterate
+- **Preserve referential integrity** when sanitizing related data
+- **Test sanitization queries** thoroughly before production use
+- **Document sanitization rules** for compliance audits
+
+## Next Steps
+
+- **[Configure Storage Profiles](storage_profiles.md)** - Set up cloud storage for your snapshots
+- **[Set up SSO Integration](sso/index.md)** - Enable team collaboration features
+- **[Sanitization Guide](../sanitize/introduction.md)** - Learn advanced data sanitization techniques
+- **[Agent CLI Reference](../cmd/dbsnapper.md)** - Complete command-line interface documentation

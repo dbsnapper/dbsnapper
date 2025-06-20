@@ -100,7 +100,7 @@ Always review sanitization rules before loading production data
 Use subset configurations to reduce snapshot size
 ```
 
-Always put a blank line after the !!! admonition block to ensure proper rendering.
+Always put a blank line before and after admonitions for proper rendering and between the admonition and the surrounding text.
 
 ## File Naming Conventions
 
