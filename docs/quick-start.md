@@ -1,27 +1,56 @@
 ---
-title: Quick start
-description: How to quickly get started with the DBSnapper Agent and use it to build and load a database snapshot.
+title: Quick Start Guide
+description: Get started with DBSnapper in minutes - create your first sanitized database snapshot and load it into a development environment.
 ---
 
-## Really Quick Start (update)
+This guide will walk you through creating your first database snapshot with DBSnapper in just a few minutes. You'll learn how to set up the agent, configure a target database, and create a sanitized snapshot for development use.
 
-Just use the latest version of the DBSnapper container image, provide the minimum required `DBSNAPPER_SECRET_KEY` and `DBSNAPPER_AUTHTOKEN` environment variables necessary to run DBSnapper in Cloud mode, without a configuration file.
+## What You'll Accomplish
 
-```sh
-docker run -v /var/run/docker.sock:/var/run/docker.sock -e DBSNAPPER_SECRET_KEY=XXX -e DBSNAPPER_AUTHTOKEN=YYY --rm --network dbsnapper --pull always ghcr.io/dbsnapper/dbsnapper:latest dbsnapper build dvdrental-cloud
+By the end of this guide, you will have:
+
+- ✅ Configured the DBSnapper Agent
+- ✅ Connected to a database (source)
+- ✅ Created your first database snapshot
+- ✅ Loaded the snapshot into a development database
+
+## Prerequisites
+
+Before starting, ensure you have:
+
+- **DBSnapper Agent installed** - See the [installation guide](installation.md) for setup instructions
+- **A source database** - PostgreSQL or MySQL database with sample data
+- **A destination database** - Where you'll load the snapshot (can be empty)
+- **Database tools** - Either installed locally or Docker available for containerized tools
+
+<!-- prettier-ignore-start -->
+!!! tip "Need a Test Database?"
+    If you don't have a database ready, consider using the PostgreSQL `dvdrental` sample database or MySQL `sakila` database for testing.
+<!-- prettier-ignore-end -->
+
+## Option 1: Container-Based Quick Start
+
+The fastest way to get started is using the DBSnapper container with DBSnapper Cloud:
+
+```bash
+docker run -v /var/run/docker.sock:/var/run/docker.sock \
+  -e DBSNAPPER_SECRET_KEY=your_secret_key \
+  -e DBSNAPPER_AUTHTOKEN=your_auth_token \
+  --rm --network dbsnapper --pull always \
+  ghcr.io/dbsnapper/dbsnapper:latest \
+  dbsnapper build your-cloud-target
 ```
 
-This command does the following:
+This approach requires:
 
-1. It pulls the latest version of the [DBSnapper Agent container image](https://ghcr.io/dbsnapper/dbsnapper) from the GitHub Container Registry,
-2. It mounts the host Docker socket. This is optional, but necessary for ephemeral sanitization operations requiring Docker-in-Docker (DinD) support.
-3. Passes the `DBSNAPPER_SECRET_KEY` and `DBSNAPPER_AUTHTOKEN` environment variables to the container
-4. Runs the `dbsnapper build dvdrental-cloud` command to build a snapshot of the `dvdrental-cloud` target defined in the DBSnapper Cloud.
-5. If a storage profile is defined in the DBSnapper Cloud, the snapshot will be uploaded to the configured storage provider.
+1. A [DBSnapper Cloud account](https://app.dbsnapper.com/sign_up) with configured targets
+2. Your secret key and auth token from the cloud dashboard
 
-## Quick Start
+## Option 2: Local Configuration Setup
 
-In this example we will create and restore a database snapshot.
+For local development or when you want full control over configuration:
+
+### Step 1: Initialize Configuration
 
 ## Initialize the configuration file
 
@@ -82,78 +111,145 @@ dbsnapper config check
     ```
 <!-- prettier-ignore-end -->
 
-### Add target definitions
+### Step 3: Configure Database Targets
 
-Add one or more databse `targets` to configuration file. Here we define an `app` target with a `src_url` specifying the source database and a `dst_url` specifying the destination database
+Add database connection details to your configuration. A "target" defines both source and destination databases.
 
-<!-- prettier-ignore-start -->
-!!! example "Defining an app target definition"
+Open your configuration file (`~/.config/dbsnapper/dbsnapper.yml`) and add a target definition:
 
-    ```yaml
-    targets:
-      app:
-        snapshot:
-          src_url: postgresql://postgres:postgres@localhost:15432/app?sslmode=disable
-          dst_url: postgresql://postgres:postgres@localhost:15432/app_snap?sslmode=disable
-    ```
-<!-- prettier-ignore-end -->
+```yaml
+targets:
+  my_app:
+    snapshot:
+      src_url: postgresql://postgres:postgres@localhost:5432/production_app?sslmode=disable
+      dst_url: postgresql://postgres:postgres@localhost:5432/dev_app?sslmode=disable
+```
 
 <!-- prettier-ignore-start -->
-!!! danger "Danger: Destination database `dst_url` will be DROPPED and RECREATED"
 
-    A database specified on the `dst_url` will be DROPPED and RECREATED when the `load` command is used
+!!! warning "Database Safety"
+    The destination database (`dst_url`) will be **completely dropped and recreated** when loading a snapshot. Never use a production database as a destination.
+
+!!! tip "Connection Examples"
+
+    - **PostgreSQL**: `postgresql://user:password@host:port/database?sslmode=disable`
+    - **MySQL**: `mysql://user:password@host:port/database`
 <!-- prettier-ignore-end -->
 
-### List targets
+### Step 4: Verify Target Configuration
 
-Now that we have a target defined, we can list all targets with:
+List all configured targets and verify connectivity:
 
-```sh
+```bash
 dbsnapper targets
 ```
 
-This command will also check the size and connectivity status for each target defined in the configuration file.
+This command displays all targets with their connection status and database sizes. The DBSnapper UI provides a clear overview:
 
-<p class="img-box">
-  <img src="/static/tui/dbs-ui-all-targets.png" alt="DBSnapper Agent UI - All Targets" width="90%">
-  <br/>
-  <small>DBSnapper Agent UI - All Targets</small>
-</p>
+![DBSnapper Agent UI - All Targets](static/tui/dbs-ui-all-targets.png "DBSnapper Agent UI showing all configured targets")
 
-### Build a snapshot
+### Step 5: Create Your First Snapshot
 
-Now we're ready to create our first snapshot of the `app` target which can be done with the `build` command:
+Build a snapshot of your source database:
 
-```sh
-dbsnapper build app
+```bash
+dbsnapper build my_app
 ```
 
-This will connect to the database using the native dump utility and will create a dump of all data in the database.
+This command:
 
-### List snapshots for a target
+- Connects to your source database using the configured `src_url`
+- Creates a database dump using native tools (`pg_dump` for PostgreSQL, `mysqldump` for MySQL)
+- Stores the snapshot in your working directory
+- Optionally uploads to cloud storage if configured
 
-Once you've successfully built a snapshot, you can list all the sanpshots for a target with the following command (note the singular `target` command):
+<!-- prettier-ignore-start -->
+!!! tip "Snapshot Naming"
+    Snapshots are automatically timestamped and indexed. You can also add custom tags or descriptions.
+<!-- prettier-ignore-end -->
 
-```sh
-dbsnapper target app
+### Step 6: View Available Snapshots
+
+List all snapshots for a specific target:
+
+```bash
+dbsnapper target my_app
 ```
 
-<p class="img-box crop">
-  <img src="/static/tui/dbs-ui-target-snapshots.png" alt="DBSnapper Agent UI - Target Snapshots">
-    <br/>
-  <small>DBSnapper Agent UI - Target Snapshots Example</small>
-</p>
+This shows detailed information about each snapshot including size, creation time, and status:
 
-### Load a snapshot
+![DBSnapper Agent UI - Target Snapshots](static/tui/dbs-ui-target-snapshots.png "DBSnapper Agent UI showing snapshots for a target")
 
-If a `dst_url` is defined in the target definition, you can load a snapshot to the destination using the index on the snapshot list.
+### Step 7: Load a Snapshot
 
-```sh
-dbsnapper load app 0
+Load the most recent snapshot (index 0) into your destination database:
+
+```bash
+dbsnapper load my_app 0
 ```
 
 <!-- prettier-ignore-start -->
-!!! danger "Danger: Destination database `dst_url` will be DROPPED and RECREATED"
-
-    Remember, the database specified on `dst_url` will be DROPPED and a new empty database with the same name will be CREATED prior to loading the data from the snapshot!
+!!! danger "Destructive Operation"
+    The destination database will be **completely dropped and recreated**. Ensure you're not targeting a production database.
 <!-- prettier-ignore-end -->
+
+## Congratulations! 🎉
+
+You've successfully created and loaded your first database snapshot with DBSnapper. Your development database now contains a sanitized copy of your production data.
+
+## Next Steps
+
+Now that you have the basics working, explore these advanced features:
+
+### Data Sanitization
+
+Learn how to remove sensitive information from your snapshots:
+
+- **[Sanitization Overview](sanitize/introduction.md)** - Understanding data sanitization concepts
+- **[Configure Sanitization Rules](sanitize/configuration.md)** - Set up automated PII removal
+
+### Data Subsetting
+
+Reduce snapshot size by including only relevant data:
+
+- **[Subset Configuration](subset/introduction.md)** - Create smaller, focused snapshots
+
+### Team Collaboration
+
+Share snapshots securely with your team:
+
+- **[DBSnapper Cloud](dbsnapper-cloud/introduction.md)** - Central snapshot management
+- **[Storage Profiles](dbsnapper-cloud/storage_profiles.md)** - Configure cloud storage
+
+### Automation & Integration
+
+Integrate DBSnapper into your workflows:
+
+- **[GitHub Actions](articles/dbsnapper-github-actions-ecs-simplified.md)** - Automated CI/CD snapshots
+- **[VS Code Extension](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper)** - In-editor snapshot management
+- **[Terraform Provider](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)** - Infrastructure as Code
+
+## Common Issues & Troubleshooting
+
+**Connection Problems**: If `dbsnapper targets` shows connection errors, verify:
+
+- Database credentials and network connectivity
+- Database server is running and accepting connections
+- SSL/TLS settings match your database configuration
+
+**Missing Tools**: If `dbsnapper config check` reports missing tools:
+
+- Install database tools locally (`postgresql-client`, `mysql-client`)
+- Or use Docker-based engines (recommended for consistency)
+
+**Permission Errors**: Ensure the DBSnapper user has:
+
+- `SELECT` permissions on source database
+- `CREATE DATABASE` permissions on destination server
+
+## Get Help
+
+- **[Configuration Reference](configuration.md)** - Complete configuration options
+- **[Command Reference](cmd/dbsnapper.md)** - Full CLI documentation
+- **[GitHub Issues](https://github.com/dbsnapper/dbsnapper/issues)** - Report bugs or request features
+- **[Community Support](https://github.com/dbsnapper/dbsnapper/discussions)** - Get help from the community
