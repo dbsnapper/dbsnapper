@@ -88,14 +88,19 @@ Use Material theme admonitions for important information:
 
 ```markdown
 !!! note "Version Information"
+
 This feature is available in DBSnapper v2.0+
 
 !!! warning "Security Note"
+
 Always review sanitization rules before loading production data
 
 !!! tip "Pro Tip"
+
 Use subset configurations to reduce snapshot size
 ```
+
+Always put a blank line after the !!! admonition block to ensure proper rendering.
 
 ## File Naming Conventions
 

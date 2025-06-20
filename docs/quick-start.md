@@ -23,10 +23,9 @@ Before starting, ensure you have:
 - **A destination database** - Where you'll load the snapshot (can be empty)
 - **Database tools** - Either installed locally or Docker available for containerized tools
 
-<!-- prettier-ignore-start -->
 !!! tip "Need a Test Database?"
+
     If you don't have a database ready, consider using the PostgreSQL `dvdrental` sample database or MySQL `sakila` database for testing.
-<!-- prettier-ignore-end -->
 
 ## Option 1: Container-Based Quick Start
 
@@ -60,7 +59,6 @@ Run the `config init` command to create an example configuration at `~/.config/d
 dbsnapper config init
 ```
 
-<!-- prettier-ignore-start -->
 !!! example "Configuration file initialized to default values"
 
     ```yaml
@@ -70,7 +68,6 @@ dbsnapper config init
       images:
         postgres: postgres:latest
     ```
-<!-- prettier-ignore-end -->
 
 ### Check the configuration and environment
 
@@ -80,7 +77,6 @@ Next, we can check our configuration and required dependencies. This runs some c
 dbsnapper config check
 ```
 
-<!-- prettier-ignore-start -->
 !!! example "`dbsnapper config check` output"
 
     ```sh
@@ -109,7 +105,6 @@ dbsnapper config check
       ✅ Configuration OK
 
     ```
-<!-- prettier-ignore-end -->
 
 ### Step 3: Configure Database Targets
 
@@ -125,16 +120,14 @@ targets:
       dst_url: postgresql://postgres:postgres@localhost:5432/dev_app?sslmode=disable
 ```
 
-<!-- prettier-ignore-start -->
-
 !!! warning "Database Safety"
+
     The destination database (`dst_url`) will be **completely dropped and recreated** when loading a snapshot. Never use a production database as a destination.
 
 !!! tip "Connection Examples"
 
     - **PostgreSQL**: `postgresql://user:password@host:port/database?sslmode=disable`
     - **MySQL**: `mysql://user:password@host:port/database`
-<!-- prettier-ignore-end -->
 
 ### Step 4: Verify Target Configuration
 
@@ -163,10 +156,9 @@ This command:
 - Stores the snapshot in your working directory
 - Optionally uploads to cloud storage if configured
 
-<!-- prettier-ignore-start -->
 !!! tip "Snapshot Naming"
+
     Snapshots are automatically timestamped and indexed. You can also add custom tags or descriptions.
-<!-- prettier-ignore-end -->
 
 ### Step 6: View Available Snapshots
 
@@ -188,10 +180,9 @@ Load the most recent snapshot (index 0) into your destination database:
 dbsnapper load my_app 0
 ```
 
-<!-- prettier-ignore-start -->
 !!! danger "Destructive Operation"
+
     The destination database will be **completely dropped and recreated**. Ensure you're not targeting a production database.
-<!-- prettier-ignore-end -->
 
 ## Congratulations! 🎉
 
