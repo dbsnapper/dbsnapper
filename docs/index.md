@@ -9,8 +9,10 @@ description: DBSnapper simplifies the process of creating de-identified database
 
 # Welcome to DBSnapper
 
+**DBSnapper revolutionizes database snapshot workflows** by creating sanitized, development-ready snapshots of production databases. Get real-world data for development and testing while maintaining security and compliance.
+
 <!-- prettier-ignore-start -->
-!!! note "Latest Updates"
+!!! tip "Latest Updates"
 
     - **VSCode Extension** - Available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper) for in-editor database snapshot management
     - **Terraform Provider** - Manage DBSnapper resources with [Infrastructure as Code](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
@@ -18,71 +20,99 @@ description: DBSnapper simplifies the process of creating de-identified database
     
 <!-- prettier-ignore-end -->
 
+## Choose Your Path
+
+### 🚀 **New to DBSnapper?**
+Perfect for developers getting started with database snapshots.
+
+**Prerequisites:** Access to a PostgreSQL or MySQL database  
+**Time Required:** ~15 minutes
+
+1. **[System Requirements](requirements.md)** - Check your setup
+2. **[Installation Guide](installation.md)** - Get the CLI tool
+3. **[Quick Start Tutorial](quick-start.md)** - Create your first snapshot
+
+### ⚡ **Experienced Developer?**
+Jump straight to advanced configurations and integrations.
+
+**Prerequisites:** Familiarity with database operations  
+**Best For:** Teams ready to implement snapshots in production workflows
+
+1. **[How DBSnapper Works](how-it-works.md)** - Architecture overview
+2. **[Configuration Reference](configuration.md)** - Advanced setup options
+3. **[Integration Examples](articles/dbsnapper-github-actions-ecs-simplified.md)** - CI/CD workflows
+
+### 🏢 **Enterprise Team?**
+Scale database snapshots across your organization with team features.
+
+**Prerequisites:** Team database management needs  
+**Features:** SSO, team sharing, compliance tools
+
+1. **[DBSnapper Cloud Overview](dbsnapper-cloud/introduction.md)** - Platform features
+2. **[SSO Setup (Okta)](dbsnapper-cloud/sso/sso-okta-oidc.md)** - Enterprise authentication
+3. **[Team Management](dbsnapper-cloud/targets.md)** - Shared resources
+
+## Quick Migration Guides
+
+### From Traditional Database Dumps
+- **pg_dump/mysqldump users**: See [Database Engines](database-engines/introduction.md)
+- **Docker database setups**: Check [Docker Integration](database-engines/postgresql-docker.md)
+
+### From Competitor Tools
+- **From Anonymize.io**: Review [Sanitization Strategies](sanitize/introduction.md)
+- **From custom scripts**: See [Configuration Templates](configuration.md#common-patterns)
+
 <p class="img-box">
   <img src="/static/dbs-architecture.jpg" alt="DBSnapper Architecture" width="90%">
   <br/>
   <small>DBSnapper Architecture Overview</small>
 </p>
 
-DBSnapper revolutionizes the way development teams handle database snapshotting, bringing de-identified production data into the heart of development and testing workflows. It stands as a robust alternative to traditional, often cumbersome methods for creating development and test fixtures. With DBSnapper, you get to leverage real, production-grade data, stripped of its sensitive elements, to power your development and testing environments.
+## Why DBSnapper?
 
-## Quick Start
+### ✅ **The DBSnapper Advantage**
+- **Real Production Data**: Work with actual data patterns, not synthetic fixtures
+- **Privacy Compliant**: Built-in sanitization meets GDPR, HIPAA, and other regulations
+- **Zero Infrastructure**: No databases to manage - ephemeral processing only
+- **Team Ready**: Share snapshots securely with SSO and access controls
 
-Ready to get started? Here's your path to creating your first database snapshot:
+### ❌ **Traditional Challenges Solved**
+- **No More Stale Test Data**: Always work with fresh, relevant datasets
+- **End Synthetic Data Limitations**: Get realistic edge cases and data distributions  
+- **Eliminate Security Risks**: Automatic PII removal and data masking
+- **Stop Complex Setup**: One command replaces hours of database configuration
 
-1. **[Install DBSnapper](installation.md)** - Get the CLI tool set up
-2. **[Quick Start Guide](quick-start.md)** - Create your first snapshot in minutes
-3. **[Sign up for DBSnapper Cloud](https://app.dbsnapper.com/sign_up)** - Share snapshots with your team
+## Quick Help & Troubleshooting
 
-## Sign Up for DBSnapper Cloud
+### 🔧 **Common Issues**
+- **Installation Problems**: [Installation Troubleshooting](installation.md#troubleshooting)
+- **Connection Errors**: [Database Connection Guide](database-engines/introduction.md#common-connection-issues)
+- **Configuration Issues**: [Configuration Validation](configuration.md#validation-and-testing)
+- **Performance Optimization**: [Performance Best Practices](snapshot/configuration.md#performance-optimization)
 
-[Sign Up for the DBSnapper Cloud](https://app.dbsnapper.com/sign_up) and get started with a safer, simpler way to manage your database snapshots.
+### 📞 **Get Support**
+- **Community**: [GitHub Discussions](https://github.com/dbsnapper/dbsnapper/discussions)
+- **Enterprise Support**: [Contact Us](https://dbsnapper.com/contact)
+- **Bug Reports**: [GitHub Issues](https://github.com/dbsnapper/dbsnapper/issues)
 
-## Releases and Integrations
+## Platform Integrations
 
-- [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/dbsnapper?label=DBSnapper%20Agent)](https://github.com/dbsnapper/dbsnapper/releases)
-  The DBSnapper Agent interacts with your databases and communicates with the DBSnapper Cloud.
+### 🛠️ **Development Tools**
+[![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/dbsnapper?label=DBSnapper%20Agent)](https://github.com/dbsnapper/dbsnapper/releases) **DBSnapper Agent** - Core CLI tool for database operations
 
-- ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension) - DBSnapper Extension for VSCode, allowing you to load database snapshots directly from your editor.
+![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension) **VSCode Extension** - Load snapshots directly from your editor
 
-- [![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
-  The DBSnapper Terraform Provider allows you to manage DBSnapper resources using the Terraform platform and Infrastructure as Code.
+### ☁️ **Infrastructure**
+[![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest) **Terraform Provider** - Infrastructure as Code resource management
 
-- [![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent)
-  The DBSnapper GitHub Action allows you to include DBSnapper in your CI/CD pipelines for automated management of database snapshots.
+[![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent) **GitHub Actions** - CI/CD pipeline automation
 
-- [![Static Badge](https://img.shields.io/badge/Okta_OIDC_SSO-Learn_More-blue)](./dbsnapper-cloud/sso/sso-okta-oidc.md)
-  DBSnapper supports [Okta OIDC](./dbsnapper-cloud/sso/sso-okta-oidc.md) for Single Sign-On (SSO) authentication and group sharing.
+### 🔐 **Enterprise Security**
+[![Static Badge](https://img.shields.io/badge/Okta_OIDC_SSO-Learn_More-blue)](./dbsnapper-cloud/sso/sso-okta-oidc.md) **SSO Integration** - Okta OIDC authentication and group-based sharing
 
-## Key Features
+## DBSnapper Cloud
 
-DBSnapper provides comprehensive database snapshot management with these core capabilities:
-
-### 🗄️ **Database Support & Storage**
-
-- **PostgreSQL and MySQL** databases with more engines coming soon
-- **Bring Your Own Storage** - Use Amazon S3, Cloudflare R2, or your preferred cloud storage
-- **Presigned URLs** for secure upload and download operations
-
-### 🔒 **Security & Compliance**
-
-- **Data Sanitization** - Remove or mask sensitive information
-- **SSO Integration** - Okta OIDC support with group-based sharing
-- **Private-cloud First** - Your data stays in your infrastructure
-
-### ⚙️ **Developer Experience**
-
-- **Zero-Config Operation** - Complex operations in a single command
-- **Terraform Provider** - Infrastructure as Code support
-- **GitHub Actions** - CI/CD pipeline integration
-- **VSCode Extension** - In-editor snapshot management
-- **Docker-Enabled** - Leverages containerization for database tools
-
-### 📊 **Advanced Capabilities**
-
-- **Database Subsetting** - Create smaller, relationally-complete snapshots
-- **Ephemeral Sanitization** - No need for temporary databases
-- **Templating Engine** - Environment variable support for sensitive data
+[**Start Your Free Trial**](https://app.dbsnapper.com/sign_up) - Get team sharing, SSO, and managed storage in minutes.
 
 ## Core Capabilities
 

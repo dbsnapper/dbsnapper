@@ -1,0 +1,690 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files and files not matching ignore patterns, combined into a single document by Repomix.
+The content has been processed where empty lines have been removed, line numbers have been added, content has been compressed (code blocks are separated by ⋮---- delimiter).
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: **/*
+- Files matching these patterns are excluded: **/*.log, **/uv.lock, **/package-lock.json, **/.env, **/Cargo.lock, **/node_modules, **/target, **/dist, **/build, **/repomix-output.xml, **/yarn.lock, **/docs, **/spec, **/.claude
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Empty lines have been removed from all files
+- Line numbers have been added to the beginning of each line
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.github/
+  workflows/
+    ci.yml
+  copilot-instructions.md
+overrides/
+  partials/
+    integrations/
+      analytics/
+        gtm.html
+        plausible.html
+.gitignore
+.prettierrc
+CLAUDE.md
+DBSnapper DOCS.code-workspace
+mkdocs.yml
+README.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="CLAUDE.md">
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+This is the official documentation repository for **DBSnapper**, a database snapshotting tool that creates sanitized, development-ready snapshots of production databases. The site is built with MkDocs Material theme and deployed to docs.dbsnapper.com.
+
+## Development Commands
+
+### Local Development
+
+```bash
+# Install dependencies (run in CI/CD, no local requirements file)
+pip install mkdocs-material mkdocs-git-revision-date-localized-plugin pillow cairosvg mkdocs-exclude-search-plugin
+
+# Start local development server with live reload
+mkdocs serve
+
+# Build static site for deployment
+mkdocs build
+
+# Deploy to GitHub Pages (done automatically via CI/CD)
+mkdocs gh-deploy --force
+```
+
+### No Testing Framework
+
+This is a documentation-only project with no automated tests. Validation is done through:
+
+- Local preview with `mkdocs serve`
+- Manual link checking
+- Visual review of rendered content
+
+## Architecture
+
+### Technology Stack
+
+- **MkDocs** with Material theme for static site generation
+- **GitHub Pages** for hosting at docs.dbsnapper.com
+- **GitHub Actions** for automated deployment on push to main
+- **Python-based** toolchain with markdown extensions
+
+### Content Structure
+
+```
+docs/
+├── index.md                    # Welcome page
+├── how-it-works.md            # Architecture overview
+├── installation.md            # Setup instructions
+├── quick-start.md            # Getting started guide
+├── configuration.md          # Configuration reference
+├── snapshot/                 # Snapshot creation workflows
+├── sanitize/                # Data sanitization guides
+├── subset/                  # Data subsetting documentation
+├── share/                   # Sharing functionality
+├── dbsnapper-cloud/         # Cloud platform documentation
+├── database-engines/        # PostgreSQL & MySQL guides
+├── cloud-storage-engines/   # S3 & Cloudflare R2 integration
+├── cmd/                     # CLI command reference
+└── articles/                # Tutorials and use cases
+```
+
+### Key Configuration Files
+
+- `mkdocs.yml` - Site configuration, navigation, theme settings
+- `.github/workflows/ci.yml` - Automated deployment pipeline
+- `.github/copilot-instructions.md` - Comprehensive writing guidelines
+- `overrides/` - Custom theme modifications
+
+## Content Guidelines
+
+### Core Terminology
+
+- **Target** = database connection configuration
+- **Snapshot** = database backup/export
+- **Sanitization** = removing/masking sensitive data
+- **Subset** = reducing data volume
+- **DBSnapper Cloud** = SaaS platform
+- **DBSnapper Agent** = CLI tool (`dbsnapper` command)
+
+### Writing Standards
+
+- User-centric content for developers and DevOps engineers
+- Include practical code examples (YAML configs, shell commands, SQL)
+- Use Material theme admonitions for important information
+- Progressive documentation from basic to advanced features
+- Consistent file naming: lowercase with hyphens
+
+### Code Example Formats
+
+```yaml
+# YAML for configuration examples
+targets:
+  my_target:
+    database_type: postgres
+    hostname: localhost
+```
+
+```bash
+# Shell commands for CLI usage
+dbsnapper build my_target
+dbsnapper load my_target latest
+```
+
+### Adding New Documentation
+
+1. Create markdown file in appropriate directory
+2. Add navigation entry to `mkdocs.yml` under `nav:` section
+3. Include frontmatter with title and description
+4. Test locally with `mkdocs serve`
+5. Verify navigation and links work correctly
+
+### Phase Completion Protocol:
+
+When completing major refactoring phases or significant milestones:
+
+1. Update the `mkdocs.yml` file with new navigation structure
+2. Ensure all links are valid and point to the correct files
+3. Run `mkdocs serve` to preview changes
+4. Run `repomix` to pack codebase for AI context preservation
+5. Commit changes with a clear message indicating the phase completion
+
+## Deployment
+
+### Automated Pipeline
+
+- Triggers on push to main/master branches
+- Uses GitHub Actions with Ubuntu runner
+- Installs Python dependencies and deploys via `mkdocs gh-deploy --force`
+- No manual deployment needed
+
+### Dependencies
+
+No local dependency files (requirements.txt, package.json). Dependencies are installed directly in CI/CD:
+
+- mkdocs-material
+- mkdocs-git-revision-date-localized-plugin
+- pillow
+- cairosvg
+- mkdocs-exclude-search-plugin
+
+## Content Organization
+
+The documentation covers the complete DBSnapper ecosystem:
+
+- **DBSnapper Agent**: CLI tool for database operations
+- **DBSnapper Cloud**: SaaS platform for team collaboration
+- **VSCode Extension**: In-editor snapshot management
+- **Terraform Provider**: Infrastructure as Code support
+- **GitHub Actions**: CI/CD automation
+- **SSO Integration**: Enterprise authentication (Okta OIDC)
+
+Database support includes PostgreSQL and MySQL with cloud storage integration for Amazon S3 and Cloudflare R2.
+</file>
+
+<file path="DBSnapper DOCS.code-workspace">
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}
+</file>
+
+<file path=".prettierrc">
+{
+  "tabWidth": 2,
+  "useTabs": false
+}
+</file>
+
+<file path="overrides/partials/integrations/analytics/gtm.html">
+<!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-MB9Q8LB");
+</script>
+<!-- End Google Tag Manager -->
+</file>
+
+<file path="overrides/partials/integrations/analytics/plausible.html">
+<script
+  defer
+  data-domain="docs.dbsnapper.com"
+  src="https://plausible.io/js/plausible.js"
+></script>
+</file>
+
+<file path=".gitignore">
+.cache
+.venv
+.DS_Store
+</file>
+
+<file path=".github/copilot-instructions.md">
+# GitHub Copilot Instructions for DBSnapper Documentation
+
+This repository contains the MkDocs-based documentation for DBSnapper, a database snapshotting tool that creates sanitized development snapshots of production databases.
+
+## Project Overview
+
+**DBSnapper** is a tool that revolutionizes database snapshotting by bringing de-identified production data into development and testing workflows. The documentation covers:
+
+- Database snapshot creation, sanitization, and loading
+- Support for PostgreSQL and MySQL databases
+- Cloud storage integration (Amazon S3, Cloudflare R2)
+- DBSnapper Cloud platform features
+- Command-line interface documentation
+- Integration guides and tutorials
+
+## Technology Stack
+
+- **Documentation Generator**: MkDocs with Material theme
+- **Markup**: Markdown with extensions (PyMdown, Admonition, etc.)
+- **Hosting**: GitHub Pages (docs.dbsnapper.com)
+- **Styling**: Material Design with custom CSS
+- **Features**: Search, dark/light mode, navigation, social cards
+
+## Content Structure & Guidelines
+
+### Documentation Organization
+
+```
+docs/
+├── index.md                    # Welcome page and overview
+├── how-it-works.md            # Architecture and concepts
+├── installation.md            # Setup instructions
+├── quick-start.md            # Getting started guide
+├── configuration.md          # Main configuration reference
+├── snapshot/                 # Snapshot creation docs
+├── sanitize/                # Data sanitization docs
+├── subset/                  # Data subsetting docs
+├── share/                   # Sharing functionality
+├── dbsnapper-cloud/         # Cloud platform docs
+├── database-engines/        # Database-specific guides
+├── cloud-storage-engines/   # Storage provider guides
+├── cmd/                     # CLI command reference
+└── articles/                # Tutorials and guides
+```
+
+### Writing Style Guidelines
+
+1. **User-Centric**: Write from the perspective of developers and DevOps engineers
+2. **Practical**: Include code examples, configuration snippets, and screenshots
+3. **Progressive**: Start with basic concepts, build to advanced features
+4. **Consistent**: Use consistent terminology (e.g., "target" for database connection, "snapshot" for database backup)
+5. **Clear**: Use simple, direct language; avoid jargon when possible
+
+### Content Types
+
+- **Guides**: Step-by-step instructions with examples
+- **Reference**: Configuration options, CLI commands, API docs
+- **Tutorials**: End-to-end workflows and use cases
+- **Concepts**: Architecture explanations and theory
+
+### Code Examples & Configuration
+
+When adding code examples:
+
+```yaml
+# Use YAML for configuration examples
+targets:
+  my_target:
+    database_type: postgres
+    hostname: localhost
+    port: 5432
+```
+
+```bash
+# Use shell for CLI commands
+dbsnapper build my_target
+dbsnapper load my_target latest
+```
+
+```sql
+-- Use SQL for database queries
+SELECT * FROM users WHERE created_at > '2024-01-01';
+```
+
+### Admonitions
+
+Use Material theme admonitions for important information:
+
+```markdown
+!!! note "Version Information"
+
+This feature is available in DBSnapper v2.0+
+
+!!! warning "Security Note"
+
+Always review sanitization rules before loading production data
+
+!!! tip "Pro Tip"
+
+Use subset configurations to reduce snapshot size
+```
+
+Always put a blank line before and after admonitions for proper rendering and between the admonition and the surrounding text.
+
+## File Naming Conventions
+
+- Use lowercase with hyphens: `backup-amazon-rds-with-dbsnapper.md`
+- Be descriptive: `dbsnapper-github-actions-ecs-simplified.md`
+- Group related content in folders: `database-engines/postgresql-local.md`
+
+## MkDocs Configuration
+
+The site uses these key features:
+
+- **Theme**: Material with custom logo and colors
+- **Navigation**: Hierarchical menu structure defined in `mkdocs.yml`
+- **Plugins**: Git revision dates, search, social cards
+- **Extensions**: Code highlighting, tabs, task lists, emoji support
+
+## Image and Asset Guidelines
+
+- Store images in `docs/static/` directory
+- Use descriptive filenames: `amazon-rds-postgres-target-screenshot.png`
+- Include alt text for accessibility
+- Optimize file sizes for web delivery
+- Use consistent screenshot styling (browser chrome, consistent UI state)
+
+## Common Tasks
+
+### Adding New Documentation
+
+1. Create the markdown file in the appropriate directory
+2. Add navigation entry to `mkdocs.yml` under the `nav:` section
+3. Include frontmatter with title and description:
+   ```yaml
+   ---
+   title: Page Title
+   description: Brief description for SEO and social sharing
+   ---
+   ```
+
+### CLI Documentation
+
+- Command reference files follow pattern: `cmd/dbsnapper_command.md`
+- Include usage examples, common flags, and troubleshooting
+- Auto-generated from CLI help text when possible
+
+### Adding Code Examples
+
+- Prefer complete, runnable examples
+- Include context and explanation
+- Show both input and expected output
+- Use syntax highlighting for better readability
+
+## Brand and Terminology
+
+- **Product Name**: DBSnapper (not DB Snapper or dbsnapper in prose)
+- **Core Concepts**:
+  - Target = database connection configuration
+  - Snapshot = database backup/export
+  - Sanitization = removing/masking sensitive data
+  - Subset = reducing data volume
+- **Cloud Service**: DBSnapper Cloud
+- **CLI Tool**: `dbsnapper` command
+
+## Testing and Quality
+
+Before submitting documentation:
+
+1. **Local Testing**: Run `mkdocs serve` to preview changes
+2. **Link Checking**: Verify all internal and external links work
+3. **Code Examples**: Test all code snippets and configurations
+4. **Screenshots**: Ensure images are current and properly sized
+5. **Navigation**: Verify new pages appear in the navigation menu
+
+## Development Workflow
+
+When updating documentation:
+
+1. Create feature branch from main
+2. Make changes and test locally with `mkdocs serve`
+3. Commit with descriptive messages
+4. Submit pull request with documentation preview
+5. Deploy automatically triggers on merge to main
+
+This documentation serves developers, DevOps engineers, and database administrators who need to create safe, sanitized database snapshots for development and testing environments.
+</file>
+
+<file path=".github/workflows/ci.yml">
+name: ci
+on:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - uses: actions/cache@v4
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+      - run: pip install mkdocs-material mkdocs-git-revision-date-localized-plugin pillow cairosvg mkdocs-exclude-search
+      - run: mkdocs gh-deploy --force
+</file>
+
+<file path="README.md">
+<a href="https://dbsnapper.com">
+<p align="center">
+  <img alt="DBSnapper Logo" src="https://docs.dbsnapper.com/static/dbs-docs.jpg?v=3&s=200" height="300" />
+  <h3 align="center">DBSnapper</h3>
+  <p align="center">A safer, simpler tool for securing your datasets </p>
+</p>
+</a>
+
+---
+
+[![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/dbsnapper?label=DBSnapper%20Agent)](https://github.com/dbsnapper/dbsnapper/releases)
+![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension)
+[![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
+[![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent)
+[![Static Badge](https://img.shields.io/badge/Okta_OIDC_SSO-Learn_More-blue)](https://docs.dbsnapper.com/dbsnapper-cloud/sso/sso-okta-oidc/)
+
+
+DBSnapper allows development teams to safely develop against production data and use it for real-world development, testing, and model training. Create Snapshots of databases (Subset snapshots if needed), Sanitize them for development use, and Share them with your team.
+
+## Get Started with DBSnapper
+
+- [Sign Up for DBSnapper](https://app.dbsnapper.com/sign_up)
+- [DBSnapper Agent Releases](https://github.com/dbsnapper/dbsnapper/releases)
+
+## Architecture
+<p align="center" class="img-box">
+  <img src="https://docs.dbsnapper.com/static/dbs-architecture.jpg?v=3&s=200" height="300" alt="DBSnapper Architecture">
+  <br/>
+  <small>DBSnapper Architecture Overview</small>
+</p>
+
+## Integrations and Extensions
+- [Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=DBSnapper.vscode-dbsnapper)
+- [Terraform Provider](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
+- [Github Action - Install DBSnapper Agent](https://github.com/marketplace/actions/install-dbsnapper-agent)
+- [OKTA OIDC SSO Installation](https://docs.dbsnapper.com/dbsnapper-cloud/sso/sso-okta-oidc/)
+
+## Documentation
+
+- [DBSnapper Documentation](https://docs.dbsnapper.com)
+
+## Blog and Support
+
+- [Read the DBSnapper Blog](https://dbsnapper.com/blog)
+- Have questions or need support?: [Contact us](https://dbsnapper.com/contact)
+</file>
+
+<file path="mkdocs.yml">
+site_name: DBSnapper Documentation
+site_url: https://docs.dbsnapper.com
+site_description: "Create sanitized development snapshots of your production databases."
+edit_uri: ""
+copyright: Copyright &copy; 2024 Scharfnado, LLC
+repo_name: dbsnapper/dbsnapper
+repo_url: https://github.com/dbsnapper/dbsnapper
+extra_css:
+  - stylesheets/extra.css
+theme:
+  name: material
+  custom_dir: overrides
+  language: en
+  logo: static/logo.png
+  favicon: static/favicon.ico
+  icon:
+    repo: material/turtle
+  features:
+    - search.suggest
+    - search.highlight
+    - search.share
+    - navigation.indexes
+    # - navigation.sections
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+  palette:
+    - media: "(prefers-color-scheme: light)" # Light mode
+      scheme: default
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: dark)" # Dark mode
+      scheme: slate
+      primary: light blue
+      accent: indigo
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+plugins:
+  - git-revision-date-localized
+  - search
+  - social
+  - exclude-search:
+      exclude:
+        - "cmd/dbsnapper_auth.md"
+        - "cmd/dbsnapper_config.md"
+        - "configuration/secrets-encryption.md"
+        - "configuration/target-definitions.md"
+      exclude_unreferenced: true
+extra:
+  homepage: https://dbsnapper.com
+  analytics:
+    provider: gtm
+    # provider: google
+    # property: G-HWQPXED3FR
+    # provider: plausible
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/dbsnapper
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/company/dbsnapper
+    - icon: fontawesome/brands/mastodon
+      link: https://mastodon.social/@dbsnapper
+nav:
+  - Welcome: index.md
+  - Get Started:
+      - How it Works: how-it-works.md
+      - requirements.md
+      - installation.md
+      - quick-start.md
+      - Configuration Settings: configuration.md
+      - Philosophy: philosophy.md
+  - Snapshot:
+      - Introduction: snapshot/introduction.md
+      - Configuration: snapshot/configuration.md
+      - Build and Load: snapshot/build_and_load.md
+  - Subset:
+      - Introduction: subset/introduction.md
+      - Configuration: subset/configuration.md
+  - Sanitize:
+      - Introduction: sanitize/introduction.md
+      - Configuration: sanitize/configuration.md
+      - Sanitize: sanitize/sanitize.md
+  - Share:
+      - Introduction: share/introduction.md
+  - DBSnapper Cloud:
+      - Introduction: dbsnapper-cloud/introduction.md
+      - Targets: dbsnapper-cloud/targets.md
+      - Storage Profiles: dbsnapper-cloud/storage_profiles.md
+      - Single Sign-On:
+          - dbsnapper-cloud/sso/index.md
+          - Single Sign-On (SSO) Integration with Okta: dbsnapper-cloud/sso/sso-okta-oidc.md
+  - Database Engines:
+      - database-engines/introduction.md
+      - database-engines/postgresql-local.md
+      - database-engines/mysql-local.md
+      - database-engines/postgresql-docker.md
+      - database-engines/mysql-docker.md
+  - Cloud Storage Engines:
+      - cloud-storage-engines/introduction.md
+      - cloud-storage-engines/configuration.md
+      - cloud-storage-engines/cloudflare-r2.md
+      - cloud-storage-engines/amazon-s3.md
+  - Command Line Usage:
+      - cmd/dbsnapper.md
+      - cmd/dbsnapper_auth_token.md
+      - cmd/dbsnapper_config_init.md
+      - cmd/dbsnapper_config_check.md
+      - cmd/dbsnapper_subset.md
+      - cmd/dbsnapper_build.md
+      - cmd/dbsnapper_pull.md
+      - cmd/dbsnapper_sanitize.md
+      - cmd/dbsnapper_load.md
+      - cmd/dbsnapper_targets.md
+      - cmd/dbsnapper_target.md
+  - Articles:
+      - articles/useful-postgres-mysql-queries.md
+      - articles/dbsnapper-github-actions-ecs-simplified.md
+      - articles/dbsnapper-github-actions-amazon-ecs.md
+      - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
+      - articles/backup-amazon-rds-with-dbsnapper.md
+  - Release Notes: release-notes.md
+markdown_extensions:
+  # Python Markdown
+  - admonition
+  - meta
+  - footnotes
+  - attr_list
+  - def_list
+  - toc:
+      permalink: true
+  # Python Markdown Extensions
+  - pymdownx.highlight:
+      anchor_linenums: true
+      auto_title: false
+  - pymdownx.inlinehilite
+  - pymdownx.details
+  - pymdownx.tilde
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+</file>
+
+</files>
