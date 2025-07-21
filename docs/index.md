@@ -1,5 +1,5 @@
 ---
-title: Welcome
+title: Welcome to DBSnapper
 description: DBSnapper simplifies the process of creating de-identified database snapshots that can be used for real-world development, testing, and AI model training.
 ---
 
@@ -20,142 +20,303 @@ description: DBSnapper simplifies the process of creating de-identified database
     
 <!-- prettier-ignore-end -->
 
-## Choose Your Path
+## System Prerequisites
 
-### 🚀 **New to DBSnapper?**
-Perfect for developers getting started with database snapshots.
+Before getting started with DBSnapper, ensure you have:
 
-**Prerequisites:** Access to a PostgreSQL or MySQL database  
-**Time Required:** ~15 minutes
+- **Operating System**: macOS, Linux, or Windows (WSL2 recommended)
+- **Database Access**: PostgreSQL (9.6+) or MySQL (5.7+) with appropriate credentials
+- **Storage Space**: Minimum 2x your database size for snapshot operations
+- **Network Access**: Outbound HTTPS for DBSnapper Cloud features (optional)
+- **Memory**: 512MB RAM minimum, 2GB+ recommended for large databases
 
-1. **[System Requirements](requirements.md)** - Check your setup
-2. **[Installation Guide](installation.md)** - Get the CLI tool
-3. **[Quick Start Tutorial](quick-start.md)** - Create your first snapshot
+[View detailed system requirements →](requirements.md)
 
-### ⚡ **Experienced Developer?**
-Jump straight to advanced configurations and integrations.
+## Choose Your User Journey
 
-**Prerequisites:** Familiarity with database operations  
-**Best For:** Teams ready to implement snapshots in production workflows
+### 🚀 **Beginner: First Database Snapshot**
+*Perfect for developers new to database snapshots*
 
-1. **[How DBSnapper Works](how-it-works.md)** - Architecture overview
-2. **[Configuration Reference](configuration.md)** - Advanced setup options
-3. **[Integration Examples](articles/dbsnapper-github-actions-ecs-simplified.md)** - CI/CD workflows
+**What You'll Learn**: Create, sanitize, and load your first database snapshot  
+**Time Required**: ~15 minutes  
+**Prerequisites**: Basic database knowledge
 
-### 🏢 **Enterprise Team?**
-Scale database snapshots across your organization with team features.
+<div class="grid cards" markdown>
 
-**Prerequisites:** Team database management needs  
-**Features:** SSO, team sharing, compliance tools
+- :material-download:{ .lg .middle } **Step 1: Install DBSnapper**
+  
+    ---
+    
+    Download and install the CLI tool for your operating system
+    
+    [:octicons-arrow-right-24: Installation Guide](installation.md){ .md-button .md-button--primary }
 
-1. **[DBSnapper Cloud Overview](dbsnapper-cloud/introduction.md)** - Platform features
-2. **[SSO Setup (Okta)](dbsnapper-cloud/sso/sso-okta-oidc.md)** - Enterprise authentication
-3. **[Team Management](dbsnapper-cloud/targets.md)** - Shared resources
+- :material-rocket-launch:{ .lg .middle } **Step 2: Quick Start Tutorial**
+  
+    ---
+    
+    Create your first snapshot with our guided tutorial
+    
+    [:octicons-arrow-right-24: Start Tutorial](quick-start.md){ .md-button .md-button--primary }
 
-## Quick Migration Guides
+- :material-shield-check:{ .lg .middle } **Step 3: Basic Sanitization**
+  
+    ---
+    
+    Learn to remove sensitive data from snapshots
+    
+    [:octicons-arrow-right-24: Sanitization Basics](sanitize/introduction.md){ .md-button }
 
-### From Traditional Database Dumps
-- **pg_dump/mysqldump users**: See [Database Engines](database-engines/introduction.md)
-- **Docker database setups**: Check [Docker Integration](database-engines/postgresql-docker.md)
+- :material-arrow-right:{ .lg .middle } **Step 4: What's Next?**
+  
+    ---
+    
+    Explore subsetting, sharing, and automation
+    
+    [:octicons-arrow-right-24: Next Steps](#beginners-next-steps){ .md-button }
+
+</div>
+
+### ⚡ **Experienced: Production Workflows**
+*For teams ready to implement snapshots in production*
+
+**What You'll Learn**: Advanced configurations, team workflows, CI/CD integration  
+**Prerequisites**: Familiarity with database operations and DevOps practices
+
+<div class="grid cards" markdown>
+
+- :material-shield-lock:{ .lg .middle } **Architecture & Security**
+  
+    ---
+    
+    Understand DBSnapper's architecture and security model
+    
+    [:octicons-arrow-right-24: How It Works](how-it-works.md){ .md-button .md-button--primary }
+
+- :material-cog:{ .lg .middle } **Advanced Configuration**
+  
+    ---
+    
+    Master complex sanitization rules and subsetting strategies
+    
+    [:octicons-arrow-right-24: Configuration Reference](configuration.md){ .md-button .md-button--primary }
+
+- :material-account-group:{ .lg .middle } **Team Collaboration**
+  
+    ---
+    
+    Set up shared snapshots and access controls
+    
+    [:octicons-arrow-right-24: Team Workflows](share/introduction.md){ .md-button }
+
+- :material-robot:{ .lg .middle } **Automation & CI/CD**
+  
+    ---
+    
+    Integrate with GitHub Actions, Jenkins, and more
+    
+    [:octicons-arrow-right-24: Automation Guide](articles/dbsnapper-github-actions-ecs-simplified.md){ .md-button }
+
+</div>
+
+### 🏢 **Enterprise: Organization-Wide Deployment**
+*Scale database snapshots across your organization*
+
+**What You'll Learn**: SSO integration, compliance, team management  
+**Features**: Enterprise authentication, audit logs, priority support
+
+<div class="grid cards" markdown>
+
+- :material-cloud:{ .lg .middle } **DBSnapper Cloud Setup**
+  
+    ---
+    
+    Deploy the cloud platform for your organization
+    
+    [:octicons-arrow-right-24: Cloud Overview](dbsnapper-cloud/introduction.md){ .md-button .md-button--primary }
+
+- :material-login:{ .lg .middle } **SSO Configuration**
+  
+    ---
+    
+    Integrate with Okta, Azure AD, or Google Workspace
+    
+    [:octicons-arrow-right-24: SSO Setup Guide](dbsnapper-cloud/sso/sso-okta-oidc.md){ .md-button .md-button--primary }
+
+- :material-certificate:{ .lg .middle } **Compliance & Security**
+  
+    ---
+    
+    GDPR, HIPAA, and SOC 2 compliance strategies
+    
+    [:octicons-arrow-right-24: Compliance Guide](sanitize/configuration.md){ .md-button }
+
+- :material-account-cog:{ .lg .middle } **Team Management**
+  
+    ---
+    
+    Manage users, permissions, and shared resources
+    
+    [:octicons-arrow-right-24: Team Administration](dbsnapper-cloud/targets.md){ .md-button }
+
+</div>
+
+## Migration Guides
 
 ### From Competitor Tools
-- **From Anonymize.io**: Review [Sanitization Strategies](sanitize/introduction.md)
-- **From custom scripts**: See [Configuration Templates](configuration.md#common-patterns)
 
-<p class="img-box">
-  <img src="/static/dbs-architecture.jpg" alt="DBSnapper Architecture" width="90%">
-  <br/>
-  <small>DBSnapper Architecture Overview</small>
-</p>
+<div class="grid cards" markdown>
+
+- :material-database:{ .lg .middle } **From pg_dump/mysqldump**
+  
+    ---
+    
+    Migrate from native database tools to DBSnapper
+    
+    - [PostgreSQL Migration](database-engines/postgresql-local.md)
+    - [MySQL Migration](database-engines/mysql-local.md)
+
+- :material-shield-account:{ .lg .middle } **From Anonymize.io**
+  
+    ---
+    
+    Transition your anonymization rules to DBSnapper
+    
+    - [Sanitization Migration](sanitize/introduction.md)
+    - [Rule Conversion Guide](sanitize/configuration.md)
+
+- :material-script:{ .lg .middle } **From Custom Scripts**
+  
+    ---
+    
+    Replace bash scripts with DBSnapper workflows
+    
+    - [Script Migration Patterns](configuration.md)
+    - [Automation Examples](cmd/dbsnapper.md)
+
+- :material-docker:{ .lg .middle } **From Docker Setups**
+  
+    ---
+    
+    Integrate DBSnapper with containerized databases
+    
+    - [Docker Integration](database-engines/postgresql-docker.md)
+    - [MySQL Docker Setup](database-engines/mysql-docker.md)
+
+</div>
+
+## Quick Troubleshooting
+
+<!-- prettier-ignore-start -->
+!!! warning "Common Issues & Solutions"
+
+    **Installation Problems**
+    
+    - [Binary not found errors](installation.md#troubleshooting)
+    - [Permission issues](installation.md#permission-errors)
+    - [Version compatibility](installation.md#version-requirements)
+    
+    **Connection Errors**
+    
+    - [Database authentication failures](database-engines/introduction.md#authentication-issues)
+    - [Network connectivity problems](database-engines/introduction.md#network-troubleshooting)
+    - [SSL/TLS configuration](database-engines/introduction.md#ssl-configuration)
+    
+    **Snapshot Issues**
+    
+    - [Storage space problems](snapshot/configuration.md#storage-requirements)
+    - [Performance optimization](snapshot/configuration.md#performance-tuning)
+    - [Large database handling](subset/introduction.md#large-databases)
+    
+    **Configuration Problems**
+    
+    - [YAML syntax errors](configuration.md#validation-and-testing)
+    - [Environment variables](configuration.md#environment-variables)
+    - [Path resolution issues](configuration.md#path-configuration)
+<!-- prettier-ignore-end -->
+
+[View Complete Troubleshooting Guide →](troubleshooting.md)
 
 ## Why DBSnapper?
 
-### ✅ **The DBSnapper Advantage**
-- **Real Production Data**: Work with actual data patterns, not synthetic fixtures
-- **Privacy Compliant**: Built-in sanitization meets GDPR, HIPAA, and other regulations
-- **Zero Infrastructure**: No databases to manage - ephemeral processing only
-- **Team Ready**: Share snapshots securely with SSO and access controls
+<div class="grid cards" markdown>
 
-### ❌ **Traditional Challenges Solved**
-- **No More Stale Test Data**: Always work with fresh, relevant datasets
-- **End Synthetic Data Limitations**: Get realistic edge cases and data distributions  
-- **Eliminate Security Risks**: Automatic PII removal and data masking
-- **Stop Complex Setup**: One command replaces hours of database configuration
+- :material-database-check:{ .lg .middle } **Real Production Data**
+  
+    ---
+    
+    Work with actual data patterns and edge cases, not synthetic fixtures that miss real-world complexity
 
-## Quick Help & Troubleshooting
+- :material-shield-lock:{ .lg .middle } **Privacy Compliant**
+  
+    ---
+    
+    Built-in sanitization meets GDPR, HIPAA, and other regulations with automated PII removal
 
-### 🔧 **Common Issues**
-- **Installation Problems**: [Installation Troubleshooting](installation.md#troubleshooting)
-- **Connection Errors**: [Database Connection Guide](database-engines/introduction.md#common-connection-issues)
-- **Configuration Issues**: [Configuration Validation](configuration.md#validation-and-testing)
-- **Performance Optimization**: [Performance Best Practices](snapshot/configuration.md#performance-optimization)
+- :material-cloud-off:{ .lg .middle } **Zero Infrastructure**
+  
+    ---
+    
+    No databases to manage - ephemeral processing means no persistent sensitive data
 
-### 📞 **Get Support**
-- **Community**: [GitHub Discussions](https://github.com/dbsnapper/dbsnapper/discussions)
-- **Enterprise Support**: [Contact Us](https://dbsnapper.com/contact)
-- **Bug Reports**: [GitHub Issues](https://github.com/dbsnapper/dbsnapper/issues)
+- :material-account-group:{ .lg .middle } **Team Ready**
+  
+    ---
+    
+    Share snapshots securely with SSO integration and granular access controls
+
+</div>
 
 ## Platform Integrations
 
-### 🛠️ **Development Tools**
-[![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/dbsnapper?label=DBSnapper%20Agent)](https://github.com/dbsnapper/dbsnapper/releases) **DBSnapper Agent** - Core CLI tool for database operations
+### Development Tools
+[![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/dbsnapper?label=DBSnapper%20Agent)](https://github.com/dbsnapper/dbsnapper/releases) **DBSnapper Agent** - Core CLI tool
 
-![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension) **VSCode Extension** - Load snapshots directly from your editor
+![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/dbsnapper.vscode-dbsnapper?label=VSCode%20Extension) **VSCode Extension** - In-editor snapshot management
 
-### ☁️ **Infrastructure**
-[![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest) **Terraform Provider** - Infrastructure as Code resource management
+### Infrastructure & Automation
+[![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fprovider-versions%2F55330&query=%24.data.attributes.tag&label=Terraform%20Provider)](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest) **Terraform Provider** - Infrastructure as Code
 
-[![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent) **GitHub Actions** - CI/CD pipeline automation
+[![GitHub Release](https://img.shields.io/github/v/release/dbsnapper/install-dbsnapper-agent-action?label=Github%20Action%20-%20Install%20DBSnapper%20Agent)](https://github.com/marketplace/actions/install-dbsnapper-agent) **GitHub Actions** - CI/CD automation
 
-### 🔐 **Enterprise Security**
-[![Static Badge](https://img.shields.io/badge/Okta_OIDC_SSO-Learn_More-blue)](./dbsnapper-cloud/sso/sso-okta-oidc.md) **SSO Integration** - Okta OIDC authentication and group-based sharing
+### Enterprise Security
+[![Static Badge](https://img.shields.io/badge/Okta_OIDC_SSO-Learn_More-blue)](./dbsnapper-cloud/sso/sso-okta-oidc.md) **SSO Integration** - Enterprise authentication
 
-## DBSnapper Cloud
+## Get Started Now
 
-[**Start Your Free Trial**](https://app.dbsnapper.com/sign_up) - Get team sharing, SSO, and managed storage in minutes.
+<div class="grid cards" markdown>
 
-## Core Capabilities
+- :material-rocket-launch:{ .lg .middle } **Try DBSnapper Free**
+  
+    ---
+    
+    Download the CLI and create your first snapshot in minutes
+    
+    [:octicons-arrow-right-24: Download DBSnapper](installation.md){ .md-button .md-button--primary }
 
-### 📦 Subsetting - Smaller snapshots, relationally complete
+- :material-cloud:{ .lg .middle } **Start Cloud Trial**
+  
+    ---
+    
+    Get team sharing, SSO, and managed storage with DBSnapper Cloud
+    
+    [:octicons-arrow-right-24: Start Free Trial](https://app.dbsnapper.com/sign_up){ .md-button .md-button--primary }
 
-Create smaller, more manageable relationally-complete snapshots of your database. Perfect for development and testing when you only need a subset of production data.
+</div>
 
-**Key Benefits:**
+## Beginner's Next Steps
 
-- **Efficient Data Management** - Work with relevant data only, reducing resource usage
-- **Maintains Data Integrity** - Preserves relational structure and referential integrity
-- **Customizable Criteria** - Define specific tables, rows, or data sets to include
+After completing the quick start tutorial, explore these features:
 
-### Snapshotting - Simplified database backups
+1. **[Data Subsetting](subset/introduction.md)** - Create smaller, focused snapshots
+2. **[Advanced Sanitization](sanitize/configuration.md)** - Complex data masking rules
+3. **[Snapshot Sharing](share/introduction.md)** - Collaborate with your team
+4. **[Automation Setup](articles/dbsnapper-github-actions-ecs-simplified.md)** - CI/CD integration
+5. **[Performance Tuning](snapshot/configuration.md#performance-optimization)** - Optimize for large databases
 
-DBSnapper offers an efficient and powerful solution for snapshotting databases that simplifies the snapshotting process for different database platforms.
+## Get Support
 
-DBSnapper's snapshotting capability is not just about capturing data; it's a strategic tool that integrates into and enhances the entire software development lifecycle. From creating realistic test environments and aiding in AI model training to providing essential support in CI/CD pipelines, DBSnapper stands as an indispensable asset for any software development team aiming to streamline and improve their database management and utilization in a modern startup environment.
-
-- **Real-world Test Cases**: Utilizing de-identified data snapshots, you can create more effective and realistic test cases. This helps in identifying potential issues in a more accurate production-like environment.
-
-- **Seamless Integration with CI/CD Pipelines**: DBSnapper can be easily [integrated into CI/CD pipelines such as GitHub Actions](articles/dbsnapper-github-actions-amazon-ecs.md), automating the process of generating snapshots for your team and ensuring the team is using the latest and most accurate data for testing.
-
-- **Training AI Models**: For AI and machine learning initiatives, having access to diverse, real-world data sets is crucial. DBSnapper's ability to provide de-identified snapshots of real operational data can significantly enhance the training process of AI models, leading to more accurate models.
-
-### Sanitization - De-identification and sensitive data removal
-
-DBSnapper enables you to de-identify and sanitize your production data, removing sensitive information such as personal details, financial data, and other confidential information. This is crucial for ensuring compliance with data protection regulations and maintaining the privacy and security of your users.
-
-- **Data Provenance During Sanitization**: The DBSnapper tools are designed to give you full control over your data, ensuring that no sensitive or proprietary data leaves your environment.
-
-- **Adherence to GDPR and Other Regulations**: In the era of stringent data protection laws like the GDPR, CCPA, and others, DBSnapper's sanitization feature ensures that your data handling practices are compliant, reducing the risk of legal complications and hefty fines.
-
-- **Maintaining Data Utility Post-Sanitization**: Despite the removal of sensitive data, the utility and integrity of the dataset are preserved, making it suitable for development, testing, and analysis without compromising privacy.
-
-### Share - Securely distribute snapshots via DBSnapper Cloud
-
-The sharing aspect of DBSnapper is made possible through the DBSnapper Cloud, a critical feature for secure storage and distribution of database snapshots. It's designed for seamless collaboration within your team or for integration with automated processes.
-
-- **SSO-Aware Team Sharing**: DBSnapper Cloud supports Single Sign-On (SSO), and is SSO-Group aware, allowing you to easily share snapshots with your team members, using the groups you've already set up in your SSO provider.
-
-- **Flexibility of Storage Choices**: With DBSnapper, you have the flexibility to 'Bring Your Own Cloud Storage Provider'. This means you can choose the cloud storage that best aligns with your company’s policies and data management strategies, ensuring that your data remains within your approved PaaS vendor.
-
-- **Easy Access for Team Members**: Shared snapshots are easily accessible to authorized team members. This facilitates collaboration, as team members can work with the same datasets in a synchronized manner.
-
-- **Integration with Automated Processes**: The DBSnapper Cloud is designed for integration with automated processes, such as CI/CD pipelines, making it simpler to incorporate database snapshots into your development and deployment workflows.
+- **Community**: [GitHub Discussions](https://github.com/dbsnapper/dbsnapper/discussions)
+- **Bug Reports**: [GitHub Issues](https://github.com/dbsnapper/dbsnapper/issues)
+- **Enterprise Support**: [Contact Us](https://dbsnapper.com/contact)
+- **Documentation Feedback**: [Docs Issues](https://github.com/dbsnapper/dbsnapper-docs/issues)
