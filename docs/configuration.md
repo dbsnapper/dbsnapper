@@ -1,464 +1,735 @@
 ---
-title: Configuration Settings
-description: DBSnapper configuration file and description of settings
+title: Configuration Guide
+description: Complete guide to configuring DBSnapper for your database snapshot workflows - from basic setup to advanced enterprise features.
 ---
 
-The DBSnapper configuration file specifies your local targets along with system settings such as working directory, DBSnapper Cloud authentication token, defaults, overrides, and much more. This file is located at `~/.config/dbsnapper/dbsnapper.yml` by default.
+# Configuration Guide
 
-## Sample Configuration
+DBSnapper uses a YAML configuration file to define your database targets, storage profiles, and system settings. This guide will take you from basic setup to advanced enterprise configurations.
 
 <!-- prettier-ignore-start -->
-!!! example "`~/.config/dbsnapper/dbnsapper.yml`"
+!!! tip "Quick Start"
 
-    ```yaml linenums="1"
-    authtoken: 1234567890abcdef1234567890abcdef....
-    working_directory: /Users/snappy/.dbsnapper
-    secret_key: 1234567890abcdef1234567890abcdef
-    docker:
-      images:
-        mysql: mysql:8-oracle
-        postgres: postgres:16-alpine
-    # Target configurations
-    targets:
-      sakila:
-        name: sakila
-        # Snapshot configuration
-        snapshot:
-          src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
-          dst_url: mysql://root:mysql@localhost:3306/sakila_snap?tls=false
-        # Sanitization configuration
-        sanitize:
-          dst_url: mysql://root:mysql@localhost:3306/sakila_sanitized?tls=false
-          query_file: "sakila.san.sql"
-        # Subsetting configuration
-        subset:
-          src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
-          dst_url: mysql://root:mysql@localhost:3306/sakila_subset?tls=false
-          subset_tables:
-            - table: sakila.film
-              where: "film_id < 20"
-            - table: sakila.actor
-              percent: 20
-          copy_tables:
-            - sakila.store
-          excluded_tables:
-            - sakila.staff
-          added_relationships:
-            - fk_table: sakila.address
-              fk_columns: city_id
-              ref_table: sakila.city
-              ref_columns: id
-          excluded_relationships:
-            - fk_table: sakila.store
-              ref_table: sakila.staff
-      
-      # New for 2.3.0: Sharing Targets
-      dvdrental-share:
-        name: dvdrental-share
-        share:
-          dst_url: postgres://postgres:postgres@localhost:5432/dvdrental_share
-          storage_profile_name: s3-from-awscli-profile
-
-    # New for 2.6.0: Overrides - Sanitization Query and Destination Database     
-    override:
-      san_query: RFJPUCBUQUJMRSBJRiBFWElTVFMgZGJzbmFwcGVyX2luZm87CkNSRUFURSBUQUJMRSBkYnNuYXBwZXJfaW5mbyAoY3JlYXRlZF9hdCB0aW1lc3RhbXAsIHRhZ3MgdGV4dCBbXSk7CklOU0VSVCBJTlRPIGRic25hcHBlcl9pbmZvIChjcmVhdGVkX2F0LCB0YWdzKQpWQUxVRVMgKE5PVygpLCAne3F1ZXJ5OnNhbl9xdWVyeV9vdmVycmlkZSwgbG9jYXRpb246Y2xvdWR9Jyk7
-      dst_db_url: postgres://postgres:postgres@localhost:15432/dbsnapper_dst_db_override
-
-    # New for 2.7.0: Default Destination Database for Team Sharing
-    defaults:
-      shared_target_dst_db_url: postgres://postgres:postgres@localhost:15432/dbsnapper_dst_db_default
-
-
-
-    # Storage profiles for sharing configurations
-    storage_profiles:
-      # All Profiles:
-      # Leave access_key and secret_key to use a profile
-      # Leave the awscli_profile empty to use the default profile
-      # If the endpoint is specified in the profile it will override the
-      # endpoint specified in this configuration.
-
-      # S3
-      s3-from-credentials:
-        provider: s3
-        awscli_profile:
-        access_key: <access_key>
-        secret_key: <secret_key>
-        region: <region>
-        bucket: dbsnapper-test-s3
-        prefix:
-
-      s3-from-awscli-profile:
-        provider: s3
-        awscli_profile: dbsnapper_credentials
-        bucket: dbsnapper-test-s3
-        prefix:
-
-      # R2
-      # Uses the account ID to create the endpoint url.
-      # Can be omitted if the r2 endpoint_url is specified in the awscli config.
-      # Or set the following Env Variables and leave the awscli_profile empty:
-      # AWS_ACCESS_KEY
-      # AWS_SECRET_KEY"
-      # AWS_ENDPOINT_URL"
-      r2-from-credentials:
-        provider: r2
-        awscli_profile:
-        access_key: <access_key>
-        secret_key: <secret_key>
-        account_id: <account_id>
-        bucket: dbsnapper-test-r2
-        prefix:
-
-      r2-from-awscli-profile:
-        provider: r2
-        awscli_profile: r2_production
-        account_id: # optional if enpoint_url set in profile
-        bucket: dbsnapper-test-r2
-        prefix: 
-
-      r2-from-env-or-default-awscli_profile:
-        provider: r2
-        bucket: dbsnapper-test-r2
-        prefix: sanitized
-
-      # Minio
-      minio-from-credentials:
-        provider: minio
-        awscli_profile:
-        access_key: <access_key>
-        secret_key: <secret_key>
-        endpoint: http://localhost:9000
-        bucket: dbsnapper-test-minio
-        prefix:
-
-      # Digital Ocean Spaces
-      # Endpoint shold be set to the endpoint of the spaces region i.e. nyc3 below
-      dospaces-from-credentials:
-        provider: dospaces
-        awscli_profile:
-        access_key: <access_key>
-        secret_key: <secret_key>
-        endpoint: https://nyc3.digitaloceanspaces.com
-        bucket: dbsnapper-test-do
-        prefix:
-    ```
+    **New to DBSnapper?** Start with the [Basic Configuration](#basic-configuration) section below.
+    
+    **Already using DBSnapper?** Jump to [Advanced Configuration](#advanced-configuration) or use the navigation menu to find specific topics.
 <!-- prettier-ignore-end -->
 
-## Environment Variable Support
+## Configuration File Location
 
-DBSnapper can be configured exclusively through environment variables if you don't want to rely on a configuration file. All configuration options can be represented as environment variables through a specific naming convention involving prefixing the environment variable with `DBSNAPPER` and replacing periods with two underscores `__`. Some examples include:
+The DBSnapper configuration file is located at:
 
-- `docker.images.postgres` -> `DBSNAPPER_DOCKER__IMAGES__POSTGRES: postgres:latest` # Sets the docker image to use for the postgres containers
-- `defaults.shared_target_dst_db_url` -> `DBSNAPPER_DEFAULTS__SHARED_TARGET_DST_DB_URL: <connstring>` # Sets the default destination database URL for shared targets
-- `override.san_query` -> `DBSNAPPER_OVERRIDE__SAN_QUERY: <base-64-encoded-value>` # Sets a query to use for sanitization overriding any existing queries.
+- **Linux/macOS**: `~/.config/dbsnapper/dbsnapper.yml`
+- **Windows (WSL2)**: `~/.config/dbsnapper/dbsnapper.yml`
 
-## Configuration details by section
+Create this file using:
 
-```yaml linenums="1"
-authtoken: 1234567890abcdef1234567890abcdef....
-working_directory: /Users/snappy/.dbsnapper
+```bash
+dbsnapper config init
+```
+
+## Basic Configuration
+
+Start with these essential configurations to get DBSnapper working quickly.
+
+### Minimal Working Example
+
+```yaml title="~/.config/dbsnapper/dbsnapper.yml" linenums="1"
+# Basic DBSnapper configuration
+secret_key: 1234567890abcdef1234567890abcdef
+working_directory: ~/.dbsnapper
+
+# Your first target
+targets:
+  my_app:
+    snapshot:
+      src_url: postgresql://user:password@localhost:5432/production_db
+      dst_url: postgresql://user:password@localhost:5432/development_db
+```
+
+<!-- prettier-ignore-start -->
+!!! success "What This Does"
+
+    This basic configuration:
+    
+    - Sets up encryption with a secret key
+    - Defines where snapshots are stored locally
+    - Creates one target called `my_app`
+    - Connects to your production database as source
+    - Loads snapshots into your development database
+<!-- prettier-ignore-end -->
+
+### Essential Settings Explained
+
+#### Secret Key
+```yaml
 secret_key: 1234567890abcdef1234567890abcdef
 ```
+- **Purpose**: Encrypts your snapshots for security
+- **Format**: 32-character hexadecimal string (16 bytes)
+- **Auto-generated**: Created by `dbsnapper config init`
+- **Environment**: Can use `DBSNAPPER_SECRET_KEY` instead
 
-`authtoken` (`string` optional)
-: Auth token used to authenticate with the DBSnapper Cloud. Can also be provided via the `DBSNAPPER_AUTHTOKEN` environment variable.
+#### Working Directory
+```yaml
+working_directory: ~/.dbsnapper
+```
+- **Purpose**: Where snapshots are stored locally
+- **Default**: `~/.dbsnapper`
+- **Requirements**: Must have write permissions
+- **Space**: Ensure enough disk space (2x your largest database)
 
-`working_directory` (`string` optional)
-: Working directory used to store database snapshots. Defaults to `~/.dbsnapper`
+#### Basic Target Definition
+```yaml
+targets:
+  my_app:  # Target name (choose any identifier)
+    snapshot:
+      src_url: postgresql://user:pass@host:port/database
+      dst_url: postgresql://user:pass@host:port/database
+```
 
-`secret_key` (`string[32]`)
-: 16 byte hexadecimal string (32 characters) that acts as your encryption key. Created on `init`. Can be provided via the `DBSNAPPER_SECRET_KEY` environment variable instead of in configuration file.
+### Common Database Connection Examples
 
-### Docker
+#### PostgreSQL
+```yaml
+targets:
+  postgres_app:
+    snapshot:
+      src_url: postgresql://postgres:mypassword@localhost:5432/production?sslmode=require
+      dst_url: postgresql://postgres:mypassword@localhost:5432/development?sslmode=disable
+```
 
-```yaml linenums="4"
+#### MySQL
+```yaml
+targets:
+  mysql_app:
+    snapshot:
+      src_url: mysql://root:mypassword@localhost:3306/production?tls=true
+      dst_url: mysql://root:mypassword@localhost:3306/development?tls=false
+```
+
+#### Using Environment Variables
+```yaml
+targets:
+  secure_app:
+    snapshot:
+      src_url: postgresql://{{`DB_USER` | env}}:{{`DB_PASS` | env}}@{{`DB_HOST` | env}}/{{`DB_NAME` | env}}
+      dst_url: postgresql://postgres:postgres@localhost:5432/development
+```
+
+<!-- prettier-ignore-start -->
+!!! warning "Destination Database Safety"
+
+    **The destination database will be completely dropped and recreated** when loading snapshots.
+    
+    **Never use a production database as a destination!**
+    
+    Always verify your `dst_url` points to a development/testing database.
+<!-- prettier-ignore-end -->
+
+### Validation and Testing
+
+After creating your configuration, validate it:
+
+```bash
+# Check configuration syntax and database connections
+dbsnapper config check
+
+# List configured targets
+dbsnapper targets
+
+# Test connection to a specific target
+dbsnapper targets my_app
+```
+
+Expected `config check` output:
+```
+✅ Config file found and loaded
+✅ PostgreSQL tools available
+✅ Target 'my_app' source: Connected
+✅ Target 'my_app' destination: Connected
+✅ Configuration OK
+```
+
+## Intermediate Configuration
+
+Add these features as your needs grow.
+
+### Docker Database Support
+
+If you use Docker for databases, add Docker engine configuration:
+
+```yaml
+# Enable Docker-based database engines
 docker:
   images:
-    mysql: mysql:8-oracle
     postgres: postgres:16-alpine
-```
+    mysql: mysql:8.0
 
-`docker`
-: Docker specific configuration setings
-
-docker: `images`
-: Docker images to use for database engines
-
-docker: images: `<image_name>: <value>`
-: specifies the docker image to use for a given database engine. In the example above the `mysql` and `postgres` docker images have been defined. See [Database Engines](database-engines/introduction.md) for more information.
-
-### Targets
-
-```yaml linenums="9"
 targets:
-  sakila:
-    name: sakila
+  docker_app:
+    snapshot:
+      src_url: postgresql://postgres:password@localhost:5432/production
+      dst_url: postgresql://postgres:password@localhost:5433/development
+    # Use Docker engine instead of local tools
+    engine: pgdocker
 ```
 
-`targets`
-: One or more target definitions to be used for snapshotting, subsetting, and sanitization.
+### Basic Data Sanitization
 
-targets: `<target_name>`
-: Identifier for the target definition, must be unique.
-
-targets: <target_name\>: `name`
-: The name of the target - can be different from the target identifier, but the target identifier is used in the agent.
-
-### Target Snapshot
-
-```yaml linenums="13"
-snapshot:
-  src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
-  dst_url: mysql://root:mysql@localhost:3306/sakila_snap?tls=false
-```
-
-`snapshot`
-: Snapshot configuration for the target
-
-`src_url`
-: Connection string of source database
-
-`dst_url`
-: Connection string of destination database
-
-<!-- prettier-ignore-start -->
-!!! danger
-
-    A database specified on the `dst_url` will be DROPPED and RECREATED when the `load`, `sanitize`, and `subset` commands are used
-<!-- prettier-ignore-end -->
-
-### Target Sanitization
-
-```yaml linenums="17"
-sanitize:
-  dst_url: mysql://root:mysql@localhost:3306/sakila_sanitized?tls=false
-  query_file: "sakila.san.sql"
-```
-
-<!-- prettier-ignore-start -->
-`sanitize`
-:   Sanitization configuration for the target
-
-`dst_url`
-:   Connection string for the database where you will sanitize the snapshot (will be overwritten)
-
-`query_file`
-:   Specifies the filename of the query to be used for sanitization. This query should be located in the `working_directory` specified in the configuration.
-
-<!-- prettier-ignore-end -->
-
-### Target Subsetting
-
-```yaml linenums="21"
-subset:
-  src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
-  dst_url: mysql://root:mysql@localhost:3306/sakila_subset?tls=false
-  subset_tables:
-    - table: sakila.film
-      where: "film_id < 20"
-    - table: sakila.actor
-      percent: 20
-  copy_tables:
-    - sakila.store
-  excluded_tables:
-    - sakila.staff
-  added_relationships:
-    - fk_table: sakila.address
-      fk_columns: city_id
-      ref_table: sakila.city
-      ref_columns: id
-  excluded_relationships:
-    - fk_table: sakila.store
-      ref_table: sakila.staff
-```
-
-Let's look at each section of this configuration in detail.
-
-#### Subset Connection Strings
-
-```yaml linenums="21"
-subset:
-  src_url: mysql://root:mysql@localhost:13306/sakila?tls=false
-  dst_url: mysql://root:mysql@localhost:3306/sakila_subset?tls=false
-```
-
-`subset`
-: Subset configuration for the target
-
-`src_url`
-: Connection string of source database
-
-`dst_url`
-: Connection string for the database where the subset will be created (will be overwritten)
-
-#### Initial Tables to Subset
-
-```yaml linenums="24"
-subset_tables:
-  - table: sakila.film
-    where: "film_id < 20"
-  - table: sakila.actor
-    percent: 20
-```
-
-`subset_tables`
-
-: List of tables to be subsetted. The subset tables are the initial tables of interest, and the `where` and `percent` clauses can be used to control the portion of each table to be included in the subset. Rows from other tables are included as needed to maintain referential integrity with the subset tables.
-
-`table`
-: The name of the table to be subsetted. All tables are specified in the format `schema.table`.
-
-`where`
-: Providing a `where` clause will subset the table based on the condition specified.
-
-`percent`
-: Specifying the `percent` clause will take a random sample of the table based on the percentage specified.
-
-<!-- prettier-ignore-start -->
-!!! note "`subset_tables` clauses"
-
-    One (and only one) of the `where` or `percent` clauses must be provided for each table in the `subset_tables` list.
-<!-- prettier-ignore-end -->
-
-#### Tables to Copy or Exclude
-
-```yaml linenums="29"
-copy_tables:
-  - sakila.store
-excluded_tables:
-  - sakila.staff
-```
-
-`copy_tables`
-: List of tables to be copied in whole to the subset database (`dst_url`). These tables are copied as-is from the source database to the subset database.
-
-`excluded_tables`
-: List of tables to be excluded from the subset database (`dst_url`). These tables are not copied to the subset database.
-
-#### Defining Relationships
-
-```yaml linenums="33"
-added_relationships:
-  - fk_table: sakila.address
-    fk_columns: city_id
-    ref_table: sakila.city
-    ref_columns: id
-excluded_relationships:
-  - fk_table: sakila.store
-    ref_table: sakila.staff
-```
-
-<!-- prettier-ignore-start -->
-
-`added_relationships`
-:   List of table relationships to be considered. These relationships are added to the configuration when a set of tables have a foreign key relationship that is not defined in the database schema via foreign key constraints.
-
-    Each `added_relationships` entry is defined by the `fk_table`, `fk_columns`, `ref_table`, and `ref_columns` attributes.
-
-`excluded_relationships` 
-:   List of table relationships to be excluded. A relationship should be excluded when a **circular dependency** is detected in the database schema. This can occur when a table has a foreign key relationship to another table that also has a foreign key relationship back to the original table.
-
-    Each `excluded_relationships` entry is defined by the `fk_table` and `ref_table` attributes.
-<!-- prettier-ignore-end -->
-
-## Connection String Templates (v2.1.0)
-
-All connection string URLs now support templating. This allows you to access environment variables in the connection string URLs. For example, you can now use the following connection string URL for a Postgres database:
+Remove sensitive data during snapshots:
 
 ```yaml
-snapshot:
-  src_url: postgres://{{`DB_USER` | env}}:{{`DB_PASSWORD` | env}}@localhost:5432/{{`DB_NAME` | env}}
+targets:
+  ecommerce_app:
+    snapshot:
+      src_url: postgresql://postgres:password@localhost:5432/production
+      dst_url: postgresql://postgres:password@localhost:5432/development
+    # Add sanitization
+    sanitize:
+      dst_url: postgresql://postgres:password@localhost:5432/sanitized_dev
+      queries:
+        - "UPDATE users SET email = 'user' || id || '@example.com'"
+        - "UPDATE users SET ssn = 'XXX-XX-' || RIGHT(ssn, 4)"
+        - "UPDATE orders SET credit_card = 'XXXX-XXXX-XXXX-' || RIGHT(credit_card, 4)"
 ```
 
-In this example we are indicating we want the username, password, and database name to be read from the `DB_USER`, `DB_PASSWORD`, and `DB_NAME` environment variables, respectively.
+### Basic Data Subsetting
 
-Templates conform to Go Templates syntax. Specify the `env` function to read the value from the environment.
+Create smaller snapshots with related data:
 
 ```yaml
-{{`ENV_VAR` | env}} # substitute the value of the ENV_VAR environment variable
-{{`CONSTANT`}} # substitute the supplied `CONSTANT` value
+targets:
+  large_app:
+    snapshot:
+      src_url: postgresql://postgres:password@localhost:5432/production
+      dst_url: postgresql://postgres:password@localhost:5432/development
+    # Add subsetting for large databases
+    subset:
+      src_url: postgresql://postgres:password@localhost:5432/production
+      dst_url: postgresql://postgres:password@localhost:5432/subset_dev
+      subset_tables:
+        - table: public.users
+          where: "created_at > NOW() - INTERVAL '30 days'"
+        - table: public.orders
+          percent: 10
+      copy_tables:
+        - public.products
+        - public.categories
 ```
 
-## Sharing Target (v2.3.0)
+### Environment Variable Configuration
 
-Added in v2.3.0, a sharing target allows you to specify a target definition that can be used to access shared snapshots on a cloud storage provider.
+For CI/CD or containerized deployments, use environment variables:
 
-### Sharing sanitized snapshots
+```bash
+# Set via environment instead of config file
+export DBSNAPPER_SECRET_KEY="1234567890abcdef1234567890abcdef"
+export DBSNAPPER_WORKING_DIRECTORY="/tmp/dbsnapper"
+export DBSNAPPER_AUTHTOKEN="your-cloud-token"
 
-In v.2.2.0, we added the ability to specify different cloud storage locations for original (unsanitized) and sanitized snapshots. This allows you to securely share sanitized snapshots with developers and other third parties while keeping the unsanitized snapshots private. You specify the different storage locations in the on the target settings page of the DBSnapper Cloud.
+# Target-specific environment variables
+export DBSNAPPER_TARGETS__MY_APP__SNAPSHOT__SRC_URL="postgresql://..."
+export DBSNAPPER_TARGETS__MY_APP__SNAPSHOT__DST_URL="postgresql://..."
+```
 
-### Accessing the share
+Environment variable naming convention:
+- Prefix with `DBSNAPPER_`
+- Replace periods with double underscores `__`
+- Use uppercase
 
-To access the shared snapshots, you need to create a new target definition in your configuration file. The target definition should include the `share` section with the `dst_url` and `storage_profile_name` attributes.
+Examples:
+- `docker.images.postgres` → `DBSNAPPER_DOCKER__IMAGES__POSTGRES`
+- `targets.my_app.snapshot.src_url` → `DBSNAPPER_TARGETS__MY_APP__SNAPSHOT__SRC_URL`
 
-<!-- prettier-ignore-start -->
-!!! example "Specifying a Sharing Target"
+## Advanced Configuration
 
-    ```yaml
-    # New for 2.3.0: Sharing Targets
-    dvdrental-share:
-      name: dvdrental-share
-      share:
-        dst_url: postgres://postgres:postgres@localhost:5432/dvdrental_share
-        storage_profile_name: s3-dbsnapper-sanitized
-    ```
-<!-- prettier-ignore-end -->
+Enterprise features for production environments.
 
-The example above shows a sharing target named `dvdrental-share`. The `dst_url` attribute specifies the connection string that will be used when loading any of the shared snapshots.
+### DBSnapper Cloud Integration
 
-The `storage_profile_name` attribute specifies the name of a storage profile that will be used to access the shared snapshots. In the example above we are using the `s3-dbsnapper-sanitized` storage profile to access the shared snapshots. This storage profile must be defined in the `storage_profiles` section of the configuration file.
+Connect to DBSnapper Cloud for team sharing and managed storage:
 
-<!-- prettier-ignore-start -->
-!!! example "Storage profile configuration"
+```yaml
+# Cloud authentication
+authtoken: your-cloud-auth-token-here
 
-    ```yaml
-    storage_profiles:
-      s3-dbsnapper-sanitized
-        provider: s3
-        awscli_profile:
-        access_key: <access_key>
-        secret_key: <secret_key>
-        region: <region>
-        bucket: dbsnapper-sanitized
-        prefix:
-    ```
-<!-- prettier-ignore-end -->
+# Default destination for shared snapshots
+defaults:
+  shared_target_dst_db_url: postgresql://postgres:password@localhost:5432/shared_snapshots
 
-The example above shows the configuration for the `s3-dbsnapper-sanitized` storage profile. This storage profile specifies the connection details for the cloud storage provider where the shared snapshots are stored. It also specifies the `bucket` and `prefix` where the shared snapshots are stored.
+# Cloud storage profiles
+storage_profiles:
+  production_s3:
+    provider: s3
+    awscli_profile: dbsnapper-prod
+    bucket: company-dbsnapper-snapshots
+    prefix: production/
+    region: us-east-1
+  
+  development_s3:
+    provider: s3
+    access_key: AKIA...
+    secret_key: secret...
+    bucket: company-dbsnapper-dev
+    prefix: development/
+    region: us-west-2
 
-## Overrides (v2.6.0)
+# Sharing targets
+targets:
+  shared_production:
+    share:
+      dst_url: postgresql://postgres:password@localhost:5432/shared_prod
+      storage_profile_name: production_s3
+```
 
-Added in v2.6.0, the `override` section allows you to specify a custom sanitization query and destination database for a target. This is useful when you want to override the default sanitization query and destination database for a target.
+### Advanced Sanitization Patterns
 
-<!-- prettier-ignore-start -->
-```yaml title="Override configuration settings" linenums="1"
-# New for 2.6.0: Overrides - Sanitization Query and Destination Database     
+#### GDPR Compliance
+```yaml
+targets:
+  gdpr_compliant:
+    sanitize:
+      dst_url: postgresql://postgres:password@localhost:5432/gdpr_safe
+      queries:
+        # Personal identifiers
+        - "UPDATE users SET email = 'deleted_' || id || '@example.com'"
+        - "UPDATE users SET first_name = 'User', last_name = id::text"
+        - "UPDATE users SET phone = NULL, address = NULL"
+        
+        # Right to be forgotten
+        - "DELETE FROM user_activity WHERE user_id IN (SELECT id FROM users WHERE gdpr_delete_requested = true)"
+        - "UPDATE users SET email = 'deleted@example.com', status = 'deleted' WHERE gdpr_delete_requested = true"
+        
+        # Data minimization
+        - "UPDATE users SET birth_date = NULL WHERE created_at < NOW() - INTERVAL '2 years'"
+```
+
+#### HIPAA Compliance
+```yaml
+targets:
+  hipaa_safe:
+    sanitize:
+      dst_url: postgresql://postgres:password@localhost:5432/hipaa_compliant
+      queries:
+        # PHI removal
+        - "UPDATE patients SET ssn = 'XXX-XX-' || RIGHT(ssn, 4)"
+        - "UPDATE patients SET first_name = 'Patient', last_name = id::text"
+        - "UPDATE patients SET email = 'patient' || id || '@hospital.local'"
+        - "UPDATE patients SET phone = '555-0' || LPAD((id % 10000)::text, 3, '0')"
+        
+        # Medical record sanitization
+        - "UPDATE medical_records SET notes = 'Sanitized for development use'"
+        - "UPDATE prescriptions SET notes = NULL"
+        
+        # Audit trail preservation
+        - "INSERT INTO sanitization_log (table_name, record_count, sanitized_at) VALUES ('patients', (SELECT COUNT(*) FROM patients), NOW())"
+```
+
+#### Financial Data Sanitization
+```yaml
+targets:
+  financial_safe:
+    sanitize:
+      dst_url: postgresql://postgres:password@localhost:5432/financial_dev
+      queries:
+        # PCI DSS compliance
+        - "UPDATE credit_cards SET number = '4111111111111' || RIGHT(number, 4)"
+        - "UPDATE credit_cards SET cvv = '123', expiry_date = '12/25'"
+        
+        # Account number masking
+        - "UPDATE bank_accounts SET account_number = 'XXXX-XXXX-' || RIGHT(account_number, 4)"
+        - "UPDATE bank_accounts SET routing_number = '123456789'"
+        
+        # Transaction amount obfuscation (preserving patterns)
+        - "UPDATE transactions SET amount = ROUND((amount * 0.1 + (RANDOM() * amount * 0.2))::numeric, 2)"
+        
+        # SSN handling
+        - "UPDATE customers SET ssn = 'XXX-XX-' || RIGHT(ssn, 4)"
+```
+
+### Complex Subsetting Strategies
+
+#### Time-Based Subsetting
+```yaml
+targets:
+  recent_data:
+    subset:
+      src_url: postgresql://postgres:password@localhost:5432/production
+      dst_url: postgresql://postgres:password@localhost:5432/recent_subset
+      subset_tables:
+        # Recent orders with cascading relationships
+        - table: public.orders
+          where: "created_at > NOW() - INTERVAL '90 days'"
+        
+        # Active users only
+        - table: public.users
+          where: "last_login > NOW() - INTERVAL '180 days' AND status = 'active'"
+        
+        # Sample of products (for variety)
+        - table: public.products
+          percent: 25
+      
+      # Always include reference data
+      copy_tables:
+        - public.countries
+        - public.currencies
+        - public.product_categories
+        - public.payment_methods
+      
+      # Skip large audit tables
+      excluded_tables:
+        - public.audit_logs
+        - public.session_tracking
+        - public.email_logs
+```
+
+#### Geographic Subsetting
+```yaml
+targets:
+  regional_subset:
+    subset:
+      src_url: postgresql://postgres:password@localhost:5432/production
+      dst_url: postgresql://postgres:password@localhost:5432/us_west_subset
+      subset_tables:
+        # Focus on specific geographic regions
+        - table: public.stores
+          where: "region IN ('US-WEST', 'US-CENTRAL')"
+        
+        # Customers in those regions
+        - table: public.customers
+          where: "country = 'US' AND state IN ('CA', 'OR', 'WA', 'NV', 'AZ', 'CO')"
+        
+        # Orders from those stores/customers (handled by relationships)
+        
+      # Define relationships if not in schema
+      added_relationships:
+        - fk_table: public.orders
+          fk_columns: store_id
+          ref_table: public.stores
+          ref_columns: id
+        - fk_table: public.orders
+          fk_columns: customer_id
+          ref_table: public.customers
+          ref_columns: id
+```
+
+### Multi-Environment Configuration
+
+#### Development Team Setup
+```yaml
+# Shared team configuration
+authtoken: team-shared-token
+
+defaults:
+  shared_target_dst_db_url: postgresql://postgres:password@localhost:5432/team_shared
+
+targets:
+  # Production snapshots (read-only for developers)
+  production_readonly:
+    share:
+      dst_url: postgresql://postgres:password@localhost:5432/prod_readonly
+      storage_profile_name: production_s3_readonly
+  
+  # Staging environment
+  staging:
+    snapshot:
+      src_url: postgresql://staging_user:password@staging.company.com:5432/app
+      dst_url: postgresql://postgres:password@localhost:5432/staging_local
+    sanitize:
+      dst_url: postgresql://postgres:password@localhost:5432/staging_sanitized
+      queries:
+        - "UPDATE users SET email = 'dev' || id || '@company-staging.com'"
+  
+  # Feature development
+  feature_branch:
+    snapshot:
+      src_url: postgresql://postgres:password@localhost:5432/staging_sanitized
+      dst_url: postgresql://postgres:password@localhost:5432/feature_dev
+    subset:
+      src_url: postgresql://postgres:password@localhost:5432/staging_sanitized
+      dst_url: postgresql://postgres:password@localhost:5432/feature_subset
+      subset_tables:
+        - table: public.users
+          percent: 5
+        - table: public.orders
+          where: "created_at > NOW() - INTERVAL '30 days'"
+
+storage_profiles:
+  production_s3_readonly:
+    provider: s3
+    awscli_profile: company-prod-readonly
+    bucket: company-prod-snapshots
+    prefix: sanitized/
+    region: us-east-1
+```
+
+### Configuration Overrides
+
+For specific deployment scenarios:
+
+```yaml
+# Global overrides (applied to all operations)
 override:
-  san_query: RFJPUCBUQUJMRSBJRiBFWElTVFMgZGJzbmFwcGVyX2luZm87CkNSRUFURSBUQUJMRSBkYnNuYXBwZXJfaW5mbyAoY3JlYXRlZF9hdCB0aW1lc3RhbXAsIHRhZ3MgdGV4dCBbXSk7CklOU0VSVCBJTlRPIGRic25hcHBlcl9pbmZvIChjcmVhdGVkX2F0LCB0YWdzKQpWQUxVRVMgKE5PVygpLCAne3F1ZXJ5OnNhbl9xdWVyeV9vdmVycmlkZSwgbG9jYXRpb246Y2xvdWR9Jyk7
-  dst_db_url: postgres://postgres:postgres@localhost:15432/dbsnapper_dst_db_override
+  # Custom sanitization query (base64 encoded)
+  san_query: VVBEQVRFIHVzZXJzIFNFVCBlbWFpbCA9ICdkZXYnIHx8IGlkIHx8ICdAZXhhbXBsZS5jb20n
+  
+  # Override destination database for all operations
+  dst_db_url: postgresql://postgres:password@localhost:15432/override_destination
+
+# Environment-specific defaults
+defaults:
+  shared_target_dst_db_url: postgresql://postgres:password@localhost:5432/shared_default
 ```
-<!-- prettier-ignore-end -->
 
-### Sanitization Query Override
+## Configuration Templates
 
-The `san_query` attribute allows you to specify a custom sanitization query for a target. This query will be used instead of the default sanitization query specified in the `sanitize` section of the target.
+### E-commerce Application
+```yaml title="ecommerce-template.yml"
+secret_key: your-secret-key-here
+working_directory: ~/.dbsnapper
 
-The `san_query` attribute must be base64 encoded.
+docker:
+  images:
+    postgres: postgres:16-alpine
+    mysql: mysql:8.0
 
-### Destination Database Override
-
-The `dst_db_url` attribute allows you to provide a destination database connection string that will be used for any operation that requires a destination database. This is useful when you want to override the destination database location configured in the target definition.
-
-## Defaults (v2.7.0)
-
-<!-- prettier-ignore-start -->
-```yaml title="Default configuration settings" linenums="1"
-
-    # New for 2.7.0: Default Destination Database for Team Sharing
-    defaults:
-      shared_target_dst_db_url: postgres://postgres:postgres@localhost:15432/dbsnapper_dst_db_default
+targets:
+  ecommerce_prod:
+    snapshot:
+      src_url: postgresql://{{`PROD_DB_USER` | env}}:{{`PROD_DB_PASS` | env}}@{{`PROD_DB_HOST` | env}}/ecommerce
+      dst_url: postgresql://postgres:postgres@localhost:5432/ecommerce_dev
+    
+    sanitize:
+      dst_url: postgresql://postgres:postgres@localhost:5432/ecommerce_sanitized
+      queries:
+        # Customer data
+        - "UPDATE customers SET email = 'customer' || id || '@example.com'"
+        - "UPDATE customers SET first_name = 'Customer', last_name = id::text"
+        - "UPDATE customers SET phone = '555-0' || LPAD((id % 1000)::text, 3, '0')"
+        
+        # Payment data
+        - "UPDATE payment_methods SET card_number = '4111111111111' || RIGHT(card_number, 4)"
+        - "UPDATE payment_methods SET cvv = '123'"
+        
+        # Order amounts (preserve patterns)
+        - "UPDATE orders SET total_amount = ROUND((total_amount * 0.8 + RANDOM() * total_amount * 0.4)::numeric, 2)"
+    
+    subset:
+      src_url: postgresql://postgres:postgres@localhost:5432/ecommerce_sanitized
+      dst_url: postgresql://postgres:postgres@localhost:5432/ecommerce_subset
+      subset_tables:
+        - table: public.customers
+          where: "created_at > NOW() - INTERVAL '6 months'"
+        - table: public.products
+          percent: 30
+      copy_tables:
+        - public.categories
+        - public.brands
+        - public.countries
 ```
-<!-- prettier-ignore-end -->
 
-Similar to the `override` section, the `defaults` section allows you to specify a default destination database for shared team snapshots. Snapshots shared with a team do not use the destination database specified in the target definition. Instead, each team member must set a default shared target destination database in their configuration file.
+### SaaS Multi-Tenant Application
+```yaml title="saas-template.yml"
+secret_key: your-secret-key-here
+authtoken: your-cloud-token-here
+
+targets:
+  saas_tenant_demo:
+    snapshot:
+      src_url: postgresql://{{`DB_USER` | env}}:{{`DB_PASS` | env}}@{{`DB_HOST` | env}}/saas_prod
+      dst_url: postgresql://postgres:postgres@localhost:5432/saas_demo
+    
+    sanitize:
+      dst_url: postgresql://postgres:postgres@localhost:5432/saas_demo_sanitized
+      queries:
+        # Tenant isolation preserved
+        - "UPDATE users SET email = tenant_id || '_user' || (id % 1000) || '@demo.com'"
+        - "UPDATE users SET first_name = 'Demo', last_name = 'User' || (id % 1000)"
+        
+        # Organization data
+        - "UPDATE organizations SET name = 'Demo Org ' || id"
+        - "UPDATE organizations SET domain = 'demo-org-' || id || '.example.com'"
+        
+        # Preserve tenant relationships but sanitize content
+        - "UPDATE tenant_data SET sensitive_field = 'demo_value_' || (id % 100)"
+    
+    subset:
+      src_url: postgresql://postgres:postgres@localhost:5432/saas_demo_sanitized
+      dst_url: postgresql://postgres:postgres@localhost:5432/saas_demo_subset
+      subset_tables:
+        # Keep 2-3 demo tenants with full data
+        - table: public.organizations
+          where: "id IN (1, 2, 3)"
+      
+      # Exclude tenant-specific large tables
+      excluded_tables:
+        - public.audit_logs
+        - public.usage_metrics
+        - public.backup_data
+
+storage_profiles:
+  demo_storage:
+    provider: s3
+    bucket: company-demo-snapshots
+    prefix: sanitized/
+    awscli_profile: demo-profile
+```
+
+### Development Team Template
+```yaml title="team-template.yml"
+# Team shared configuration
+authtoken: team-shared-token-here
+secret_key: team-shared-secret-key
+
+defaults:
+  shared_target_dst_db_url: postgresql://postgres:postgres@localhost:5432/team_shared
+
+targets:
+  # Production snapshots (shared, sanitized)
+  prod_shared:
+    share:
+      dst_url: postgresql://postgres:postgres@localhost:5432/prod_shared
+      storage_profile_name: team_s3
+  
+  # Personal development database
+  personal_dev:
+    snapshot:
+      src_url: postgresql://postgres:postgres@localhost:5432/prod_shared
+      dst_url: postgresql://postgres:postgres@localhost:5432/{{`USER` | env}}_dev
+    
+    subset:
+      src_url: postgresql://postgres:postgres@localhost:5432/prod_shared
+      dst_url: postgresql://postgres:postgres@localhost:5432/{{`USER` | env}}_subset
+      subset_tables:
+        - table: public.users
+          percent: 1
+        - table: public.orders
+          where: "created_at > NOW() - INTERVAL '7 days'"
+
+storage_profiles:
+  team_s3:
+    provider: s3
+    awscli_profile: team-profile
+    bucket: team-snapshots
+    prefix: shared/sanitized/
+```
+
+## Troubleshooting Configuration
+
+### Common Configuration Issues
+
+#### YAML Syntax Errors
+```bash
+# Validate YAML syntax
+python -c "import yaml; print('Valid YAML' if yaml.safe_load(open('~/.config/dbsnapper/dbsnapper.yml')) else 'Invalid YAML')"
+
+# Check with DBSnapper
+dbsnapper config check
+```
+
+Common YAML mistakes:
+- **Indentation**: Use spaces, not tabs
+- **Quoting**: Quote values with special characters
+- **Lists**: Use `- item` format with proper indentation
+
+#### Connection String Issues
+```bash
+# Test database connectivity separately
+psql "postgresql://user:pass@host:port/database" -c "SELECT version();"
+mysql -h host -P port -u user -p database -e "SELECT VERSION();"
+
+# Check DBSnapper connection
+dbsnapper targets target_name
+```
+
+#### Environment Variable Problems
+```bash
+# Check environment variables
+env | grep DBSNAPPER
+
+# Test template expansion
+dbsnapper config check --debug
+```
+
+#### Permission Issues
+```bash
+# Check file permissions
+ls -la ~/.config/dbsnapper/
+
+# Ensure directory is writable
+touch ~/.config/dbsnapper/test && rm ~/.config/dbsnapper/test
+
+# Check working directory permissions
+mkdir -p ~/.dbsnapper && touch ~/.dbsnapper/test && rm ~/.dbsnapper/test
+```
+
+### Configuration Validation Commands
+
+```bash
+# Comprehensive configuration check
+dbsnapper config check
+
+# Verify specific target
+dbsnapper targets my_target
+
+# Test connection strings
+dbsnapper config check --target my_target --verbose
+
+# Validate storage profiles
+dbsnapper config check --storage-profiles
+
+# Check environment variable expansion
+dbsnapper config dump --resolve-env
+```
+
+### Performance Optimization
+
+#### Large Database Configuration
+```yaml
+# Optimize for large databases (>100GB)
+targets:
+  large_db:
+    snapshot:
+      src_url: postgresql://user:pass@host/large_db?sslmode=require
+      dst_url: postgresql://user:pass@localhost/large_db_local?sslmode=disable
+      # Increase timeout for large databases
+      timeout: 3600
+      # Use compression
+      compression: true
+      # Parallel processing
+      parallel_workers: 4
+
+working_directory: /data/dbsnapper  # Use fast storage
+```
+
+#### Memory Usage Optimization
+```yaml
+# For memory-constrained environments
+working_directory: /tmp/dbsnapper  # Use temporary storage
+docker:
+  memory_limit: 2g  # Limit Docker memory usage
+  images:
+    postgres: postgres:16-alpine  # Use smaller images
+```
+
+## Next Steps
+
+### Basic Users
+1. **[Create Your First Snapshot](quick-start.md)** - Test your configuration
+2. **[Add Sanitization](sanitize/introduction.md)** - Remove sensitive data
+3. **[Set Up Team Sharing](dbsnapper-cloud/introduction.md)** - Collaborate securely
+
+### Advanced Users
+1. **[Subset Configuration](subset/introduction.md)** - Optimize snapshot size
+2. **[Storage Profiles](cloud-storage-engines/introduction.md)** - Configure cloud storage
+3. **[CI/CD Integration](articles/dbsnapper-github-actions-ecs-simplified.md)** - Automate workflows
+
+### Enterprise Teams
+1. **[DBSnapper Cloud Setup](dbsnapper-cloud/introduction.md)** - Team management
+2. **[SSO Configuration](dbsnapper-cloud/sso/sso-okta-oidc.md)** - Enterprise authentication
+3. **[Compliance Documentation](sanitize/configuration.md)** - Regulatory requirements
+
+---
+
+**Need help?** Check our [troubleshooting guide](troubleshooting.md) or [contact support](https://dbsnapper.com/contact).
