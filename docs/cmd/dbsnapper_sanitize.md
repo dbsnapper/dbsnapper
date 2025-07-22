@@ -1,11 +1,16 @@
 ---
 title: "dbsnapper sanitize"
-description: "DBSnapper Agent Command Reference: 'dbsnapper sanitize' - Used to sanitize a snapshot"
+description: "DBSnapper Agent Command Reference for 'dbsnapper sanitize'"
+weight: 100
 ---
+
+# dbsnapper sanitize
+
+## dbsnapper sanitize
+
 Used to sanitize a snapshot
 
 ### Synopsis
-
 
 The `dbsnapper sanitize` command sanitizes the specified database snapshot and takes a `target_name` and `snapshot_index` as arguments.
 	
@@ -43,6 +48,11 @@ dbsnapper sanitize [flags] target_name snapshot_index
 
 ```
   -e, --ephemeral   Create a snapshot using an ephemeral database via docker containers
+  -h, --help        help for sanitize
   -n, --new         Create a new snapshot set for the target
 ```
+
+### SEE ALSO
+
+* [dbsnapper](dbsnapper.md)	 - Simplifies the process of creating de-identified database snapshots that can be used for real-world development, testing, and AI model training.
 

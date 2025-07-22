@@ -1,11 +1,16 @@
 ---
 title: "dbsnapper pull"
-description: "DBSnapper Agent Command Reference: 'dbsnapper pull' - Retrieve a snapshot and store it locally"
+description: "DBSnapper Agent Command Reference for 'dbsnapper pull'"
+weight: 100
 ---
+
+# dbsnapper pull
+
+## dbsnapper pull
+
 Retrieve a snapshot and store it locally
 
 ### Synopsis
-
 
 The `dbsnapper pull` command downloads a snapshot from the DBsnapper Cloud or finds it locally. the `pull` command takes  `target_name` and `snapshot_index` as arguments.
 
@@ -26,6 +31,11 @@ dbsnapper pull <target_name> [snapshot_index] [flags]
 ### Options
 
 ```
+  -h, --help       help for pull
   -o, --original   Use the original snapshot instead of the sanitized version.
 ```
+
+### SEE ALSO
+
+* [dbsnapper](dbsnapper.md)	 - Simplifies the process of creating de-identified database snapshots that can be used for real-world development, testing, and AI model training.
 

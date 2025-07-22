@@ -1,11 +1,16 @@
 ---
 title: "dbsnapper target"
-description: "DBSnapper Agent Command Reference: 'dbsnapper target' - Used to list snapshots for a target"
+description: "DBSnapper Agent Command Reference for 'dbsnapper target'"
+weight: 100
 ---
+
+# dbsnapper target
+
+## dbsnapper target
+
 Used to list snapshots for a target
 
 ### Synopsis
-
 
  The `target` command lists all snapshots for a `target_name`.
 
@@ -22,8 +27,14 @@ dbsnapper target target_name [flags]
 
 ```
       --destdb string   Destination Database URL Override - Will Overwrite any existing destination database!!!
+  -h, --help            help for target
+      --info            Output database and table stats using
       --noui            Disable the Terminal UI
   -o, --original        Use the original snapshot instead of the sanitized version.
   -u, --update          Update the db info for all targets (default true)
 ```
+
+### SEE ALSO
+
+* [dbsnapper](dbsnapper.md)	 - Simplifies the process of creating de-identified database snapshots that can be used for real-world development, testing, and AI model training.
 

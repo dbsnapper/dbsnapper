@@ -13,3 +13,9 @@ DBSnapper is a database snapshot creation and management tool for developers.
 	You can specify your database targets and other configuration properties in the `~/.config/dbsnapper/dbsnapper.yml` configuration file.
 	
 
+### Options
+
+```
+      --config string   config file (default is $HOME/.config/dbsnapper/dbsnapper.yml)
+```
+
