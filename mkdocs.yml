@@ -108,6 +108,9 @@ nav:
       - cloud-storage-engines/configuration.md
       - cloud-storage-engines/cloudflare-r2.md
       - cloud-storage-engines/amazon-s3.md
+  - Commands:
+      - commands/build.md
+      - commands/load.md
   - Command Line Usage:
       - cmd/dbsnapper.md
       - cmd/dbsnapper_auth_token.md
