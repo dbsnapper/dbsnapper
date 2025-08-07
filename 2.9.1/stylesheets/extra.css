@@ -1,0 +1,54 @@
+.md-nav {
+  font-size: 0.7rem;
+  line-height: 1.3;
+}
+.md-nav__title {
+  font-size: 0.8rem;
+  color: #000;
+  display: block;
+  font-weight: 700;
+  overflow: hidden;
+  padding: 0 0.6rem;
+  text-overflow: ellipsis;
+}
+
+.md-nav__item--section > .md-nav__link[for] {
+  font-size: 0.75rem;
+  color: #0000009a;
+}
+
+.img-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px solid red; */
+}
+
+.img-box img {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 2px solid blue;
+  border-radius: 0.5rem;
+}
+
+.img-box small {
+}
+
+.crop {
+  overflow: hidden;
+  height: 360px;
+}
+.crop img {
+  margin: 237px 0 0 0px;
+  border: none;
+}
+
+/* Code font size small  */
+pre code {
+  font-size: 0.8rem;
+}
+
+.md-typeset code {
+  font-size: 0.6rem;
+}

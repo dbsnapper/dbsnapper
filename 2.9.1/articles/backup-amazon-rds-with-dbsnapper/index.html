@@ -1,0 +1,2764 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="In this tutorial, we show how to easily backup Amazon RDS databases using DBSnapper. We'll cover how to launch DBSnapper and backup an Amazon RDS database in a private VPC.">
+      
+      
+      
+        <link rel="canonical" href="https://docs.dbsnapper.com/2.9.1/articles/backup-amazon-rds-with-dbsnapper/">
+      
+      
+        <link rel="prev" href="../creating-sanitized-database-snapshots-with-dbsnapper/">
+      
+      
+        <link rel="next" href="../../release-notes/">
+      
+      
+      <link rel="icon" href="../../static/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>Backup Amazon RDS Databases with DBSnapper - DBSnapper Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  <!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-MB9Q8LB");
+</script>
+<!-- End Google Tag Manager -->
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Backup Amazon RDS Databases with DBSnapper - DBSnapper Documentation" >
+      
+        <meta  property="og:description"  content="In this tutorial, we show how to easily backup Amazon RDS databases using DBSnapper. We'll cover how to launch DBSnapper and backup an Amazon RDS database in a private VPC." >
+      
+        <meta  property="og:image"  content="https://docs.dbsnapper.com/2.9.1/assets/images/social/articles/backup-amazon-rds-with-dbsnapper.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://docs.dbsnapper.com/2.9.1/articles/backup-amazon-rds-with-dbsnapper/" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Backup Amazon RDS Databases with DBSnapper - DBSnapper Documentation" >
+      
+        <meta  name="twitter:description"  content="In this tutorial, we show how to easily backup Amazon RDS databases using DBSnapper. We'll cover how to launch DBSnapper and backup an Amazon RDS database in a private VPC." >
+      
+        <meta  name="twitter:image"  content="https://docs.dbsnapper.com/2.9.1/assets/images/social/articles/backup-amazon-rds-with-dbsnapper.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#backup-amazon-rds-databases-with-dbsnapper" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://dbsnapper.com" title="DBSnapper Documentation" class="md-header__button md-logo" aria-label="DBSnapper Documentation" data-md-component="logo">
+      
+  <img src="../../static/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DBSnapper Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Backup Amazon RDS Databases with DBSnapper
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dbsnapper/dbsnapper" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.47 5.95c.48-.28 1-.51 1.53-.67V4c0-1.1.87-2 1.97-2.03C13.13 2 14 2.9 14 4v1.28c.53.17 1.05.39 1.53.67l-1.6 2.12h-3.86zM19 12c0 .5-.05.95-.14 1.4l-2.53-.78-1.19-3.66 1.6-2.11q.645.6 1.14 1.35c.79-.07 1.55.05 2.23.39 1.03.53 1.73 1.54 1.89 2.69l-3 .36zM5 12v-.35l-3-.37c.16-1.15.86-2.16 1.89-2.69a3.54 3.54 0 0 1 2.19-.33c.33-.51.71-.98 1.16-1.39l1.62 2.08-1.19 3.67-2.53.78C5.05 12.95 5 12.5 5 12m5.24-2.43h3.52l1.09 3.36L12 15l-2.85-2.07zm-2.11 4.48 3.12 2.26v2.65c-.57-.06-1.12-.19-1.63-.38l-1.23 2.76a3.49 3.49 0 0 1-2.02-2.58c-.14-.76-.02-1.52.32-2.2-.45-.52-.82-1.1-1.1-1.74zm7.74 0 2.54.77c-.28.64-.65 1.22-1.1 1.74.34.68.46 1.44.33 2.2a3.52 3.52 0 0 1-2.03 2.58l-1.22-2.76c-.53.19-1.06.36-1.64.42v-2.69z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dbsnapper/dbsnapper
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://dbsnapper.com" title="DBSnapper Documentation" class="md-nav__button md-logo" aria-label="DBSnapper Documentation" data-md-component="logo">
+      
+  <img src="../../static/logo.png" alt="logo">
+
+    </a>
+    DBSnapper Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dbsnapper/dbsnapper" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.47 5.95c.48-.28 1-.51 1.53-.67V4c0-1.1.87-2 1.97-2.03C13.13 2 14 2.9 14 4v1.28c.53.17 1.05.39 1.53.67l-1.6 2.12h-3.86zM19 12c0 .5-.05.95-.14 1.4l-2.53-.78-1.19-3.66 1.6-2.11q.645.6 1.14 1.35c.79-.07 1.55.05 2.23.39 1.03.53 1.73 1.54 1.89 2.69l-3 .36zM5 12v-.35l-3-.37c.16-1.15.86-2.16 1.89-2.69a3.54 3.54 0 0 1 2.19-.33c.33-.51.71-.98 1.16-1.39l1.62 2.08-1.19 3.67-2.53.78C5.05 12.95 5 12.5 5 12m5.24-2.43h3.52l1.09 3.36L12 15l-2.85-2.07zm-2.11 4.48 3.12 2.26v2.65c-.57-.06-1.12-.19-1.63-.38l-1.23 2.76a3.49 3.49 0 0 1-2.02-2.58c-.14-.76-.02-1.52.32-2.2-.45-.52-.82-1.1-1.1-1.74zm7.74 0 2.54.77c-.28.64-.65 1.22-1.1 1.74.34.68.46 1.44.33 2.2a3.52 3.52 0 0 1-2.03 2.58l-1.22-2.76c-.53.19-1.06.36-1.64.42v-2.69z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dbsnapper/dbsnapper
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Welcome
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Get Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Get Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-it-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How it Works
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Requirements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DBSnapper Agent Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration Settings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../philosophy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Philosophy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Snapshot
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Snapshot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../snapshot/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../snapshot/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../snapshot/build_and_load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build and Load
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Subset
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Subset
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../subset/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../subset/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sanitize
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Sanitize
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sanitize/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sanitize/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sanitize/sanitize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sanitize
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Share
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Share
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../share/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DBSnapper Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            DBSnapper Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbsnapper-cloud/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbsnapper-cloud/targets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Targets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbsnapper-cloud/storage_profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Storage Profiles
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../dbsnapper-cloud/sso/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Single Sign-On
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            Single Sign-On
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbsnapper-cloud/sso/sso-okta-oidc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Single Sign-On (SSO) Integration with Okta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Database Engines
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Database Engines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/postgresql-local/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PostgreSQL Local (postgres://)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/mysql-local/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MySQL Local (mysql://)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/postgresql-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PostgreSQL Docker (pgdocker://)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/mysql-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MySQL Docker (mydocker://)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud Storage Engines
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud Storage Engines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-storage-engines/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cloud Storage Engines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-storage-engines/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Storage Engine Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-storage-engines/cloudflare-r2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cloudflare R2 Storage Engine
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-storage-engines/amazon-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Amazon S3 Storage Engine
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Commands
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build Command
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Load Command
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Command Line Usage
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Command Line Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_auth_token/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper auth token
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_config_init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper config init
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_config_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper config check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_subset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper subset
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper build
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_pull/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper pull
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_sanitize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper sanitize
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper load
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_targets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper targets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_target/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper target
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Articles
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Articles
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../useful-postgres-mysql-queries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Useful Postgres and MySQL Queries
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dbsnapper-github-actions-ecs-simplified/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Part 2: Using DBSnapper, GitHub Actions, and ECS - A Simplified Approach
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dbsnapper-github-actions-amazon-ecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Part 1: Using DBSnapper with GitHub Actions and Amazon ECS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../creating-sanitized-database-snapshots-with-dbsnapper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sanitized Database Snapshots with DBSnapper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Backup Amazon RDS Databases with DBSnapper
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Backup Amazon RDS Databases with DBSnapper
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tldr-backup-in-four-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR Backup in Four Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-an-ec2-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch an EC2 Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-an-interactive-dbsnapper-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch an Interactive DBSnapper Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-the-amazon-rds-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup the Amazon RDS Database
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Backup the Amazon RDS Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-the-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build the Snapshot
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-the-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      List the Snapshot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-test-ec2-rds-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional: Test EC2 &lt;-&gt; RDS Connection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-install-docker-community-edition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional: Install Docker Community Edition
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tldr-backup-in-four-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR Backup in Four Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-an-ec2-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch an EC2 Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-an-interactive-dbsnapper-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch an Interactive DBSnapper Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-the-amazon-rds-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup the Amazon RDS Database
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Backup the Amazon RDS Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-the-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build the Snapshot
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-the-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      List the Snapshot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-test-ec2-rds-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional: Test EC2 &lt;-&gt; RDS Connection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-install-docker-community-edition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional: Install Docker Community Edition
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="backup-amazon-rds-databases-with-dbsnapper">Backup Amazon RDS Databases with DBSnapper<a class="headerlink" href="#backup-amazon-rds-databases-with-dbsnapper" title="Permanent link">&para;</a></h1>
+<p>DBSnapper is a powerful tool for creating and managing backups of your databases. It is designed to be easy to use, and can be installed and configured in minutes. In this tutorial, we'll show you how to use DBSnapper to backup an Amazon RDS database deployed in a private VPC.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>In this tutorial we'll be using the following tools to backup the Amazon RDS database:</p>
+<ul>
+<li>DBSnapper Agent to facilitate the backup process</li>
+<li>DBSnapper Cloud to provide the target configuration and snapshot storage</li>
+<li>Docker to launch a DBSnapper container with the necessary database client tools.</li>
+<li>Amazon EC2 instance to connect to the Amazon RDS database</li>
+</ul>
+<p>Here's our target definition on the DBSnapper Cloud. We've simply provided the connection string of the Amazon RDS database as the source URL, and a Cloudflare R2 storage profile as the destination URL.</p>
+<p><img alt="Target Definition for Amazon RDS" src="../../static/amazon-rds-postgres%20target%20screenshot.png" /></p>
+<h2 id="tldr-backup-in-four-commands">TL;DR Backup in Four Commands<a class="headerlink" href="#tldr-backup-in-four-commands" title="Permanent link">&para;</a></h2>
+<!-- prettier-ignore-start -->
+<div class="admonition tip">
+<p class="admonition-title">Update: You can now do this in a SINGLE command</p>
+<p>(copied from the <a href="../../quick-start/">DBSnapper Quick Start Guide</a>)</p>
+<p>Just use the latest version of the DBSnapper container image, provide the minimum required <code>DBSNAPPER_SECRET_KEY</code> and <code>DBSNAPPER_AUTHTOKEN</code> environment variables necessary to run DBSnapper in Cloud mode, without a configuration file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span>/var/run/docker.sock:/var/run/docker.sock<span class="w"> </span>-e<span class="w"> </span><span class="nv">DBSNAPPER_SECRET_KEY</span><span class="o">=</span>XXX<span class="w"> </span>-e<span class="w"> </span><span class="nv">DBSNAPPER_AUTHTOKEN</span><span class="o">=</span>YYY<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>dbsnapper<span class="w"> </span>--pull<span class="w"> </span>always<span class="w"> </span>ghcr.io/dbsnapper/dbsnapper:latest<span class="w"> </span>dbsnapper<span class="w"> </span>build<span class="w"> </span>dvdrental-cloud
+</code></pre></div>
+<p>This command does the following:</p>
+<ol>
+<li>It pulls the latest version of the <a href="https://ghcr.io/dbsnapper/dbsnapper">DBSnapper Agent container image</a> from the GitHub Container Registry,</li>
+<li>It mounts the host Docker socket. This is optional, but necessary for ephemeral sanitization operations requiring Docker-in-Docker (DinD) support.</li>
+<li>Passes the <code>DBSNAPPER_SECRET_KEY</code> and <code>DBSNAPPER_AUTHTOKEN</code> environment variables to the container</li>
+<li>Runs the <code>dbsnapper build dvdrental-cloud</code> command to build a snapshot of the <code>dvdrental-cloud</code> target defined in the DBSnapper Cloud.</li>
+<li>If a storage profile is defined in the DBSnapper Cloud, the snapshot will be uploaded to the configured storage provider.</li>
+</ol>
+</div>
+<!-- prettier-ignore-end -->
+
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Amazon RDS Backup in four commands</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span>
+<span class="normal"><a href="#__codelineno-1-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Launch interactive DBSnapper Container from EC2 instance</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/dbsnapper/dbsnapper:latest<span class="w"> </span>/bin/bash
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># Create our configuration and connect to the DBSnapper Cloud</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>dbsnapper<span class="w"> </span>config<span class="w"> </span>init
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>dbsnapper<span class="w"> </span>auth<span class="w"> </span>token<span class="w"> </span>&lt;YOUR_DBSNAPPER_CLOUD_AUTH_TOKEN&gt;
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c1"># Build the snapshot and upload to object storage</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>dbsnapper<span class="w"> </span>build<span class="w"> </span>amazon-rds-postgres
+</code></pre></div></td></tr></table></div>
+<h2 id="launch-an-ec2-instance">Launch an EC2 Instance<a class="headerlink" href="#launch-an-ec2-instance" title="Permanent link">&para;</a></h2>
+<p>To easily gain access to the Amazon RDS database, we'll launch an EC2 instance in the same VPC as the RDS database. This will allow us to run DBSnapper and connect to the RDS database without exposing the database to the public internet.</p>
+<p>For this instance I am using the <code>Canonical, Ubuntu, 22.04 LTS, arm64 (ami-05d47d29a4c2d19e1)</code> image. But you can use other Linux distributions as well.</p>
+<h2 id="launch-an-interactive-dbsnapper-container">Launch an Interactive DBSnapper Container<a class="headerlink" href="#launch-an-interactive-dbsnapper-container" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/dbsnapper/dbsnapper/pkgs/container/dbsnapper" target="_blank">DBSnapper Docker Images</a> include the necessary database client tools for PostgreSQL and MySQL, so it is a quick way to get started with all the necessary dependencies.</p>
+<!-- prettier-ignore-start -->
+<div class="admonition note">
+<p class="admonition-title">Docker Dependency</p>
+<p>This tutorial uses Docker to launch the container - if you need to install Docker, see the <a href="#detour-install-docker-community-edition">Detour: Install Docker Community Edition</a> section below.</p>
+</div>
+<!-- prettier-ignore-end -->
+
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Launch DBSnapper Container & Setup DBSnapper Agent</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># Launch interactive DBSnapper Container</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/dbsnapper/dbsnapper:latest<span class="w"> </span>/bin/bash
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1"># Create our configuration and connect to the DBSnapper Cloud</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>dbsnapper<span class="w"> </span>config<span class="w"> </span>init
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>dbsnapper<span class="w"> </span>auth<span class="w"> </span>token<span class="w"> </span>&lt;YOUR_DBSNAPPER_CLOUD_AUTH_TOKEN&gt;
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>dbsnapper<span class="w"> </span>targets
+</code></pre></div></td></tr></table></div>
+<p>Using the commands above, we will launch an interactive DBSnapper container, initialize the DBSnapper configuration file, and authenticate with the DBSnapper Cloud using the authentication token provided on the <a href="https://app.dbsnapper.com/get_started">Get Started</a> page, and finally list the available targets.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Command output</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="hll">1c09173ca85b:~#<span class="w"> </span>dbsnapper<span class="w"> </span>config<span class="w"> </span>init
+</span><a id="__codelineno-3-2" name="__codelineno-3-2"></a>DBSnapper<span class="w"> </span>Agent<span class="w"> </span>-<span class="w"> </span>Version:<span class="w"> </span><span class="m">2</span>.0.0<span class="w"> </span><span class="o">(</span>60302b36df4d08b7c0a983c435d683e67373b235<span class="o">)</span><span class="w"> </span>Build<span class="w"> </span>Date:<span class="w"> </span><span class="m">2024</span>-02-22T00:13:23Z
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>DBSnapper<span class="w"> </span>Cloud:<span class="w"> </span>Standalone<span class="w"> </span>Mode
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>Initializing<span class="w"> </span>dbsnapper<span class="w"> </span>config<span class="w"> </span>at<span class="w">       </span>:<span class="w"> </span>/root/.config/dbsnapper/dbsnapper.yml
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>Creating<span class="w"> </span>dbsnapper<span class="w"> </span>working<span class="w"> </span>directory<span class="w"> </span>at:<span class="w"> </span>/root/.dbsnapper
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="hll">1c09173ca85b:~#<span class="w"> </span>dbsnapper<span class="w"> </span>auth<span class="w"> </span>token<span class="w"> </span>&lt;YOUR_DBSNAPPER_CLOUD_AUTH_TOKEN&gt;
+</span><a id="__codelineno-3-9" name="__codelineno-3-9"></a>DBSnapper<span class="w"> </span>Agent<span class="w"> </span>-<span class="w"> </span>Version:<span class="w"> </span><span class="m">2</span>.0.0<span class="w"> </span><span class="o">(</span>60302b36df4d08b7c0a983c435d683e67373b235<span class="o">)</span><span class="w"> </span>Build<span class="w"> </span>Date:<span class="w"> </span><span class="m">2024</span>-02-22T00:13:23Z
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>DBSnapper<span class="w"> </span>Cloud:<span class="w"> </span>Standalone<span class="w"> </span>Mode
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>Cloud<span class="w"> </span>API<span class="w"> </span>token<span class="w"> </span>written<span class="w"> </span>to<span class="w"> </span>configuration<span class="w"> </span>file:<span class="w"> </span>/root/.config/dbsnapper/dbsnapper.yml
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="hll">1c09173ca85b:~#<span class="w"> </span>dbsnapper<span class="w"> </span>targets
+</span><a id="__codelineno-3-15" name="__codelineno-3-15"></a>DBSnapper<span class="w"> </span>Agent<span class="w"> </span>-<span class="w"> </span>Version:<span class="w"> </span><span class="m">2</span>.0.0<span class="w"> </span><span class="o">(</span>60302b36df4d08b7c0a983c435d683e67373b235<span class="o">)</span><span class="w"> </span>Build<span class="w"> </span>Date:<span class="w"> </span><span class="m">2024</span>-02-22T00:13:23Z
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>DBSnapper<span class="w"> </span>Cloud:<span class="w"> </span>Enabled
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>Listing<span class="w"> </span>all<span class="w"> </span>targets
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>+---------------------+----------+--------+------------------------------------------------------+------+-----+-----------------+-------+----------+
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="p">|</span><span class="w">        </span>NAME<span class="w">         </span><span class="p">|</span><span class="w"> </span>LOCATION<span class="w"> </span><span class="p">|</span><span class="w"> </span>STATUS<span class="w"> </span><span class="p">|</span><span class="w">                         </span>SRC<span class="w">                          </span><span class="p">|</span><span class="w"> </span>SIZE<span class="w"> </span><span class="p">|</span><span class="w"> </span>DST<span class="w"> </span><span class="p">|</span><span class="w"> </span>STORAGE<span class="w"> </span>PROFILE<span class="w"> </span><span class="p">|</span><span class="w"> </span>QUERY<span class="w"> </span><span class="p">|</span><span class="w"> </span>MESSAGES<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>+---------------------+----------+--------+------------------------------------------------------+------+-----+-----------------+-------+----------+
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="p">|</span><span class="w"> </span>amazon-rds-postgres<span class="w"> </span><span class="p">|</span><span class="w"> </span>cloud<span class="w">    </span><span class="p">|</span><span class="w">        </span><span class="p">|</span><span class="w"> </span>pgl://dbsna...amazonaws.com:5432/rds_backup_tutorial<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>B<span class="w">  </span><span class="p">|</span><span class="w">     </span><span class="p">|</span><span class="w"> </span>Cloudflare<span class="w"> </span>R2<span class="w">   </span><span class="p">|</span><span class="w"> </span>No<span class="w">    </span><span class="p">|</span><span class="w">          </span><span class="p">|</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>+---------------------+----------+--------+------------------------------------------------------+------+-----+-----------------+-------+----------+
+</code></pre></div></td></tr></table></div>
+<p>With three simple DBSnapper commands (highlighted) we've initialized the configuration file, authenticated with the DBSnapper Cloud, and listed the available targets. We see our Amazon RDS database listed as the <code>amazon-rds-postgres</code> target.</p>
+<h2 id="backup-the-amazon-rds-database">Backup the Amazon RDS Database<a class="headerlink" href="#backup-the-amazon-rds-database" title="Permanent link">&para;</a></h2>
+<h3 id="build-the-snapshot">Build the Snapshot<a class="headerlink" href="#build-the-snapshot" title="Permanent link">&para;</a></h3>
+<p>Now that we have the DBSnapper container running and have authenticated with the DBSnapper Cloud, we can simply use the <code>build</code> command to create a snapshot of the Amazon RDS database.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Backup Amazon RDS Database</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>dbsnapper<span class="w"> </span>build<span class="w"> </span>amazon-rds-postgres
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Command Output</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="hll">1c09173ca85b:~#<span class="w"> </span>dbsnapper<span class="w"> </span>build<span class="w"> </span>amazon-rds-postgres
+</span><a id="__codelineno-5-2" name="__codelineno-5-2"></a>DBSnapper<span class="w"> </span>Agent<span class="w"> </span>-<span class="w"> </span>Version:<span class="w"> </span><span class="m">2</span>.0.0<span class="w"> </span><span class="o">(</span>60302b36df4d08b7c0a983c435d683e67373b235<span class="o">)</span><span class="w"> </span>Build<span class="w"> </span>Date:<span class="w"> </span><span class="m">2024</span>-02-22T00:13:23Z
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>DBSnapper<span class="w"> </span>Cloud:<span class="w"> </span>Enabled
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>START:<span class="w"> </span>Build<span class="w"> </span>Snapshot<span class="w"> </span><span class="k">for</span><span class="w"> </span>target:<span class="w"> </span>amazon-rds-postgres<span class="w"> </span>with<span class="w"> </span>engine:<span class="w"> </span>postgres-local
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>--&gt;<span class="w"> </span>Cloud<span class="w"> </span>target,<span class="w"> </span>Cloud<span class="w"> </span>storage,<span class="w"> </span>non-localhost<span class="w"> </span>DB.
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>--&gt;<span class="w"> </span>Zipping<span class="w"> </span>snapshot<span class="w"> </span>1708621936_amazon-rds-postgres<span class="w"> </span>to<span class="w"> </span>/root/.dbsnapper/1708621936_amazon-rds-postgres.zip
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>--&gt;<span class="w"> </span>Uploading<span class="w"> </span>snapshot<span class="w"> </span>to<span class="w"> </span>Cloud<span class="w"> </span>Storage<span class="w"> </span>Profile:<span class="w"> </span>Cloudflare<span class="w"> </span>R2<span class="w"> </span>-<span class="w"> </span>r2://dbsnapper-r2/dbsnapper-playground/cc6e21cb-e591-4a0e-8166-eba3c2a98dca.zip
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>--&gt;<span class="w"> </span>Upload<span class="w"> </span>complete.
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>--&gt;<span class="w"> </span>Local<span class="w"> </span>snapshot<span class="w"> </span>entry<span class="w"> </span>stored<span class="w"> </span><span class="k">in</span><span class="w"> </span>cloud,<span class="w"> </span>ID:<span class="w"> </span>cc6e21cb-e591-4a0e-8166-eba3c2a98dca
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>FINISH:<span class="w"> </span>Building<span class="w"> </span>DB<span class="w"> </span>Snapshot<span class="w"> </span><span class="k">for</span><span class="w"> </span>target:<span class="w"> </span>amazon-rds-postgres
+</code></pre></div></td></tr></table></div>
+<p>And there you have it. We've backed up the Amazon RDS database and it is now available in your cloud storage and can be retrieved and loaded by the DBSnapper Agent on any machine with access to the your DBSnapper Cloud account.</p>
+<h3 id="list-the-snapshot">List the Snapshot<a class="headerlink" href="#list-the-snapshot" title="Permanent link">&para;</a></h3>
+<p>We can verify that the snapshot was created by listing the snapshots for the target.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">List Snapshots for the Target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="hll">1c09173ca85b:~#<span class="w"> </span>dbsnapper<span class="w"> </span>target<span class="w"> </span>amazon-rds-postgres
+</span><a id="__codelineno-6-2" name="__codelineno-6-2"></a>DBSnapper<span class="w"> </span>Agent<span class="w"> </span>-<span class="w"> </span>Version:<span class="w"> </span><span class="m">2</span>.0.0<span class="w"> </span><span class="o">(</span>60302b36df4d08b7c0a983c435d683e67373b235<span class="o">)</span><span class="w"> </span>Build<span class="w"> </span>Date:<span class="w"> </span><span class="m">2024</span>-02-22T00:13:23Z
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>DBSnapper<span class="w"> </span>Cloud:<span class="w"> </span>Enabled
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>Tables<span class="w"> </span><span class="k">in</span><span class="w"> </span>target:<span class="w">  </span>amazon-rds-postgres
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a>+---------------+------------+--------+
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="p">|</span><span class="w">     </span>NAME<span class="w">      </span><span class="p">|</span><span class="w"> </span>EST<span class="err">&#39;</span>D<span class="w"> </span>ROWS<span class="w"> </span><span class="p">|</span><span class="w">  </span>SIZE<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a>+---------------+------------+--------+
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="p">|</span><span class="w"> </span>address<span class="w">       </span><span class="p">|</span><span class="w">        </span><span class="m">603</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">131</span><span class="w"> </span>kB<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="p">|</span><span class="w"> </span>users<span class="w">         </span><span class="p">|</span><span class="w">          </span><span class="m">4</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">49</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="p">|</span><span class="w"> </span>store<span class="w">         </span><span class="p">|</span><span class="w">          </span><span class="m">2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">41</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="p">|</span><span class="w"> </span>staff<span class="w">         </span><span class="p">|</span><span class="w">          </span><span class="m">2</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">33</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="p">|</span><span class="w"> </span>payment<span class="w">       </span><span class="p">|</span><span class="w">     </span><span class="m">14</span>,596<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>.9<span class="w"> </span>MB<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="p">|</span><span class="w"> </span>film<span class="w">          </span><span class="p">|</span><span class="w">      </span><span class="m">1</span>,000<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">934</span><span class="w"> </span>kB<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="p">|</span><span class="w"> </span>inventory<span class="w">     </span><span class="p">|</span><span class="w">      </span><span class="m">4</span>,581<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">451</span><span class="w"> </span>kB<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="p">|</span><span class="w"> </span>film_category<span class="w"> </span><span class="p">|</span><span class="w">      </span><span class="m">1</span>,000<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">90</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="p">|</span><span class="w"> </span>language<span class="w">      </span><span class="p">|</span><span class="w">          </span><span class="m">6</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">25</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="p">|</span><span class="w"> </span>country<span class="w">       </span><span class="p">|</span><span class="w">        </span><span class="m">109</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">25</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="p">|</span><span class="w"> </span>film_actor<span class="w">    </span><span class="p">|</span><span class="w">      </span><span class="m">5</span>,462<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">500</span><span class="w"> </span>kB<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="p">|</span><span class="w"> </span>customer<span class="w">      </span><span class="p">|</span><span class="w">        </span><span class="m">599</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">188</span><span class="w"> </span>kB<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="p">|</span><span class="w"> </span>city<span class="w">          </span><span class="p">|</span><span class="w">        </span><span class="m">600</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">90</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="p">|</span><span class="w"> </span>actor<span class="w">         </span><span class="p">|</span><span class="w">        </span><span class="m">200</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">49</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="p">|</span><span class="w"> </span>category<span class="w">      </span><span class="p">|</span><span class="w">         </span><span class="m">16</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">25</span><span class="w"> </span>kB<span class="w">  </span><span class="p">|</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="p">|</span><span class="w"> </span>rental<span class="w">        </span><span class="p">|</span><span class="w">     </span><span class="m">16</span>,044<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">2</span>.4<span class="w"> </span>MB<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a>+---------------+------------+--------+
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a>Listing<span class="w"> </span>ALL<span class="w"> </span>snapshots<span class="w"> </span><span class="k">for</span><span class="w"> </span>target:<span class="w"> </span>amazon-rds-postgres
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a>+-------+-------------------------+--------------------------------+------------------------------------------+--------+------------+-------+
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="p">|</span><span class="w"> </span>INDEX<span class="w"> </span><span class="p">|</span><span class="w">         </span>CREATED<span class="w">         </span><span class="p">|</span><span class="w">              </span>NAME<span class="w">              </span><span class="p">|</span><span class="w">                 </span>FILENAME<span class="w">                 </span><span class="p">|</span><span class="w">  </span>SIZE<span class="w">  </span><span class="p">|</span><span class="w"> </span>SANITIZED?<span class="w"> </span><span class="p">|</span><span class="w"> </span>SANFN<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a>+-------+-------------------------+--------------------------------+------------------------------------------+--------+------------+-------+
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a><span class="hll"><span class="p">|</span><span class="w">     </span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">2024</span>-Feb-22<span class="w"> </span>@<span class="w"> </span><span class="m">17</span>:12:17Z<span class="w"> </span><span class="p">|</span><span class="w"> </span>1708621936_amazon-rds-postgres<span class="w"> </span><span class="p">|</span><span class="w"> </span>cc6e21cb-e591-4a0e-8166-eba3c2a98dca.zip<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">613</span><span class="w"> </span>kB<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nb">false</span><span class="w">      </span><span class="p">|</span><span class="w">       </span><span class="p">|</span>
+</span><a id="__codelineno-6-31" name="__codelineno-6-31"></a>+-------+-------------------------+--------------------------------+------------------------------------------+--------+------------+-------+
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="optional-test-ec2-rds-connection">Optional: Test EC2 &lt;-&gt; RDS Connection<a class="headerlink" href="#optional-test-ec2-rds-connection" title="Permanent link">&para;</a></h2>
+<p>To ensure we're able to connect to the Amazon RDS database from our EC2 Instance, we can use the <code>psql</code> command to connect to the database and list the available tables.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Connect to Amazon RDS Database</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">postgres</span><span class="p">:</span><span class="o">//</span><span class="n">postgres</span><span class="p">:</span><span class="o">&lt;</span><span class="n">PASSWORD</span><span class="o">&gt;</span><span class="n">dbsnapper</span><span class="o">-</span><span class="n">playground</span><span class="p">.</span><span class="o">&lt;</span><span class="n">RDS_HOSTNAME</span><span class="p">...</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">5432</span><span class="o">/</span><span class="n">rds_backup_tutorial</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="n">psql</span><span class="w"> </span><span class="p">(</span><span class="mi">16</span><span class="p">.</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="mi">16</span><span class="p">.</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="n">SSL</span><span class="w"> </span><span class="k">connection</span><span class="w"> </span><span class="p">(</span><span class="n">protocol</span><span class="p">:</span><span class="w"> </span><span class="n">TLSv1</span><span class="p">.</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">cipher</span><span class="p">:</span><span class="w"> </span><span class="n">TLS_AES_256_GCM_SHA384</span><span class="p">,</span><span class="w"> </span><span class="n">compression</span><span class="p">:</span><span class="w"> </span><span class="k">off</span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="k">Type</span><span class="w"> </span><span class="ss">&quot;help&quot;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">help</span><span class="p">.</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="n">rds_backup_tutorial</span><span class="o">=&gt;</span><span class="w"> </span><span class="err">\</span><span class="n">dt</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">             </span><span class="n">List</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">relations</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w"> </span><span class="k">Schema</span><span class="w"> </span><span class="o">|</span><span class="w">     </span><span class="n">Name</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="k">Type</span><span class="w">  </span><span class="o">|</span><span class="w">  </span><span class="k">Owner</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="c1">--------+---------------+-------+----------</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">actor</span><span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">address</span><span class="w">       </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">category</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">city</span><span class="w">          </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">country</span><span class="w">       </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">customer</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">film</span><span class="w">          </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">film_actor</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">film_category</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">inventory</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">language</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">payment</span><span class="w">       </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">rental</span><span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">staff</span><span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">store</span><span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">users</span><span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">postgres</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a><span class="p">(</span><span class="mi">16</span><span class="w"> </span><span class="k">rows</span><span class="p">)</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a><span class="n">rds_backup_tutorial</span><span class="o">=&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="optional-install-docker-community-edition">Optional: Install Docker Community Edition<a class="headerlink" href="#optional-install-docker-community-edition" title="Permanent link">&para;</a></h2>
+<p>We're using Docker for this tutorial so if your instance doesn't have it installed, the following commands will install and setup Docker community edition in rootless mode on your instance.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Install Docker Community Edition on Ubuntu 22.04 LTS</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span>
+<span class="normal"><a href="#__codelineno-8-8">8</a></span>
+<span class="normal"><a href="#__codelineno-8-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://get.docker.com<span class="w"> </span>-o<span class="w"> </span>get-docker.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>sudo<span class="w"> </span>sh<span class="w"> </span>./get-docker.sh
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>sudo<span class="w"> </span>sh<span class="w"> </span>-eux<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="s"># Install newuidmap &amp; newgidmap binaries</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="s">apt-get install -y uidmap</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="s">EOF</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>dockerd-rootless-setuptool.sh<span class="w"> </span>install
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 9, 2024 13:45:56 UTC">June 9, 2024</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Scharfnado, LLC
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/dbsnapper" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://linkedin.com/company/dbsnapper" target="_blank" rel="noopener" title="linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+      
+    
+    
+    
+      
+      
+    
+    <a href="https://mastodon.social/@dbsnapper" target="_blank" rel="noopener me" title="mastodon.social" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M433 179.1c0-97.2-63.7-125.7-63.7-125.7-62.5-28.7-228.6-28.4-290.5 0 0 0-63.7 28.5-63.7 125.7 0 115.7-6.6 259.4 105.6 289.1 40.5 10.7 75.3 13 103.3 11.4 50.8-2.8 79.3-18.1 79.3-18.1l-1.7-36.9s-36.3 11.4-77.1 10.1c-40.4-1.4-83-4.4-89.6-54-.6-4.6-.9-9.3-.9-13.9 85.6 20.9 158.7 9.1 178.7 6.7 56.1-6.7 105-41.3 111.2-72.9 9.8-49.8 9-121.5 9-121.5zm-75.1 125.2h-46.6V190.1c0-49.7-64-51.6-64 6.9v62.5H201V197c0-58.5-64-56.6-64-6.9v114.2H90.3c0-122.1-5.2-147.9 18.4-175 25.9-28.9 79.8-30.8 103.8 6.1l11.6 19.5 11.6-19.5c24.1-37.1 78.1-34.8 103.8-6.1 23.7 27.3 18.4 53 18.4 175"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "search.share", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>
