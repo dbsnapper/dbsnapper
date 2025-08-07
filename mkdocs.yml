@@ -54,6 +54,8 @@ plugins:
 
 extra:
   homepage: https://dbsnapper.com
+  version:
+    provider: mike
   analytics:
     provider: gtm
     # provider: google

@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.pylint", 
+    "redhat.vscode-yaml",
+    "yzhang.markdown-all-in-one",
+    "shd101wyy.markdown-preview-enhanced",
+    "davidanson.vscode-markdownlint",
+    "ms-vscode.vscode-json",
+    "streetsidesoftware.code-spell-checker",
+    "formulahendry.auto-rename-tag",
+    "ms-vscode-remote.remote-containers",
+    "github.vscode-github-actions",
+    "bierner.markdown-mermaid"
+  ],
+  "unwantedRecommendations": [
+    "ms-python.flake8",
+    "ms-python.mypy-type-checker"
+  ]
+}

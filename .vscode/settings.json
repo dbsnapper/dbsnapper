@@ -1,0 +1,56 @@
+{
+  "python.defaultInterpreterPath": "./.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  
+  "files.associations": {
+    "*.yml": "yaml",
+    "*.yaml": "yaml"
+  },
+  
+  "yaml.schemas": {
+    "https://json.schemastore.org/mkdocs-1.0.json": ["mkdocs.yml", "mkdocs.yaml"]
+  },
+  
+  "files.exclude": {
+    "**/.venv": false,
+    "**/site": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true
+  },
+  
+  "search.exclude": {
+    "**/site": true,
+    "**/.venv/lib": true
+  },
+  
+  "markdown.preview.doubleClickToSwitchToEditor": true,
+  "markdown.preview.markEditorSelection": true,
+  
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.rulers": [80],
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off", 
+      "other": "off"
+    }
+  },
+  
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced"
+  },
+  
+  "workbench.colorCustomizations": {
+    "terminal.background": "#1a1a1a"
+  },
+  
+  "files.watcherExclude": {
+    "**/site/**": true,
+    "**/.venv/**": true
+  }
+}

@@ -4,11 +4,15 @@ on:
     branches:
       - master
       - main
+    tags:
+      - 'v*'
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
@@ -16,5 +20,22 @@ jobs:
         with:
           key: ${{ github.ref }}
           path: .cache
-      - run: pip install mkdocs-material mkdocs-git-revision-date-localized-plugin pillow cairosvg mkdocs-exclude-search
-      - run: mkdocs gh-deploy --force
+      - run: pip install -r requirements.txt
+      - name: Configure git credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - name: Deploy documentation
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            # Extract version from tag (remove 'v' prefix if present)
+            VERSION=${GITHUB_REF#refs/tags/v}
+            VERSION=${VERSION#refs/tags/}
+            
+            # Deploy tagged version and update latest alias
+            mike deploy --push --update-aliases $VERSION latest --title="$VERSION (Latest)"
+            mike set-default --push latest
+          elif [[ $GITHUB_REF == refs/heads/main || $GITHUB_REF == refs/heads/master ]]; then
+            # Deploy development version
+            mike deploy --push dev --title="Development"
+          fi

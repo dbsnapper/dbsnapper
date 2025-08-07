@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 Start MkDocs Development Server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/.venv/bin/mkdocs",
+      "args": ["serve"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "install-dependencies"
+    },
+    {
+      "name": "🎯 Start Mike Versioned Server", 
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/.venv/bin/mike",
+      "args": ["serve", "--dev-addr=127.0.0.1:8000"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "install-dependencies"
+    }
+  ]
+}

@@ -12,7 +12,155 @@
         "cwd": "${workspaceFolder}"
       },
       "command": "source ./.venv/bin/activate && mkdocs serve",
-      "problemMatcher": []
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Start MkDocs development server (regular docs without versioning)"
+    },
+    {
+      "label": "mike-serve",
+      "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-c", "-l"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "command": "source ./.venv/bin/activate && mike serve --dev-addr=127.0.0.1:8000",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Start Mike versioned documentation server with version switcher"
+    },
+    {
+      "label": "mkdocs-build",
+      "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-c", "-l"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "command": "source ./.venv/bin/activate && mkdocs build --clean",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Build static documentation site"
+    },
+    {
+      "label": "mike-list-versions",
+      "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-c", "-l"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "command": "source ./.venv/bin/activate && mike list",
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "List all available documentation versions"
+    },
+    {
+      "label": "mike-deploy-version",
+      "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-c", "-l"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "command": "source ./.venv/bin/activate && read -p 'Enter version (e.g., 2.8): ' VERSION && mike deploy --update-aliases $VERSION latest --title=\"$VERSION (Latest)\" && mike set-default latest",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Deploy a new documentation version and update latest alias"
+    },
+    {
+      "label": "mike-deploy-dev",
+      "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-c", "-l"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "command": "source ./.venv/bin/activate && mike deploy dev --title=\"Development\"",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Deploy current branch as development version"
+    },
+    {
+      "label": "setup-venv",
+      "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-c", "-l"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "command": "python3 -m venv .venv && source ./.venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Create virtual environment and install all dependencies"
     },
     {
       "label": "update-pip-dependencies",
@@ -34,7 +182,70 @@
         "showReuseMessage": true,
         "clear": false
       },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "detail": "Update all pip dependencies to latest versions"
+    },
+    {
+      "label": "install-dependencies",
+      "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-c", "-l"]
+        },
+        "cwd": "${workspaceFolder}"
+      },
+      "command": "source ./.venv/bin/activate && pip install -r requirements.txt",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Install dependencies from requirements.txt"
+    },
+    {
+      "label": "🚀 Start Development (Regular)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "install-dependencies",
+        "mkdocs-serve"
+      ],
+      "group": "build",
+      "detail": "Install dependencies and start regular MkDocs development server"
+    },
+    {
+      "label": "🎯 Start Development (Versioned)",
+      "dependsOrder": "sequence", 
+      "dependsOn": [
+        "install-dependencies",
+        "mike-serve"
+      ],
+      "group": "build",
+      "detail": "Install dependencies and start Mike versioned development server"
+    },
+    {
+      "label": "🔄 Fresh Setup",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "setup-venv"
+      ],
+      "group": "build",
+      "detail": "Complete fresh setup: create venv and install all dependencies"
+    },
+    {
+      "label": "📦 Build & Validate",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "mkdocs-build",
+        "mike-list-versions"
+      ],
+      "group": "test",
+      "detail": "Build docs and show available versions"
     }
   ]
 }
