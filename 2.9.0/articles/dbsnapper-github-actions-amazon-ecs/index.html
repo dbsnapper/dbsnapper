@@ -1,0 +1,3683 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Learn how to use DBSnapper with GitHub Actions self-hosted runners and AWS ECS Fargate to snapshot RDS databases.">
+      
+      
+      
+        <link rel="canonical" href="https://docs.dbsnapper.com/2.9.0/articles/dbsnapper-github-actions-amazon-ecs/">
+      
+      
+        <link rel="prev" href="../dbsnapper-github-actions-ecs-simplified/">
+      
+      
+        <link rel="next" href="../creating-sanitized-database-snapshots-with-dbsnapper/">
+      
+      
+      <link rel="icon" href="../../static/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>Part 1: Using DBSnapper with GitHub Actions and Amazon ECS - DBSnapper Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  <!-- Google Tag Manager -->
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-MB9Q8LB");
+</script>
+<!-- End Google Tag Manager -->
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Part 1: Using DBSnapper with GitHub Actions and Amazon ECS - DBSnapper Documentation" >
+      
+        <meta  property="og:description"  content="Learn how to use DBSnapper with GitHub Actions self-hosted runners and AWS ECS Fargate to snapshot RDS databases." >
+      
+        <meta  property="og:image"  content="https://docs.dbsnapper.com/2.9.0/assets/images/social/articles/dbsnapper-github-actions-amazon-ecs.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://docs.dbsnapper.com/2.9.0/articles/dbsnapper-github-actions-amazon-ecs/" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Part 1: Using DBSnapper with GitHub Actions and Amazon ECS - DBSnapper Documentation" >
+      
+        <meta  name="twitter:description"  content="Learn how to use DBSnapper with GitHub Actions self-hosted runners and AWS ECS Fargate to snapshot RDS databases." >
+      
+        <meta  name="twitter:image"  content="https://docs.dbsnapper.com/2.9.0/assets/images/social/articles/dbsnapper-github-actions-amazon-ecs.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://dbsnapper.com" title="DBSnapper Documentation" class="md-header__button md-logo" aria-label="DBSnapper Documentation" data-md-component="logo">
+      
+  <img src="../../static/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DBSnapper Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part 1: Using DBSnapper with GitHub Actions and Amazon ECS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="light-blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dbsnapper/dbsnapper" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.47 5.95c.48-.28 1-.51 1.53-.67V4c0-1.1.87-2 1.97-2.03C13.13 2 14 2.9 14 4v1.28c.53.17 1.05.39 1.53.67l-1.6 2.12h-3.86zM19 12c0 .5-.05.95-.14 1.4l-2.53-.78-1.19-3.66 1.6-2.11q.645.6 1.14 1.35c.79-.07 1.55.05 2.23.39 1.03.53 1.73 1.54 1.89 2.69l-3 .36zM5 12v-.35l-3-.37c.16-1.15.86-2.16 1.89-2.69a3.54 3.54 0 0 1 2.19-.33c.33-.51.71-.98 1.16-1.39l1.62 2.08-1.19 3.67-2.53.78C5.05 12.95 5 12.5 5 12m5.24-2.43h3.52l1.09 3.36L12 15l-2.85-2.07zm-2.11 4.48 3.12 2.26v2.65c-.57-.06-1.12-.19-1.63-.38l-1.23 2.76a3.49 3.49 0 0 1-2.02-2.58c-.14-.76-.02-1.52.32-2.2-.45-.52-.82-1.1-1.1-1.74zm7.74 0 2.54.77c-.28.64-.65 1.22-1.1 1.74.34.68.46 1.44.33 2.2a3.52 3.52 0 0 1-2.03 2.58l-1.22-2.76c-.53.19-1.06.36-1.64.42v-2.69z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dbsnapper/dbsnapper
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://dbsnapper.com" title="DBSnapper Documentation" class="md-nav__button md-logo" aria-label="DBSnapper Documentation" data-md-component="logo">
+      
+  <img src="../../static/logo.png" alt="logo">
+
+    </a>
+    DBSnapper Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dbsnapper/dbsnapper" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.47 5.95c.48-.28 1-.51 1.53-.67V4c0-1.1.87-2 1.97-2.03C13.13 2 14 2.9 14 4v1.28c.53.17 1.05.39 1.53.67l-1.6 2.12h-3.86zM19 12c0 .5-.05.95-.14 1.4l-2.53-.78-1.19-3.66 1.6-2.11q.645.6 1.14 1.35c.79-.07 1.55.05 2.23.39 1.03.53 1.73 1.54 1.89 2.69l-3 .36zM5 12v-.35l-3-.37c.16-1.15.86-2.16 1.89-2.69a3.54 3.54 0 0 1 2.19-.33c.33-.51.71-.98 1.16-1.39l1.62 2.08-1.19 3.67-2.53.78C5.05 12.95 5 12.5 5 12m5.24-2.43h3.52l1.09 3.36L12 15l-2.85-2.07zm-2.11 4.48 3.12 2.26v2.65c-.57-.06-1.12-.19-1.63-.38l-1.23 2.76a3.49 3.49 0 0 1-2.02-2.58c-.14-.76-.02-1.52.32-2.2-.45-.52-.82-1.1-1.1-1.74zm7.74 0 2.54.77c-.28.64-.65 1.22-1.1 1.74.34.68.46 1.44.33 2.2a3.52 3.52 0 0 1-2.03 2.58l-1.22-2.76c-.53.19-1.06.36-1.64.42v-2.69z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dbsnapper/dbsnapper
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Welcome
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Get Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Get Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-it-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How it Works
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Requirements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DBSnapper Agent Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration Settings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../philosophy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Philosophy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Snapshot
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Snapshot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../snapshot/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../snapshot/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../snapshot/build_and_load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build and Load
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Subset
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Subset
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../subset/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../subset/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sanitize
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Sanitize
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sanitize/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sanitize/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sanitize/sanitize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sanitize
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Share
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Share
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../share/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DBSnapper Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            DBSnapper Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbsnapper-cloud/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbsnapper-cloud/targets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Targets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbsnapper-cloud/storage_profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Storage Profiles
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../dbsnapper-cloud/sso/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Single Sign-On
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            Single Sign-On
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbsnapper-cloud/sso/sso-okta-oidc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Single Sign-On (SSO) Integration with Okta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Database Engines
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Database Engines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/postgresql-local/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PostgreSQL Local (postgres://)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/mysql-local/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MySQL Local (mysql://)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/postgresql-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PostgreSQL Docker (pgdocker://)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database-engines/mysql-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MySQL Docker (mydocker://)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud Storage Engines
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud Storage Engines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-storage-engines/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cloud Storage Engines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-storage-engines/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Storage Engine Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-storage-engines/cloudflare-r2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cloudflare R2 Storage Engine
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-storage-engines/amazon-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Amazon S3 Storage Engine
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Commands
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build Command
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Load Command
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Command Line Usage
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Command Line Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_auth_token/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper auth token
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_config_init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper config init
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_config_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper config check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_subset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper subset
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper build
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_pull/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper pull
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_sanitize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper sanitize
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper load
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_targets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper targets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmd/dbsnapper_target/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbsnapper target
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Articles
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Articles
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../useful-postgres-mysql-queries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Useful Postgres and MySQL Queries
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dbsnapper-github-actions-ecs-simplified/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Part 2: Using DBSnapper, GitHub Actions, and ECS - A Simplified Approach
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Part 1: Using DBSnapper with GitHub Actions and Amazon ECS
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Part 1: Using DBSnapper with GitHub Actions and Amazon ECS
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#services-and-components-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      Services and components used
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Secrets:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overview-of-the-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview of the steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-setup-the-github-actions-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 - Setup the GitHub Actions Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1 - Setup the GitHub Actions Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iam-policy-for-the-aws_iam_role" class="md-nav__link">
+    <span class="md-ellipsis">
+      IAM Policy for the AWS_IAM_ROLE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-get-registration-token-to-register-a-runner" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 - Get Registration Token to Register a Runner
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2 - Get Registration Token to Register a Runner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-launch-amazon-ecs-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3 - Launch Amazon ECS Task
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3 - Launch Amazon ECS Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checkout-and-configure-aws-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checkout and Configure AWS Credentials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-ecs-task-definition-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update ECS Task Definition JSON
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-amazon-ecs-task-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy Amazon ECS Task Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ecs-service-set-desired-tasks-to-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ECS Service: Set Desired Tasks to 1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-definition-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Definition File
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-execute-the-dbsnapper-agent-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4 - Execute the DBSnapper Agent Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4 - Execute the DBSnapper Agent Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runs-on-self-hosted" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runs-on: Self-Hosted
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-and-run-dbsnapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install and Run DBSnapper
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-cleanup-the-amazon-ecs-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5 - Cleanup the Amazon ECS Task
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5 - Cleanup the Amazon ECS Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Workflow
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../creating-sanitized-database-snapshots-with-dbsnapper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sanitized Database Snapshots with DBSnapper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup-amazon-rds-with-dbsnapper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Backup Amazon RDS Databases with DBSnapper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#services-and-components-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      Services and components used
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Secrets:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overview-of-the-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview of the steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-setup-the-github-actions-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 - Setup the GitHub Actions Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1 - Setup the GitHub Actions Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iam-policy-for-the-aws_iam_role" class="md-nav__link">
+    <span class="md-ellipsis">
+      IAM Policy for the AWS_IAM_ROLE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-get-registration-token-to-register-a-runner" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 - Get Registration Token to Register a Runner
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2 - Get Registration Token to Register a Runner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-launch-amazon-ecs-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3 - Launch Amazon ECS Task
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3 - Launch Amazon ECS Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checkout-and-configure-aws-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checkout and Configure AWS Credentials
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-ecs-task-definition-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update ECS Task Definition JSON
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-amazon-ecs-task-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy Amazon ECS Task Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ecs-service-set-desired-tasks-to-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ECS Service: Set Desired Tasks to 1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-definition-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task Definition File
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-execute-the-dbsnapper-agent-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4 - Execute the DBSnapper Agent Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4 - Execute the DBSnapper Agent Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#runs-on-self-hosted" class="md-nav__link">
+    <span class="md-ellipsis">
+      Runs-on: Self-Hosted
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-and-run-dbsnapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install and Run DBSnapper
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-cleanup-the-amazon-ecs-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5 - Cleanup the Amazon ECS Task
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5 - Cleanup the Amazon ECS Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Description
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Workflow
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Part 1: Using DBSnapper with GitHub Actions and Amazon ECS</h1>
+
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><strong>Note:</strong> This is Part 1 of a multi-part series on using DBSnapper with GitHub Actions and Amazon ECS. <a href="../dbsnapper-github-actions-ecs-simplified/">Go here to read <strong>Part 2 - A Simplified Approach with Third-Party Runners</strong></a> which includes the results of the workflow execution.</p>
+<!-- prettier-ignore-start -->
+<div class="admonition note">
+<p class="admonition-title">Update: New DBSnapper GitHub Action</p>
+<p>We've updated this article to use our new <a href="https://github.com/marketplace/actions/install-dbsnapper-agent">Install DBSnapper Agent GitHub Action</a> that makes it simple to install the DBSnapper Agent onto a GitHub Actions runner. These changes can be found in <a href="#step-4---execute-the-dbsnapper-agent-commands">Step 4</a>.</p>
+</div>
+<!-- prettier-ignore-end -->
+
+<p>The motivation behind this article is to describe an automated way to snapshot and sanitize database workloads running on private infrastructure. In this article, we'll use GitHub Actions and self-hosted runners to trigger a snapshot and sanitization of an Amazon RDS database using DBSnapper and Amazon ECS Fargate.</p>
+<h3 id="services-and-components-used">Services and components used<a class="headerlink" href="#services-and-components-used" title="Permanent link">&para;</a></h3>
+<ul>
+<li>DBSnapper Agent to take the snapshot, sanitize it, and store it.</li>
+<li>DBSnapper Cloud providing target configuration and snapshot storage.</li>
+<li>GitHub Actions (GHA) as CI/CD provider to automate the environment setup and trigger the snapshot.</li>
+<li>GitHub Actions self-hosted runners to run the DBSnapper Agent in our private infrastructure.</li>
+<li>Amazon ECS Fargate to run an ephemeral GHA self-hosted runner</li>
+</ul>
+<h3 id="other-requirements">Other requirements<a class="headerlink" href="#other-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li>We use GitHub's OIDC Provider to provide AWS credentials needed for the actions. We used the instructions given in the <a href="https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file#oidc">aws-actions/configure-aws-credentials OIDC Section</a> to setup the federation between GitHub and AWS, using the <a href="https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file#configuring-iam-to-trust-github">CloudFormation Template</a> to speed things up.</li>
+<li>We use the <a href="https://github.com/actions/runner/pkgs/container/actions-runner">GitHub official <code>actions-runner</code> container</a> for our self-hosted runner.</li>
+</ul>
+<h3 id="github-secrets">GitHub Secrets:<a class="headerlink" href="#github-secrets" title="Permanent link">&para;</a></h3>
+<p>We will need the following GitHub Secrets configured for the GitHub Action:</p>
+<ul>
+<li><code>FG_PAT</code> - <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token">Fine-Grained GitHub Personal Access Token (PAT)</a> with <code>repo:actions:(read/write)</code> and <code>org:self-hosted-runners:(read/write)</code> scopes.</li>
+<li><code>DBSNAPPER_AUTHTOKEN</code> - Your DBSnapper Cloud Auth Token used to authenticate to the DBSnapper API.</li>
+<li><code>DBSNAPPER_SECRET_KEY</code> - Your DBSnapper config secret key used to encrypt certain configuration values.</li>
+</ul>
+<h3 id="overview-of-the-steps">Overview of the steps<a class="headerlink" href="#overview-of-the-steps" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Setup the GitHub Actions workflow basics.</li>
+<li>Get a Registration token to register a self-hosted runner.</li>
+<li>Launch an Amazon ECS Fargate Task to run the self-hosted runner.</li>
+<li>Execute the DBSnapper Agent snapshot and sanitization commands.</li>
+<li>Cleanup the Amazon ECS Fargate Tasks.</li>
+</ol>
+<h2 id="step-1-setup-the-github-actions-workflow">Step 1 - Setup the GitHub Actions Workflow<a class="headerlink" href="#step-1-setup-the-github-actions-workflow" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Step 1 - Setup the GitHub Actions Workflow</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DBSnapper</span><span class="nv"> </span><span class="s">Build</span><span class="nv"> </span><span class="s">Snapshot&quot;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># Permissions are needed for github OIDC provider - AWS federation</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="c1"># https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file#oidc</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="nt">permissions</span><span class="p">:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nt">id-token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">read</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">  </span><span class="nt">actions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="c1"># Some necessary environment variables</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">  </span><span class="nt">ORGANIZATION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper</span><span class="w"> </span><span class="c1"># Your GitHub Organization</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">  </span><span class="nt">ORGANIZATION_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/dbsnapper</span><span class="w"> </span><span class="c1"># Your GitHub Organization URL</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">  </span><span class="nt">AWS_REGION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">  </span><span class="nt">AWS_IAM_ROLE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arn:aws:iam::&lt;acct_id&gt;:role/&lt;name of role&gt;</span><span class="w"> </span><span class="c1"># From OIDC Federation</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">  </span><span class="nt">ECS_CLUSTER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">  </span><span class="nt">ECS_SERVICE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github_runner</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">  </span><span class="nt">ECS_TASK_DEFINITION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.aws/ecs_task_definition_github_runner.json</span><span class="w"> </span><span class="c1"># Initial task definition file in the repo for the ECS Task</span>
+</code></pre></div></td></tr></table></div>
+<p>Here we setup the basic elements of the GitHub Actions workflow. We define the name of the workflow, the event that triggers it, and some environment variables that we will use throughout the workflow.</p>
+<h3 id="iam-policy-for-the-aws_iam_role">IAM Policy for the AWS_IAM_ROLE<a class="headerlink" href="#iam-policy-for-the-aws_iam_role" title="Permanent link">&para;</a></h3>
+<p>The <code>permissions</code> section is needed for the GitHub OIDC provider to provide AWS credentials to the actions and the <code>AWS_IAM_ROLE</code> is the ARN of the role that the OIDC provider will assume to provide the AWS credentials. This role should have the necessary permissions to interact with the services we are using, specifically ECS in our case:</p>
+<div class="highlight"><span class="filename">Example IAM Policy for the AWS_IAM_ROLE</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;Version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">&quot;Statement&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RegisterTaskDefinition&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ecs:RegisterTaskDefinition&quot;</span><span class="p">],</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PassRolesInTaskDefinition&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;iam:PassRole&quot;</span><span class="p">],</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">      </span><span class="nt">&quot;Sid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DeployService&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">      </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">      </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ecs:UpdateService&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ecs:DescribeServices&quot;</span><span class="p">],</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">      </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="p">}</span>
+</code></pre></div>
+<p>Above is an example of the IAM policy that the <code>AWS_IAM_ROLE</code> should have to interact with ECS. You should set specific Resource ARNs for the <code>ecs:UpdateService</code> and <code>ecs:DescribeServices</code> actions to limit the access to the ECS cluster and service you are using. I've wildcarded them here for simplicity.</p>
+<h2 id="step-2-get-registration-token-to-register-a-runner">Step 2 - Get Registration Token to Register a Runner<a class="headerlink" href="#step-2-get-registration-token-to-register-a-runner" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Step 2 - Get Registration Token</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">register-runner</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">      </span><span class="nt">registration_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ steps.create-token.outputs.registration_token }}</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create Registration Token</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">create-token</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">        </span><span class="c1"># https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#about-self-hosted-runners-in-github-actions</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">        </span><span class="c1"># use jq -r to output the raw version of the .token field</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">          </span><span class="no">token=$(curl -L \</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">          </span><span class="no">-X POST \</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">          </span><span class="no">-H &quot;Accept: application/vnd.github+json&quot; \</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">          </span><span class="no">-H &quot;Authorization: Bearer ${{ secrets.FG_PAT }}&quot; \</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">          </span><span class="no">-H &quot;X-GitHub-Api-Version: 2022-11-28&quot; \</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">          </span><span class="no">&quot;https://api.github.com/orgs/${{ env.ORGANIZATION }}/actions/runners/registration-token&quot; | jq -r &#39;.token&#39;)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">          </span><span class="no">echo &quot;registration_token=$token&quot; &gt;&gt; $GITHUB_OUTPUT</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>secrets.FG_PAT</code>- The Fine-Grained GitHub Personal Access Token (PAT) used in the <code>Authentication</code> header for the API call</li>
+<li><code>env.ORGANIZATION</code> - The GitHub Organization that the runner will be registered with, used in the API URL.</li>
+</ul>
+<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>create_token.registration_token</code> - The registration token that will be used to register the self-hosted runner</li>
+</ul>
+<h3 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h3>
+<p>Step two gives us a Registration Token that we can pass to the self-hosted runner configuration script to register the runner with the GitHub Actions service. We use the <a href="https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-organization">GitHub REST API</a> to get the registration token and output it to a file that we can access in the next step.</p>
+<p>We use the <code>jq</code> utility to parse the JSON response from the API and extract the <code>token</code> field from the API response. We use the <code>-r</code> flag to output the raw version of the <code>token</code> field, otherwise it would be quoted and cause issues later in the workflow.</p>
+<p>in line 19 we save the output of the <code>token</code> to the <a href="https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter">$GITHUB_OUTPUT variable</a> which is the new way to set outputs in GitHub Actions. This is assigned to the <code>registration_token</code> output of the job in line 5 for use later in the workflow.</p>
+<h2 id="step-3-launch-amazon-ecs-task">Step 3 - Launch Amazon ECS Task<a class="headerlink" href="#step-3-launch-amazon-ecs-task" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Step 3 - Launch Amazon ECS Task</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">runner-ecs</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">register-runner</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout for access to task definition</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="c1"># Uses OIDC connector for auth</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Configure AWS credentials</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-actions/configure-aws-credentials@v4</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">        </span><span class="nt">aws-region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.AWS_REGION }}</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">        </span><span class="nt">role-to-assume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.AWS_IAM_ROLE }}</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update Task Definition JSON</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update-task-def</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restackio/update-json-file-action@main</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">        </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.ECS_TASK_DEFINITION }}</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">        </span><span class="nt">fields</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">          </span><span class="no">{</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">            </span><span class="no">&quot;containerDefinitions[0].command&quot;: [</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">            </span><span class="no">&quot;sh&quot;,</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">            </span><span class="no">&quot;-c&quot;,</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">            </span><span class="no">&quot;./config.sh --unattended --ephemeral --labels x64,linux,ecs --name ECS_Ephemeral_Runner --url ${{ env.ORGANIZATION_URL }} --token ${{ needs.register-runner.outputs.registration_token }} &amp;&amp; ./run.sh&quot;</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">            </span><span class="no">]</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">          </span><span class="no">}</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy Amazon ECS task definition</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-actions/amazon-ecs-deploy-task-definition@v1</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">        </span><span class="nt">task-definition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.ECS_TASK_DEFINITION }}</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="w">        </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.ECS_SERVICE }}</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a><span class="w">        </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.ECS_CLUSTER }}</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a><span class="w">        </span><span class="nt">wait-for-service-stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ECS Service Set desired tasks to 1</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a><span class="w">        </span><span class="no">aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --desired-count 1</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="inputs_1">Inputs<a class="headerlink" href="#inputs_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>env.AWS_REGION</code> - The AWS region where the ECS cluster is located</li>
+<li><code>env.AWS_IAM_ROLE</code> - The ARN of the IAM role that the OIDC provider will assume to provide the AWS credentials.</li>
+<li><code>env.ECS_CLUSTER</code> - The name of the ECS cluster where the task will be run.</li>
+<li><code>env.ECS_SERVICE</code> - The name of the ECS service that will run the task.</li>
+<li><code>env.ECS_TASK_DEFINITION</code> - The path and filename of the task definition file in the repository.</li>
+<li><code>.aws/ecs_task_definition_github_runner.json</code> - The initial task definition file in the repository for the ECS Task.</li>
+</ul>
+<h3 id="actions">Actions<a class="headerlink" href="#actions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/actions/checkout/tree/releases/v4.0.0"><code>actions/checkout@v4</code></a> - This action checks out the repository so that we can access the ECS task definition file.</li>
+<li><a href="https://github.com/aws-actions/configure-aws-credentials/tree/v4"><code>aws-actions/configure-aws-credentials@v4</code></a> - This action configures the AWS credentials for the actions to use. It uses the OIDC connector to authenticate with AWS.</li>
+<li><a href="https://github.com/restackio/update-json-file-action/tree/main/"><code>restackio/update-json-file-action@main</code></a> - This action updates the ECS task definition JSON file with the container command that provides the <code>--url</code> of the GitHub organization and the <code>--token</code> registration token to register the self-hosted runner. The main branch includes an updated version of node used in the action. We use this instead of <a href="https://github.com/aws-actions/amazon-ecs-render-task-definition/tree/v1"><code>amazon-ecs-render-task-definition</code></a> because it improperly parses the provided command string, causing issues with the runner registration <a href="https://github.com/aws-actions/amazon-ecs-render-task-definition/issues/252#issuecomment-1687259661">per this issue comment</a>.</li>
+</ul>
+<h3 id="description_1">Description<a class="headerlink" href="#description_1" title="Permanent link">&para;</a></h3>
+<h4 id="checkout-and-configure-aws-credentials">Checkout and Configure AWS Credentials<a class="headerlink" href="#checkout-and-configure-aws-credentials" title="Permanent link">&para;</a></h4>
+<p>In this step, we're defining the <code>runner-ecs</code> job (that depends on successful execution of the <code>register-runner</code> job) that will launch an Amazon ECS Fargate Task to run the self-hosted runner. The first two steps are straightforward. We use the <code>actions/checkout@v4</code> action on line 6 to checkout the repository so that we can access the ECS task definition file. We then use the <code>aws-actions/configure-aws-credentials@v4</code> action on line 10 to configure the AWS credentials for the actions to use. This action uses the OIDC connector to authenticate with AWS.</p>
+<h4 id="update-ecs-task-definition-json">Update ECS Task Definition JSON<a class="headerlink" href="#update-ecs-task-definition-json" title="Permanent link">&para;</a></h4>
+<p>The next step starting on line 15, we update the ECS task definition file in our repository to reflect the command we'll run to configure the self-hosted runner. In this command we use the <code>config.sh</code> script to configure the runner with the <code>--url</code> and <code>--token</code> arguments, which are needed to register the runner in the GitHub Actions service. We can find our GHA runners in the organization actions settings URL: <code>https://github.com/organizations/&lt;your_organization&gt;/settings/actions/runners</code></p>
+<!-- prettier-ignore-start -->
+<div class="admonition note">
+<p class="admonition-title">GHA Runner Docs</p>
+<p>It wasn't immediately obvious how to run the GHA runner container, so there was a bit of trial and error locally to get the commands right. Documentation can be found in the repository, and the <a href="https://github.com/actions/runner/blob/main/docs/automate.md">Automate Configuring Self-Hosted Runners</a> is especially useful. Two  scripts in the runner container are used to configure and run the runner:</p>
+<ul>
+<li><code>config.sh</code> - This script configures the runner with the provided <code>--url</code> and <code>--token</code> arguments. The <code>--ephemeral</code> flag is used to run the runner in ephemeral mode, meaning it will be removed when the task is stopped, and the <code>--unattended</code> flag is used to run the runner in unattended mode, meaning it won't prompt for user input.</li>
+<li><code>run.sh</code> - This script starts the runner, registering it with GitHub Actions, starting the runner service and waiting for jobs to run. This script is run after the runner is configured with the <code>config.sh</code> script.</li>
+</ul>
+<p>Both scripts will display help and available command line options by passing <code>--help</code> as an argument. The <code>config.sh</code> script is the only one that requires arguments, and the <code>run.sh</code> script will run the runner with the configuration provided by the <code>config.sh</code> script.</p>
+</div>
+<!-- prettier-ignore-end -->
+
+<p>The <code>--ephemeral</code> flag is used to run the runner in ephemeral mode, meaning the runner will be removed from the organization after it has completed a single job. This ensures we don't have any lingering runners in the organization.</p>
+<h4 id="deploy-amazon-ecs-task-definition">Deploy Amazon ECS Task Definition<a class="headerlink" href="#deploy-amazon-ecs-task-definition" title="Permanent link">&para;</a></h4>
+<p>The next step on line 29 uses the <code>aws-actions/amazon-ecs-deploy-task-definition@v1</code> action to deploy the updated task definition to the ECS cluster. This action takes the path to the task definition file, the cluster, and service name as inputs. We set the <code>wait-for-service-stability</code> input to <code>false</code> to avoid waiting for the service to stabilize before continuing with the workflow, since <a href="#step-4---execute-the-dbsnapper-agent-commands">Step 4 - Execute the DBSnapper Agent Commands</a> won't proceed until the runner is registered, running, and able to execute the job.</p>
+<h4 id="ecs-service-set-desired-tasks-to-1">ECS Service: Set Desired Tasks to 1<a class="headerlink" href="#ecs-service-set-desired-tasks-to-1" title="Permanent link">&para;</a></h4>
+<p>Finally, on line 39, we use the <code>aws ecs update-service</code> command (from the aws-cli) to set the desired task count for the service to 1. This will start a task in the service to run the self-hosted runner. The updated task definition will not start without this command. We use a similar command in <a href="#step-5---cleanup-the-amazon-ecs-task">Step 5 - Cleanup the Amazon ECS Task</a> to set the desired task count to 0 to stop the runner after the job is complete.</p>
+<h3 id="task-definition-file">Task Definition File<a class="headerlink" href="#task-definition-file" title="Permanent link">&para;</a></h3>
+<p>To launch an ECS task via github actions and the <code>aws-actions/amazon-ecs-deploy-task-definition@v1</code> action, we need to provide a task definition file. This file is a JSON file that defines the properties of the task that we want to run. We can create this file using the ECS task definition wizard in the AWS console and then copy the task definition JSON to a file in our repository, or we can just use the sample proided below modified for your environment. In our workflow example, we're using the <code>ECS_TASK_DEFINITION</code> environment variable to specify the path to the task definition file.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ecs_task_definition_github_runner.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;containerDefinitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;github_runner&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">      </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ghcr.io/actions/actions-runner:2.317.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">      </span><span class="nt">&quot;cpu&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">      </span><span class="nt">&quot;portMappings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">      </span><span class="nt">&quot;essential&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">      </span><span class="nt">&quot;mountPoints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">      </span><span class="nt">&quot;volumesFrom&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">      </span><span class="nt">&quot;logConfiguration&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">        </span><span class="nt">&quot;logDriver&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;awslogs&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">        </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">          </span><span class="nt">&quot;awslogs-group&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/ecs/github_runner&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">          </span><span class="nt">&quot;awslogs-create-group&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">          </span><span class="nt">&quot;awslogs-region&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;us-east-1&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">          </span><span class="nt">&quot;awslogs-stream-prefix&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ecs&quot;</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">      </span><span class="nt">&quot;systemControls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">  </span><span class="nt">&quot;family&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;github_runner&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">  </span><span class="nt">&quot;taskRoleArn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:iam::&lt;account_id&gt;:role/&lt;task_execution_role&gt;&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="w">  </span><span class="nt">&quot;executionRoleArn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:iam::&lt;account_id&gt;:role/&lt;task_execution_role&gt;&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="w">  </span><span class="nt">&quot;networkMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;awsvpc&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="w">  </span><span class="nt">&quot;volumes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="w">  </span><span class="nt">&quot;placementConstraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="w">  </span><span class="nt">&quot;requiresCompatibilities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;FARGATE&quot;</span><span class="p">],</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a><span class="w">  </span><span class="nt">&quot;cpu&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;512&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a><span class="w">  </span><span class="nt">&quot;memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2048&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a><span class="w">  </span><span class="nt">&quot;runtimePlatform&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a><span class="w">    </span><span class="nt">&quot;cpuArchitecture&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;X86_64&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a><span class="w">    </span><span class="nt">&quot;operatingSystemFamily&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LINUX&quot;</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a><span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>In this task definition, we set the default GHA runner image on line 5. If needed, we can update this image in the workflow using the <code>restackio/update-json-file-action@main</code> action. We also set the <code>cpu</code> and <code>memory</code> values for this task on lines 31 and 32 to the minimum values needed to run the runner and any additional services.</p>
+<h2 id="step-4-execute-the-dbsnapper-agent-commands">Step 4 - Execute the DBSnapper Agent Commands<a class="headerlink" href="#step-4-execute-the-dbsnapper-agent-commands" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Step 4 - Execute the DBSnapper Agent Commands</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">dbsnapper</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-hosted</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runner-ecs</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">  </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="nt">DBSNAPPER_SECRET_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.DBSNAPPER_SECRET_KEY }}</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span><span class="nt">DBSNAPPER_AUTHTOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.DBSNAPPER_AUTHTOKEN }}</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">  </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">    </span><span class="c1"># Updated to use the new DBSnapper GitHub Action</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install DBSnapper Agent</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper/install-dbsnapper-agent-action@v1</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install Database Utilities</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">      </span><span class="c1"># Get the latest version of the postgres client</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">      </span><span class="c1"># https://www.postgresql.org/download/linux/ubuntu/</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">        </span><span class="no">sudo apt-get update &amp;&amp; sudo apt-get install -y postgresql-common &amp;&amp; sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y &amp;&amp; sudo apt-get update &amp;&amp; sudo apt-get install -y postgresql-client-16</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run DBSnapper build command</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper build dvdrental-prod</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="inputs_2">Inputs<a class="headerlink" href="#inputs_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>secrets.DBSNAPPER_SECRET_KEY</code> - Your DBSnapper config secret key used to encrypt certain configuration values.</li>
+<li><code>secrets.DBSNAPPER_AUTHTOKEN</code> - Your DBSnapper Cloud Auth Token used to authenticate to the DBSnapper API.</li>
+<li><del><a href="https://github.com/dbsnapper/dbsnapper/releases/latest"><code>DBSnapper Debian Package</code></a> - The latest release of the DBSnapper Agent. Download the <code>.deb</code> package that matches your architecture. We use the <code>dbsnapper_linux_x86_64.deb</code> package in this example.</del></li>
+</ul>
+<h3 id="description_2">Description<a class="headerlink" href="#description_2" title="Permanent link">&para;</a></h3>
+<p>The steps prior to this one were necessary to setup a self-hosted runner in our private infrastructure with access to the workloads in our network. In this step, we're finally able to run the DBSnapper Agent commands to snapshot and sanitize the database.</p>
+<h4 id="runs-on-self-hosted">Runs-on: Self-Hosted<a class="headerlink" href="#runs-on-self-hosted" title="Permanent link">&para;</a></h4>
+<p>On line 2, we specify the <code>runs-on</code> property as <code>self-hosted</code> to run the job on the self-hosted runner we registered in the previous step. This property can take additional labels to be more specific about the runner that should run the job, in cases where you have many different types of runners registered in your organization. In line 3 we specify that this job depends on the <code>runner-ecs</code> job to ensure the ecs jobs are run before running the dbsnapper job.</p>
+<h4 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h4>
+<p>We set our environment variables starting on line 4. In this example, we set the minimum required <code>DBSNAPPER_SECRET_KEY</code> and <code>DBSNAPPER_AUTHTOKEN</code> environment variables necessary to run DBSnapper without a configuration file.</p>
+<!-- prettier-ignore-start -->
+<div class="admonition note">
+<p class="admonition-title">DBSnapper Configuration via Environment Variables</p>
+<p>DBSnapper can be configured exclusively through environment variables if you don't want to rely on a configuration file. All the configuration options can be represented as environment variables through a specific naming convention involving prefixing the environment variable with <code>DBSNAPPER</code> and replacing periods with two underscores <code>__</code>. Some examples from the <a href="../../configuration/">DBSnapper Configuration Documentation</a> include:</p>
+<ul>
+<li><code>docker.images.postgres</code> -&gt; <code>DBSNAPPER_DOCKER__IMAGES__POSTGRES: postgres:latest</code> # Sets the docker image to use for the postgres containers</li>
+<li><code>defaults.shared_target_dst_db_url</code> -&gt; <code>DBSNAPPER_DEFAULTS__SHARED_TARGET_DST_DB_URL: &lt;connstring&gt;</code> # Sets the default destination database URL for shared targets</li>
+<li><code>override.san_query</code> -&gt; <code>DBSNAPPER_OVERRIDE__SAN_QUERY: &lt;base-64-encoded-value&gt;</code> # Sets a query to use for sanitization overriding any existing queries.</li>
+</ul>
+</div>
+<!-- prettier-ignore-end -->
+
+<h4 id="install-and-run-dbsnapper">Install and Run DBSnapper<a class="headerlink" href="#install-and-run-dbsnapper" title="Permanent link">&para;</a></h4>
+<p>Starting on line 8 we use the new <a href="https://github.com/marketplace/actions/install-dbsnapper-agent">DBSnapper GitHub Action</a> to install the latest version of the DBSnapper Agent. This action takes into account the operating system and architecture of the runner and installs the appropriate version of the DBSnapper Agent.</p>
+<p><del>Starting on line 8, we run commands to update our apt repository, install <code>curl</code>, and use <code>curl</code> to download the latest release of the DBSnapper Agent. We then use <code>dpkg</code> to install the <code>.deb</code> package.</del></p>
+<!-- prettier-ignore-start -->
+<div class="admonition question">
+<p class="admonition-title">Why Not use the DBSnapper Docker Image?</p>
+<p>At this point, it would have been convenient to use the <a href="https://ghcr.io/dbsnapper/dbsnapper">DBSnapper Docker image</a> to run the DBSnapper commands. Unfortunately GitHub Actions... <del>runner does not have Docker installed by default, so we would need to install Docker in the runner before we could use the Docker image. To avoid the additional complexity we decided to download and install the <code>.deb</code> package instead.</del></p>
+<p>...doesn't support using docker from a self-hosted runner at this time. See the following issues for more information:</p>
+<ul>
+<li>https://github.com/actions/runner/issues/406⁠</li>
+<li>https://github.com/actions/runner/issues/367⁠    </li>
+</ul>
+</div>
+<!-- prettier-ignore-end -->
+
+<!-- prettier-ignore-start -->
+<div class="admonition note">
+<p class="admonition-title">Database Utilities Needed</p>
+<p>When using the <a href="https://github.com/dbsnapper/dbsnapper/pkgs/container/dbsnapper">DBSnapper container image</a>, the Agent and database utilities are already included in the image. Since GitHub Actions doesn't support Docker containers, we need to install the tools by hand. In this case, we install the PostgreSQL client on line 17 to support the snapshot of our Postgresql RDS database. If you are using a different database, you will need to install the appropriate client.</p>
+</div>
+<!-- prettier-ignore-end -->
+
+<p>On line 13, we run the <code>dbsnapper build dvdrental-prod</code> command which will use the <code>DBSNAPPER_AUTHTOKEN</code> to authenticate to the DBSnapper Cloud, create a snapshot of the database specified in the <code>dvdrental-prod</code> target, and store it in the cloud storage specified in the target configuration. Once this is complete and no additional steps are needed, the task will be cleaned up in the next step.</p>
+<h2 id="step-5-cleanup-the-amazon-ecs-task">Step 5 - Cleanup the Amazon ECS Task<a class="headerlink" href="#step-5-cleanup-the-amazon-ecs-task" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Step 5 - Cleanup the Amazon ECS Task</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nt">deprovision</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ always() }}</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">  </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">  </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">    </span><span class="c1"># Uses OIDC connector for auth</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Configure AWS credentials</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-actions/configure-aws-credentials@v4</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">        </span><span class="nt">aws-region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.AWS_REGION }}</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">        </span><span class="nt">role-to-assume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.AWS_IAM_ROLE }}</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ECS Add desired tasks to 0</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">        </span><span class="no">aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --desired-count 0</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="inputs_3">Inputs<a class="headerlink" href="#inputs_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>env.AWS_REGION</code> - The AWS region where the ECS cluster is located</li>
+<li><code>env.AWS_IAM_ROLE</code> - The ARN of the IAM role that the OIDC provider will assume to provide the AWS credentials.</li>
+<li><code>env.ECS_CLUSTER</code> - The name of the ECS cluster where the task will be run.</li>
+<li><code>env.ECS_SERVICE</code> - The name of the ECS service that will run the task.</li>
+</ul>
+<h3 id="actions_1">Actions<a class="headerlink" href="#actions_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/aws-actions/configure-aws-credentials/tree/v4"><code>aws-actions/configure-aws-credentials@v4</code></a> - This action configures the AWS credentials for the actions to use. It uses the OIDC connector to authenticate with AWS.</li>
+</ul>
+<h3 id="description_3">Description<a class="headerlink" href="#description_3" title="Permanent link">&para;</a></h3>
+<p>In this final step, we need to use the <code>aws-actions/configure-aws-credentials@v4</code> action to configure the AWS credentials so we can use the AWS CLI to run the <code>aws ecs update-service</code> command. We use this command to set the desired task count for the service to 0, which will stop all ECS runner tasks, ensuring we don't get billed for unnecessary resources. Because we configured the runners with the <code>--ephemeral</code> flag, they will be automatically removed from the GitHub organization when they are terminated.</p>
+<p>Note: By using the <code>if: ${{ always() }}</code> condition on line 3, we ensure this step runs even if the previous steps fail. This is important to ensure that the ECS service is cleaned up even other steps fail, which under normal circumstances would not be the case.</p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>In this article, we've shown how to use GitHub Actions to trigger a snapshot and sanitization of an Amazon RDS database using DBSnapper and Amazon ECS Fargate. We've covered the setup of the GitHub Actions workflow, the registration of a self-hosted runner, the launch of an Amazon ECS Fargate task to run the runner, the execution of the DBSnapper Agent commands, and the cleanup of the Amazon ECS task. This workflow can be used to automate the snapshot and sanitization of database workloads running on private infrastructure, providing an automated and reliable manage database backups.</p>
+<h2 id="full-workflow">Full Workflow<a class="headerlink" href="#full-workflow" title="Permanent link">&para;</a></h2>
+<p>Here is the full GitHub Actions workflow that we've described in this article. Be sure to replace any placeholders with your own values.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">DBSnapper Build Snapshot - Full Workflow</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-7-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-7-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-7-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-7-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-7-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-7-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-7-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-7-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-7-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-7-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-7-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-7-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-7-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-7-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-7-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-7-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-7-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-7-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-7-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-7-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-7-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-7-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-7-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-7-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-7-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-7-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-7-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-7-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-7-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-7-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-7-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-7-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-7-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-7-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-7-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-7-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-7-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-7-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-7-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-7-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-7-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-7-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-7-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-7-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-7-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-7-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-7-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-7-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-7-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-7-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-7-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-7-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-7-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-7-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-7-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-7-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-7-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-7-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-7-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-7-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-7-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-7-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-7-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-7-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-7-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-7-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-7-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-7-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-7-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-7-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-7-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-7-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-7-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-7-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-7-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-7-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-7-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-7-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-7-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-7-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-7-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-7-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-7-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-7-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-7-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-7-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-7-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-7-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-7-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-7-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-7-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-7-100">100</a></span>
+<span class="normal"><a href="#__codelineno-7-101">101</a></span>
+<span class="normal"><a href="#__codelineno-7-102">102</a></span>
+<span class="normal"><a href="#__codelineno-7-103">103</a></span>
+<span class="normal"><a href="#__codelineno-7-104">104</a></span>
+<span class="normal"><a href="#__codelineno-7-105">105</a></span>
+<span class="normal"><a href="#__codelineno-7-106">106</a></span>
+<span class="normal"><a href="#__codelineno-7-107">107</a></span>
+<span class="normal"><a href="#__codelineno-7-108">108</a></span>
+<span class="normal"><a href="#__codelineno-7-109">109</a></span>
+<span class="normal"><a href="#__codelineno-7-110">110</a></span>
+<span class="normal"><a href="#__codelineno-7-111">111</a></span>
+<span class="normal"><a href="#__codelineno-7-112">112</a></span>
+<span class="normal"><a href="#__codelineno-7-113">113</a></span>
+<span class="normal"><a href="#__codelineno-7-114">114</a></span>
+<span class="normal"><a href="#__codelineno-7-115">115</a></span>
+<span class="normal"><a href="#__codelineno-7-116">116</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DBSnapper</span><span class="nv"> </span><span class="s">Build</span><span class="nv"> </span><span class="s">Snapshot&quot;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="c1"># Permissions are needed for github OIDC provider - AWS federation</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="c1"># https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file#oidc</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="nt">permissions</span><span class="p">:</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">  </span><span class="nt">id-token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">  </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">read</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">  </span><span class="nt">actions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="c1"># Some necessary environment variables</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">  </span><span class="nt">ORGANIZATION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper</span><span class="w"> </span><span class="c1"># Your GitHub Organization</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">  </span><span class="nt">ORGANIZATION_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/dbsnapper</span><span class="w"> </span><span class="c1"># Your GitHub Organization URL</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">  </span><span class="nt">AWS_REGION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-east-1</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">  </span><span class="nt">AWS_IAM_ROLE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arn:aws:iam::&lt;acct_id&gt;:role/&lt;name of role&gt;</span><span class="w"> </span><span class="c1"># From OIDC Federation</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">  </span><span class="nt">ECS_CLUSTER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w">  </span><span class="nt">ECS_SERVICE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github_runner</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">  </span><span class="nt">ECS_TASK_DEFINITION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.aws/ecs_task_definition_github_runner.json</span><span class="w"> </span><span class="c1"># Initial task definition file in the repo for the ECS Task</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="w">  </span><span class="nt">register-runner</span><span class="p">:</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="w">      </span><span class="nt">registration_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ steps.create-token.outputs.registration_token }}</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create Registration Token</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a><span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">create-token</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a><span class="w">        </span><span class="c1"># https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#about-self-hosted-runners-in-github-actions</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a><span class="w">        </span><span class="c1"># use jq -r to output the raw version of the .token field</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a><span class="w">          </span><span class="no">token=$(curl -L \</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a><span class="w">          </span><span class="no">-X POST \</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34"></a><span class="w">          </span><span class="no">-H &quot;Accept: application/vnd.github+json&quot; \</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35"></a><span class="w">          </span><span class="no">-H &quot;Authorization: Bearer ${{ secrets.FG_PAT }}&quot; \</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36"></a><span class="w">          </span><span class="no">-H &quot;X-GitHub-Api-Version: 2022-11-28&quot; \</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37"></a><span class="w">          </span><span class="no">&quot;https://api.github.com/orgs/${{ env.ORGANIZATION }}/actions/runners/registration-token&quot; | jq -r &#39;.token&#39;)</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38"></a>
+<a id="__codelineno-7-39" name="__codelineno-7-39"></a><span class="w">          </span><span class="no">echo &quot;registration_token=$token&quot; &gt;&gt; $GITHUB_OUTPUT</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40"></a>
+<a id="__codelineno-7-41" name="__codelineno-7-41"></a><span class="w">  </span><span class="nt">runner-ecs</span><span class="p">:</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43"></a><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">register-runner</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-7-45" name="__codelineno-7-45"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Checkout for access to task definition</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46"></a><span class="w">          </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-7-47" name="__codelineno-7-47"></a>
+<a id="__codelineno-7-48" name="__codelineno-7-48"></a><span class="w">        </span><span class="c1"># Uses OIDC connector for auth</span>
+<a id="__codelineno-7-49" name="__codelineno-7-49"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Configure AWS credentials</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50"></a><span class="w">          </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-actions/configure-aws-credentials@v4</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51"></a><span class="w">          </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-7-52" name="__codelineno-7-52"></a><span class="w">            </span><span class="nt">aws-region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.AWS_REGION }}</span>
+<a id="__codelineno-7-53" name="__codelineno-7-53"></a><span class="w">            </span><span class="nt">role-to-assume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.AWS_IAM_ROLE }}</span>
+<a id="__codelineno-7-54" name="__codelineno-7-54"></a>
+<a id="__codelineno-7-55" name="__codelineno-7-55"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Update Task Definition JSON</span>
+<a id="__codelineno-7-56" name="__codelineno-7-56"></a><span class="w">          </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update-task-def</span>
+<a id="__codelineno-7-57" name="__codelineno-7-57"></a><span class="w">          </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restackio/update-json-file-action@main</span>
+<a id="__codelineno-7-58" name="__codelineno-7-58"></a><span class="w">          </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-7-59" name="__codelineno-7-59"></a><span class="w">            </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.ECS_TASK_DEFINITION }}</span>
+<a id="__codelineno-7-60" name="__codelineno-7-60"></a><span class="w">            </span><span class="nt">fields</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-7-61" name="__codelineno-7-61"></a><span class="w">            </span><span class="p p-Indicator">{</span>
+<a id="__codelineno-7-62" name="__codelineno-7-62"></a><span class="w">                </span><span class="s">&quot;containerDefinitions[0].command&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span>
+<a id="__codelineno-7-63" name="__codelineno-7-63"></a><span class="w">                </span><span class="s">&quot;sh&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-7-64" name="__codelineno-7-64"></a><span class="w">                </span><span class="s">&quot;-c&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-7-65" name="__codelineno-7-65"></a><span class="w">                </span><span class="s">&quot;./config.sh</span><span class="nv"> </span><span class="s">--unattended</span><span class="nv"> </span><span class="s">--ephemeral</span><span class="nv"> </span><span class="s">--labels</span><span class="nv"> </span><span class="s">x64,linux,ecs</span><span class="nv"> </span><span class="s">--name</span><span class="nv"> </span><span class="s">ECS_Ephemeral_Runner</span><span class="nv"> </span><span class="s">--url</span><span class="nv"> </span><span class="s">${{</span><span class="nv"> </span><span class="s">env.ORGANIZATION_URL</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">--token</span><span class="nv"> </span><span class="s">${{</span><span class="nv"> </span><span class="s">needs.register-runner.outputs.registration_token</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">./run.sh&quot;</span>
+<a id="__codelineno-7-66" name="__codelineno-7-66"></a><span class="w">                </span><span class="p p-Indicator">]</span>
+<a id="__codelineno-7-67" name="__codelineno-7-67"></a><span class="w">            </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-7-68" name="__codelineno-7-68"></a>
+<a id="__codelineno-7-69" name="__codelineno-7-69"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy Amazon ECS task definition</span>
+<a id="__codelineno-7-70" name="__codelineno-7-70"></a><span class="w">          </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-actions/amazon-ecs-deploy-task-definition@v1</span>
+<a id="__codelineno-7-71" name="__codelineno-7-71"></a><span class="w">          </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-7-72" name="__codelineno-7-72"></a><span class="w">            </span><span class="nt">task-definition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.ECS_TASK_DEFINITION }}</span>
+<a id="__codelineno-7-73" name="__codelineno-7-73"></a><span class="w">            </span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.ECS_SERVICE }}</span>
+<a id="__codelineno-7-74" name="__codelineno-7-74"></a><span class="w">            </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.ECS_CLUSTER }}</span>
+<a id="__codelineno-7-75" name="__codelineno-7-75"></a><span class="w">            </span><span class="nt">wait-for-service-stability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-7-76" name="__codelineno-7-76"></a>
+<a id="__codelineno-7-77" name="__codelineno-7-77"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ECS Service Set desired tasks to 1</span>
+<a id="__codelineno-7-78" name="__codelineno-7-78"></a><span class="w">          </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-7-79" name="__codelineno-7-79"></a><span class="w">            </span><span class="no">aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --desired-count 1</span>
+<a id="__codelineno-7-80" name="__codelineno-7-80"></a>
+<a id="__codelineno-7-81" name="__codelineno-7-81"></a><span class="w">  </span><span class="nt">dbsnapper</span><span class="p">:</span>
+<a id="__codelineno-7-82" name="__codelineno-7-82"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-hosted</span>
+<a id="__codelineno-7-83" name="__codelineno-7-83"></a><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">runner-ecs</span>
+<a id="__codelineno-7-84" name="__codelineno-7-84"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-7-85" name="__codelineno-7-85"></a><span class="w">      </span><span class="nt">DBSNAPPER_SECRET_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.DBSNAPPER_SECRET_KEY }}</span>
+<a id="__codelineno-7-86" name="__codelineno-7-86"></a><span class="w">      </span><span class="nt">DBSNAPPER_AUTHTOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.DBSNAPPER_AUTHTOKEN }}</span>
+<a id="__codelineno-7-87" name="__codelineno-7-87"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-7-88" name="__codelineno-7-88"></a><span class="w">      </span><span class="c1"># Updated to use the new DBSnapper GitHub Action</span>
+<a id="__codelineno-7-89" name="__codelineno-7-89"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install DBSnapper Agent</span>
+<a id="__codelineno-7-90" name="__codelineno-7-90"></a><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper/install-dbsnapper-agent-action@v1</span>
+<a id="__codelineno-7-91" name="__codelineno-7-91"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-7-92" name="__codelineno-7-92"></a><span class="w">          </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
+<a id="__codelineno-7-93" name="__codelineno-7-93"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install Database Utilities</span>
+<a id="__codelineno-7-94" name="__codelineno-7-94"></a><span class="w">        </span><span class="c1"># Get the latest version of the postgres client</span>
+<a id="__codelineno-7-95" name="__codelineno-7-95"></a><span class="w">        </span><span class="c1"># https://www.postgresql.org/download/linux/ubuntu/</span>
+<a id="__codelineno-7-96" name="__codelineno-7-96"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-7-97" name="__codelineno-7-97"></a><span class="w">          </span><span class="no">sudo apt-get update &amp;&amp; sudo apt-get install -y postgresql-common &amp;&amp; sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y &amp;&amp; sudo apt-get update &amp;&amp; sudo apt-get install -y postgresql-client-16</span>
+<a id="__codelineno-7-98" name="__codelineno-7-98"></a>
+<a id="__codelineno-7-99" name="__codelineno-7-99"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run DBSnapper build command</span>
+<a id="__codelineno-7-100" name="__codelineno-7-100"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper build dvdrental-prod</span>
+<a id="__codelineno-7-101" name="__codelineno-7-101"></a>
+<a id="__codelineno-7-102" name="__codelineno-7-102"></a><span class="w">  </span><span class="nt">deprovision</span><span class="p">:</span>
+<a id="__codelineno-7-103" name="__codelineno-7-103"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-7-104" name="__codelineno-7-104"></a><span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ always() }}</span>
+<a id="__codelineno-7-105" name="__codelineno-7-105"></a><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper</span>
+<a id="__codelineno-7-106" name="__codelineno-7-106"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-7-107" name="__codelineno-7-107"></a><span class="w">      </span><span class="c1"># Uses OIDC connector for auth</span>
+<a id="__codelineno-7-108" name="__codelineno-7-108"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Configure AWS credentials</span>
+<a id="__codelineno-7-109" name="__codelineno-7-109"></a><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-actions/configure-aws-credentials@v4</span>
+<a id="__codelineno-7-110" name="__codelineno-7-110"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-7-111" name="__codelineno-7-111"></a><span class="w">          </span><span class="nt">aws-region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.AWS_REGION }}</span>
+<a id="__codelineno-7-112" name="__codelineno-7-112"></a><span class="w">          </span><span class="nt">role-to-assume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.AWS_IAM_ROLE }}</span>
+<a id="__codelineno-7-113" name="__codelineno-7-113"></a>
+<a id="__codelineno-7-114" name="__codelineno-7-114"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ECS Add desired tasks to 0</span>
+<a id="__codelineno-7-115" name="__codelineno-7-115"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-7-116" name="__codelineno-7-116"></a><span class="w">          </span><span class="no">aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --desired-count 0</span>
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 9, 2024 19:06:02 UTC">June 9, 2024</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Scharfnado, LLC
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/dbsnapper" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://linkedin.com/company/dbsnapper" target="_blank" rel="noopener" title="linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+      
+    
+    
+    
+      
+      
+    
+    <a href="https://mastodon.social/@dbsnapper" target="_blank" rel="noopener me" title="mastodon.social" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M433 179.1c0-97.2-63.7-125.7-63.7-125.7-62.5-28.7-228.6-28.4-290.5 0 0 0-63.7 28.5-63.7 125.7 0 115.7-6.6 259.4 105.6 289.1 40.5 10.7 75.3 13 103.3 11.4 50.8-2.8 79.3-18.1 79.3-18.1l-1.7-36.9s-36.3 11.4-77.1 10.1c-40.4-1.4-83-4.4-89.6-54-.6-4.6-.9-9.3-.9-13.9 85.6 20.9 158.7 9.1 178.7 6.7 56.1-6.7 105-41.3 111.2-72.9 9.8-49.8 9-121.5 9-121.5zm-75.1 125.2h-46.6V190.1c0-49.7-64-51.6-64 6.9v62.5H201V197c0-58.5-64-56.6-64-6.9v114.2H90.3c0-122.1-5.2-147.9 18.4-175 25.9-28.9 79.8-30.8 103.8 6.1l11.6 19.5 11.6-19.5c24.1-37.1 78.1-34.8 103.8-6.1 23.7 27.3 18.4 53 18.4 175"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "search.share", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -7,6 +7,11 @@
   {
     "version": "2.9.1",
     "title": "2.9.1 (Latest)",
+    "aliases": []
+  },
+  {
+    "version": "2.9.0",
+    "title": "2.9.0 (Latest)",
     "aliases": [
       "latest"
     ]
