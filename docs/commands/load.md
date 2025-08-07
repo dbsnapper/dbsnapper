@@ -23,6 +23,8 @@ dbsnapper load <target_name> [snapshot_index|file.sql] [flags]
 
 ## Options
 
+### Command-Specific Flags
+
 ```bash
       --destdb string   Destination Database URL Override - Will overwrite any existing destination database
       --dry-run         Show execution plan without running (SQL files only)
@@ -32,20 +34,88 @@ dbsnapper load <target_name> [snapshot_index|file.sql] [flags]
   -h, --help           Show help for the load command
 ```
 
-## Snapshot Loading
-
-Load database snapshots created with the `build` command:
-
-### Basic Snapshot Operations
+### Global Flags
 
 ```bash
-dbsnapper load target_name              # Load most recent snapshot to dst_url
-dbsnapper load target_name 2            # Load snapshot by index to dst_url
-dbsnapper load target_name --original   # Load original (non-sanitized) snapshot
-dbsnapper load target_name --destdb <url>  # Load to custom destination database
+      --config string   Config file (default is ~/.config/dbsnapper/dbsnapper.yml)
+      --nocloud         Disable cloud mode to speed up operations by skipping cloud API calls
 ```
 
-### How Snapshot Loading Works
+## Target Configuration
+
+The load command uses the same target configuration as the build command. Here's what you need:
+
+### Required Configuration
+
+**Minimal Target Setup**:
+
+```yaml
+targets:
+  my-target:
+    snapshot:
+      src_url: "postgresql://user:pass@host:5432/dbname"
+      dst_url: "postgresql://user:pass@dev:5432/dbname_copy"
+```
+
+### Complete Target Configuration
+
+**Target with Schema Filtering**:
+
+```yaml
+targets:
+  postgres-target:
+    name: "PostgreSQL with Schema Control"
+    snapshot:
+      src_url: "postgresql://user:pass@prod:5432/myapp"
+      dst_url: "postgresql://user:pass@dev:5432/myapp_dev"
+      schema_config:
+        include_schemas: ["public", "app_data", "reports"]
+        # Exclude temporary and debug schemas from loading
+```
+
+## Example Usage
+
+### Snapshot Loading Examples
+
+```bash
+# Basic snapshot operations
+dbsnapper load production-db              # Load latest snapshot
+dbsnapper load production-db 5            # Load snapshot at index 5
+dbsnapper load production-db --original   # Load original (non-sanitized) snapshot
+
+# Custom destination
+dbsnapper load prod-db --destdb "postgresql://user:pass@test-host:5432/test_db"
+```
+
+### SQL File Loading Examples
+
+```bash
+# Basic SQL file operations
+dbsnapper load dev-db schema.sql          # Load schema to dst_url
+dbsnapper load dev-db data.sql --source   # Load data to src_url
+dbsnapper load dev-db migration.sql --dry-run  # Preview migration
+
+# Advanced SQL file operations
+dbsnapper load prod-db update.sql --no-drop    # Execute without dropping database
+dbsnapper load staging-db backup.sql --destdb "postgres://user:pass@host/custom_db"
+```
+
+### Automation Examples
+
+```bash
+# CI/CD pipeline usage
+CI=true dbsnapper load production-db
+DBSNAPPER_NO_CONFIRM=true dbsnapper load staging-db migration.sql --no-drop
+
+# Batch processing
+for file in migrations/*.sql; do
+  dbsnapper load dev-db "$file" --no-drop
+done
+```
+
+## How It Works
+
+### Snapshot Loading Process
 
 1. **Snapshot Selection**: Identifies the snapshot to load based on index (0 = most recent)
 2. **Database Preparation**: Drops and recreates the destination database
@@ -53,29 +123,24 @@ dbsnapper load target_name --destdb <url>  # Load to custom destination database
 4. **Data Restoration**: Restores schema, data, indexes, and constraints from the snapshot
 5. **Verification**: Confirms successful restoration
 
-### Snapshot Priority System
+### SQL File Loading Process
+
+1. **File Detection**: Automatically detects `.sql` files by extension
+2. **Database Preparation**: Optionally drops/recreates database (unless `--no-drop`)
+3. **SQL Execution**: Executes SQL file against target database
+4. **Transaction Management**: Wraps execution in transactions for rollback capability
+
+## Snapshot Priority System
 
 DBSnapper automatically prioritizes sanitized snapshots for safety:
 
-1. **Sanitized Snapshot**: Loads `{timestamp}_{target_name}.san.zip` if available
-2. **Original Snapshot**: Loads `{timestamp}_{target_name}.zip` if no sanitized version exists  
+1. **Sanitized Snapshot**: Loads `<timestamp>_<target_name>.san.zip` if available
+2. **Original Snapshot**: Loads `<timestamp>_<target_name>.zip` if no sanitized version exists  
 3. **Override**: Use `--original` flag to force loading the original snapshot
 
-## SQL File Loading
+## SQL File Operations
 
-Load SQL files directly to target databases with advanced execution modes and safety features:
-
-### Basic SQL File Operations
-
-```bash
-dbsnapper load target_name file.sql                    # Load SQL file to dst_url (default)
-dbsnapper load target_name file.sql --source           # Load SQL file to src_url
-dbsnapper load target_name file.sql --destdb <url>     # Load to custom destination
-dbsnapper load target_name file.sql --no-drop         # Execute against existing database
-dbsnapper load target_name file.sql --dry-run         # Preview execution without running
-```
-
-### SQL File Detection
+### File Detection
 
 SQL files are automatically detected by the `.sql` extension (case-insensitive):
 - `schema.sql`, `data.SQL`, `migration.Sql` are all valid
@@ -116,7 +181,7 @@ When loading snapshots, the load command respects schema configuration for Postg
 | `include_schemas: ["public", "app"]` | Loads only listed schemas from snapshot | Selective inclusion |
 | `exclude_schemas: ["temp", "logs"]` | Loads all schemas except excluded ones | Exclude temporary data |
 
-### Schema Configuration Example
+### Schema Configuration Examples
 
 ```yaml
 targets:
@@ -178,73 +243,6 @@ dbsnapper load target_name file.sql
 # Alternative environment variable
 export DBSNAPPER_NO_CONFIRM=true
 dbsnapper load target_name file.sql
-```
-
-## Example Usage
-
-### Snapshot Loading Examples
-
-```bash
-# Basic snapshot operations
-dbsnapper load production-db              # Load latest snapshot
-dbsnapper load production-db 5            # Load snapshot at index 5
-dbsnapper load production-db --original   # Load original (non-sanitized) snapshot
-
-# Custom destination
-dbsnapper load prod-db --destdb "postgresql://user:pass@test-host:5432/test_db"
-```
-
-### SQL File Loading Examples
-
-```bash
-# Basic SQL file operations
-dbsnapper load dev-db schema.sql          # Load schema to dst_url
-dbsnapper load dev-db data.sql --source   # Load data to src_url
-dbsnapper load dev-db migration.sql --dry-run  # Preview migration
-
-# Advanced SQL file operations
-dbsnapper load prod-db update.sql --no-drop    # Execute without dropping database
-dbsnapper load staging-db backup.sql --destdb "postgres://user:pass@host/custom_db"
-```
-
-### Automation Examples
-
-```bash
-# CI/CD pipeline usage
-CI=true dbsnapper load production-db
-DBSNAPPER_NO_CONFIRM=true dbsnapper load staging-db migration.sql --no-drop
-
-# Batch processing
-for file in migrations/*.sql; do
-  dbsnapper load dev-db "$file" --no-drop
-done
-```
-
-## Configuration Requirements
-
-### Basic Target Configuration
-
-```yaml
-targets:
-  myapp-dev:
-    name: "Development Database"
-    snapshot:
-      src_url: "postgresql://user:pass@prod:5432/myapp"
-      dst_url: "postgresql://user:pass@dev:5432/myapp_dev"
-```
-
-### Advanced Target Configuration with Schema Filtering
-
-```yaml
-targets:
-  postgres-target:
-    name: "PostgreSQL with Schema Control"
-    snapshot:
-      src_url: "postgresql://user:pass@prod:5432/myapp"
-      dst_url: "postgresql://user:pass@dev:5432/myapp_dev"
-      schema_config:
-        include_schemas: ["public", "app_data", "reports"]
-        # Exclude temporary and debug schemas from loading
 ```
 
 ## Use Cases
@@ -357,8 +355,8 @@ Warning: schema 'non_existent' specified but not found in snapshot
 
 - [`build`](build.md) - Create new database snapshots
 - [`sanitize`](../sanitize/sanitize.md) - Create sanitized versions of snapshots
-- [`target`](../cmd/dbsnapper_target.md) - View target details and available snapshots
-- [`targets`](../cmd/dbsnapper_targets.md) - List all available targets
+- [`target`](target.md) - View target details and available snapshots
+- [`targets`](targets.md) - List all available targets
 
 ## See Also
 

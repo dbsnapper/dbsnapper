@@ -31,7 +31,14 @@ dbsnapper auth token hNsdelkjcxgoiuwalkmcgoi...
   -h, --help   help for token
 ```
 
+### Options inherited from parent commands
+
+```
+      --config string   config file (default is ~/.config/dbsnapper/dbsnapper.yml)
+      --nocloud         Disable cloud mode to speed up operations by skipping cloud API calls
+```
+
 ### SEE ALSO
 
-* [dbsnapper auth](dbsnapper-auth.md)	 - Login to DBSnapper Cloud
+* [dbsnapper auth](dbsnapper_auth.md)	 - Login to DBSnapper Cloud
 

@@ -19,9 +19,15 @@ dbsnapper targets [flags]
 ```
       --destdb string   Destination Database URL Override - Will Overwrite any existing destination database!!!
   -h, --help            help for targets
-      --noui            Disable the Terminal UI
   -o, --original        Use the original snapshot instead of the sanitized version.
   -u, --update          Update the db info for all targets (default true)
+```
+
+### Options inherited from parent commands
+
+```
+      --config string   config file (default is ~/.config/dbsnapper/dbsnapper.yml)
+      --nocloud         Disable cloud mode to speed up operations by skipping cloud API calls
 ```
 
 ### SEE ALSO

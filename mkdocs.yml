@@ -100,31 +100,52 @@ nav:
           - Single Sign-On (SSO) Integration with Okta: dbsnapper-cloud/sso/sso-okta-oidc.md
 
   - Database Engines:
-      - database-engines/introduction.md
-      - database-engines/postgresql-local.md
-      - database-engines/mysql-local.md
-      - database-engines/postgresql-docker.md
-      - database-engines/mysql-docker.md
+      - Introduction: database-engines/introduction.md
+      - PostgreSQL:
+          - PostgreSQL Local: database-engines/postgresql-local.md
+          - PostgreSQL Docker: database-engines/postgresql-docker.md
+      - MySQL:
+          - MySQL Local: database-engines/mysql-local.md
+          - MySQL Docker: database-engines/mysql-docker.md
+      - Advanced Topics:
+          - Engine Selection Guide: database-engines/engine-selection.md
+          - Ephemeral Databases: database-engines/ephemeral-databases.md
+          - Docker Integration: database-engines/docker-integration.md
+          - Configuration Reference: database-engines/engine-configuration.md
   - Cloud Storage Engines:
       - cloud-storage-engines/introduction.md
       - cloud-storage-engines/configuration.md
       - cloud-storage-engines/cloudflare-r2.md
       - cloud-storage-engines/amazon-s3.md
   - Commands:
-      - commands/build.md
-      - commands/load.md
-  - Command Line Usage:
-      - cmd/dbsnapper.md
-      - cmd/dbsnapper_auth_token.md
-      - cmd/dbsnapper_config_init.md
-      - cmd/dbsnapper_config_check.md
-      - cmd/dbsnapper_subset.md
-      - cmd/dbsnapper_build.md
-      - cmd/dbsnapper_pull.md
-      - cmd/dbsnapper_sanitize.md
-      - cmd/dbsnapper_load.md
-      - cmd/dbsnapper_targets.md
-      - cmd/dbsnapper_target.md
+      - Overview: commands/index.md
+      - CLI Reference: cmd/dbsnapper.md
+      - Core Workflow:
+          - Build: commands/build.md
+          - Load: commands/load.md
+          - Sanitize: commands/sanitize.md
+          - Subset: commands/subset.md
+          - Pull: commands/pull.md
+      - Target Management:
+          - Targets: commands/targets.md
+          - Target: commands/target.md
+      - Configuration:
+          - Config: commands/config.md
+          - Config Init: commands/config-init.md
+          - Config Check: commands/config-check.md
+          - Config Discover: commands/config-discover.md
+          - Config Validate: commands/config-validate.md
+      - Authentication:
+          - Auth: commands/auth.md
+          - Auth Token: commands/auth-token.md
+      - Development:
+          - Dev: commands/dev.md
+          - Dev TS: commands/dev-ts.md
+          - Dev Schemas: cmd/dbsnapper_dev_schemas.md
+          - Dev Assert TS: cmd/dbsnapper_dev_assert-ts.md
+          - Dev Validate Sanitize: cmd/dbsnapper_dev_validate-sanitize.md
+      - Integration:
+          - MCP Server: commands/mcp.md
   - Articles:
       - articles/useful-postgres-mysql-queries.md
       - articles/dbsnapper-github-actions-ecs-simplified.md

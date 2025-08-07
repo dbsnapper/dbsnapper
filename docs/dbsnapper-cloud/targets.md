@@ -23,7 +23,7 @@ Targets enable teams to standardize database snapshot processes while maintainin
 
 The Targets page displays all your configured targets along with any shared team targets you have access to. Shared team targets are available when your organization uses SSO integration, leveraging SSO groups to manage access permissions.
 
-![DBSnapper Cloud - All Targets](static/cloud/targets-with-shared-targets.jpg "DBSnapper Cloud Targets page showing personal and shared team targets")
+![DBSnapper Cloud - All Targets](../static/cloud/targets-with-shared-targets.jpg "DBSnapper Cloud Targets page showing personal and shared team targets")
 
 Each target shows:
 

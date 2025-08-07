@@ -22,7 +22,8 @@ The `snapshot_index` is the index number of the snapshot to load.
 !!! note
 
     The target configuration must specifiy a `query_file` configuration parameter that specifies
-    the name of the file (located in the `working_directory`) that contains the sanitization query
+    the path to the file containing the sanitization query. Absolute paths are used as-is, while relative 
+    paths are resolved relative to the `working_directory`
 
 <!-- prettier-ignore-end -->
 
@@ -50,6 +51,13 @@ dbsnapper sanitize [flags] target_name snapshot_index
   -e, --ephemeral   Create a snapshot using an ephemeral database via docker containers
   -h, --help        help for sanitize
   -n, --new         Create a new snapshot set for the target
+```
+
+### Options inherited from parent commands
+
+```
+      --config string   config file (default is ~/.config/dbsnapper/dbsnapper.yml)
+      --nocloud         Disable cloud mode to speed up operations by skipping cloud API calls
 ```
 
 ### SEE ALSO

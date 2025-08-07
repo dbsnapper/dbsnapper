@@ -32,7 +32,7 @@ The `snapshot_index` is the index number of the snapshot to load (0 = most recen
 Load SQL files directly to target databases:
 
 - `dbsnapper load target_name file.sql` - Load SQL file to dst_url (default)
-- `dbsnapper load target_name file.sql --source` - Load SQL file to src_url
+- `dbsnapper load target_name file.sql --src_url` - Load SQL file to src_url
 - `dbsnapper load target_name file.sql --destdb <url>` - Load to custom destination
 - `dbsnapper load target_name file.sql --no-drop` - Execute against existing database
 - `dbsnapper load target_name file.sql --dry-run` - Preview execution without running
@@ -50,7 +50,6 @@ SQL files are automatically detected by the `.sql` extension (case-insensitive).
 When loading snapshots, the load command respects the schema configuration for PostgreSQL databases:
 
 **Schema Configuration Options:**
-
 - **No Configuration:** Defaults to `public` schema only
 - **Use Default Schema (`use_default_schema: true`):** Loads only the default schema
 - **Use All Schemas (`use_default_schema: false`):** Loads all schemas present in the snapshot
@@ -58,7 +57,6 @@ When loading snapshots, the load command respects the schema configuration for P
 - **Exclude Specific Schemas (`exclude_schemas`):** Loads all schemas except the excluded ones
 
 **Important Notes:**
-
 - Only schemas that exist in the snapshot will be loaded (no empty schemas created)
 - If requested schemas don't exist in the snapshot, warnings will be displayed
 - The load operation analyzes snapshot contents to determine available schemas
@@ -88,7 +86,7 @@ To skip confirmations in automated environments, set `CI=true` or `DBSNAPPER_NO_
 !!! tip "Database URL Priority"
 	Database URL resolution follows this priority:
 	1. `--destdb` flag (highest priority)
-	2. `--source` flag (determines src_url vs dst_url)
+	2. `--src_url` flag (determines src_url vs dst_url)
 	3. Configuration overrides
 	4. Target configuration defaults
 
@@ -104,7 +102,7 @@ dbsnapper load production-db --original   # Load original snapshot
 Load SQL files:
 ```bash
 dbsnapper load dev-db schema.sql          # Load schema to dst_url
-dbsnapper load dev-db data.sql --source   # Load data to src_url  
+dbsnapper load dev-db data.sql --src_url   # Load data to src_url  
 dbsnapper load dev-db migration.sql --dry-run  # Preview migration
 ```
 
@@ -127,6 +125,8 @@ targets:
         exclude_schemas: ["temp_schema"]   # Load all except these schemas
 ```
 
+
+
 ```
 dbsnapper load target_name [snapshot_index|file.sql] [flags]
 ```
@@ -139,7 +139,14 @@ dbsnapper load target_name [snapshot_index|file.sql] [flags]
   -h, --help            help for load
       --no-drop         Skip dropping/recreating database (SQL files only)
       --original        Use the original snapshot instead of the sanitized version (snapshots only)
-      --source          Load SQL file to source database instead of destination
+      --src_url         Load SQL file to source database instead of destination
+```
+
+### Options inherited from parent commands
+
+```
+      --config string   config file (default is ~/.config/dbsnapper/dbsnapper.yml)
+      --nocloud         Disable cloud mode to speed up operations by skipping cloud API calls
 ```
 
 ### SEE ALSO

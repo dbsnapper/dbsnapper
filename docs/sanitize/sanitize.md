@@ -33,7 +33,7 @@ Listing ALL snapshots for target: sakila
 +-------+-------------------------+-------------------+-----------------------+--------+------------+-------+
 ```
 
-Now we're ready to sanitize this snapshot of the `sakila` target which can be done with the [`sanitize` command](../cmd/dbsnapper_sanitize.md):
+Now we're ready to sanitize this snapshot of the `sakila` target which can be done with the [`sanitize` command](../commands/sanitize.md):
 
 ```sh
 dbsnapper sanitize sakila

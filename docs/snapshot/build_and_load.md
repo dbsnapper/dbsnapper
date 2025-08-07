@@ -19,7 +19,7 @@ Given the example configuration for the `sakila` target, we can build a snapshot
 
 ## Build a snapshot
 
-Now we're ready to create our first snapshot of the `sakila` target which can be done with the [`build` command](../cmd/dbsnapper_build.md):
+Now we're ready to create our first snapshot of the `sakila` target which can be done with the [`build` command](../commands/build.md):
 
 ```sh
 dbsnapper build sakila
@@ -63,7 +63,7 @@ And we see our new snapshot `1708236890_sakila` listed on line 10.
 
 ## Load a snapshot
 
-If a `dst_url` is defined in the target snapshot definition, you can load a snapshot to the destination using the index on the snapshot list. The [`load` command](../cmd/dbsnapper_load.md) will drop and recreate the destination database and restore the snapshot to the destination.
+If a `dst_url` is defined in the target snapshot definition, you can load a snapshot to the destination using the index on the snapshot list. The [`load` command](../commands/load.md) will drop and recreate the destination database and restore the snapshot to the destination.
 
 Use the index of the snapshot to specify which snapshot to load. The default is snapshot index 0.
 

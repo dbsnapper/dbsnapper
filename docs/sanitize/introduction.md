@@ -13,7 +13,7 @@ One of the main features of DBSnapper is the ability to sanitize a database. Thi
 
 ## Overview
 
-DBSnapper provides the [`sanitize`](../cmd/dbsnapper_sanitize.md) command to sanitize a database, which applies a sanitization query to a snapshot of the database.
+DBSnapper provides the [`sanitize`](../commands/sanitize.md) command to sanitize a database, which applies a sanitization query to a snapshot of the database.
 
 ### `sanitize` command steps
 

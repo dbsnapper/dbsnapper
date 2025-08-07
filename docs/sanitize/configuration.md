@@ -77,6 +77,6 @@ Sanitization configuration options consist of a destination url `dst_url` that w
 
 !!! danger "Danger: Destination database `dst_url` will be DROPPED and RECREATED"
 
-    Any connection string provided in the `dst_url` attribute will be overwritten when certain commands are used such as [`load`](../cmd/dbsnapper_load.md) and `sanitize` 
+    Any connection string provided in the `dst_url` attribute will be overwritten when certain commands are used such as [`load`](../commands/load.md) and `sanitize` 
 
 <!-- prettier-ignore-end -->

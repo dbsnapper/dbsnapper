@@ -79,6 +79,6 @@ As you can see, the configuration options are quite simple, consisting of a data
 
 !!! danger "Danger: Destination database `dst_url` will be DROPPED and RECREATED"
 
-    Any connection string provided in the `dst_url` attribute will be overwritten when certain commands are used such as [`load`](../cmd/dbsnapper_load.md) which loads a snapshot to the destination database.
+    Any connection string provided in the `dst_url` attribute will be overwritten when certain commands are used such as [`load`](../commands/load.md) which loads a snapshot to the destination database.
 
 <!-- prettier-ignore-end -->
