@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://docs.dbsnapper.com
-
-# Sitemaps
-Sitemap: https://docs.dbsnapper.com/sitemap.xml
