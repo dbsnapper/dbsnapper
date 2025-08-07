@@ -1,3 +1,4 @@
 .cache
 .venv
-.DS_Storesite/
+.DS_Store
+site/
