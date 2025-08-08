@@ -10,7 +10,7 @@ description: Learn how to use DBSnapper with GitHub Actions self-hosted runners 
 <!-- prettier-ignore-start -->
 !!! note "Update: New DBSnapper GitHub Action"
 
-    We've updated this article to use our new [Install DBSnapper Agent GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) that makes it simple to install the DBSnapper Agent onto a GitHub Actions runner. These changes can be found in [Step 4](#step-4---execute-the-dbsnapper-agent-commands).
+    We've updated this article to use our new [Install DBSnapper Agent GitHub Action](https://github.com/marketplace/actions/install-dbsnapper-agent) that makes it simple to install the DBSnapper Agent onto a GitHub Actions runner. These changes can be found in [Step 4](#step-4-execute-the-dbsnapper-agent-commands).
 
 <!-- prettier-ignore-end -->
 
@@ -228,11 +228,11 @@ The `--ephemeral` flag is used to run the runner in ephemeral mode, meaning the 
 
 #### Deploy Amazon ECS Task Definition
 
-The next step on line 29 uses the `aws-actions/amazon-ecs-deploy-task-definition@v1` action to deploy the updated task definition to the ECS cluster. This action takes the path to the task definition file, the cluster, and service name as inputs. We set the `wait-for-service-stability` input to `false` to avoid waiting for the service to stabilize before continuing with the workflow, since [Step 4 - Execute the DBSnapper Agent Commands](#step-4---execute-the-dbsnapper-agent-commands) won't proceed until the runner is registered, running, and able to execute the job.
+The next step on line 29 uses the `aws-actions/amazon-ecs-deploy-task-definition@v1` action to deploy the updated task definition to the ECS cluster. This action takes the path to the task definition file, the cluster, and service name as inputs. We set the `wait-for-service-stability` input to `false` to avoid waiting for the service to stabilize before continuing with the workflow, since [Step 4 - Execute the DBSnapper Agent Commands](#step-4-execute-the-dbsnapper-agent-commands) won't proceed until the runner is registered, running, and able to execute the job.
 
 #### ECS Service: Set Desired Tasks to 1
 
-Finally, on line 39, we use the `aws ecs update-service` command (from the aws-cli) to set the desired task count for the service to 1. This will start a task in the service to run the self-hosted runner. The updated task definition will not start without this command. We use a similar command in [Step 5 - Cleanup the Amazon ECS Task](#step-5---cleanup-the-amazon-ecs-task) to set the desired task count to 0 to stop the runner after the job is complete.
+Finally, on line 39, we use the `aws ecs update-service` command (from the aws-cli) to set the desired task count for the service to 1. This will start a task in the service to run the self-hosted runner. The updated task definition will not start without this command. We use a similar command in [Step 5 - Cleanup the Amazon ECS Task](#step-5-cleanup-the-amazon-ecs-task) to set the desired task count to 0 to stop the runner after the job is complete.
 
 ### Task Definition File
 

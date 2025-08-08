@@ -1,246 +1,278 @@
 ---
 title: Quick Start Guide
-description: Get started with DBSnapper in minutes - create your first sanitized database snapshot and load it into a development environment.
+description: Get started with DBSnapper in minutes - choose your path based on what you want to accomplish.
 ---
 
-This guide will walk you through creating your first database snapshot with DBSnapper in just a few minutes. You'll learn how to set up the agent, configure a target database, and create a sanitized snapshot for development use.
+# Quick Start Guide
 
-## What You'll Accomplish
+Get DBSnapper running in minutes with the approach that fits your needs. Whether you're exploring DBSnapper for the first time or setting up your team's database snapshot workflow, we've got you covered.
 
-By the end of this guide, you will have:
+## Choose Your Path
 
-- ✅ Configured the DBSnapper Agent
-- ✅ Connected to a database (source)
-- ✅ Created your first database snapshot
-- ✅ Loaded the snapshot into a development database
+=== "🚀 Try DBSnapper (5 minutes)"
 
-## Prerequisites
+    **Perfect for:** First-time users who want to see DBSnapper in action quickly.
 
-Before starting, ensure you have:
+    **What you'll accomplish:**
+    
+    - ✅ Run DBSnapper in a container (no installation needed)
+    - ✅ Create your first database snapshot
+    - ✅ Load a snapshot into a development database
+    
+    **Prerequisites:** Docker installed and a test database available
 
-- **DBSnapper Agent installed** - See the [installation guide](installation.md) for setup instructions
-- **A source database** - PostgreSQL or MySQL database with sample data
-- **A destination database** - Where you'll load the snapshot (can be empty)
-- **Database tools** - Either installed locally or Docker available for containerized tools
+    ### Step 1: Run DBSnapper with Docker
 
-!!! tip "Need a Test Database?"
+    Use our pre-built container with all tools included:
 
-    If you don't have a database ready, consider using the PostgreSQL `dvdrental` sample database or MySQL `sakila` database for testing.
+    ```bash
+    docker run -it --rm ghcr.io/dbsnapper/dbsnapper:latest /bin/bash
+    ```
 
-## Option 1: Container-Based Quick Start
+    ### Step 2: Initialize Configuration
 
-The fastest way to get started is using the DBSnapper container with DBSnapper Cloud:
+    ```bash
+    dbsnapper config init
+    ```
 
-```bash
-docker run -v /var/run/docker.sock:/var/run/docker.sock \
-  -e DBSNAPPER_SECRET_KEY=your_secret_key \
-  -e DBSNAPPER_AUTHTOKEN=your_auth_token \
-  --rm --network dbsnapper --pull always \
-  ghcr.io/dbsnapper/dbsnapper:latest \
-  dbsnapper build your-cloud-target
-```
+    ### Step 3: Configure a Test Target
 
-This approach requires:
+    Edit the generated config to add your database:
 
-1. A [DBSnapper Cloud account](https://app.dbsnapper.com/sign_up) with configured targets
-2. Your secret key and auth token from the cloud dashboard
+    ```bash
+    # Edit ~/.config/dbsnapper/dbsnapper.yml
+    targets:
+      my_test:
+        snapshot:
+          src_url: "postgresql://user:pass@host:5432/source_db"
+          dst_url: "postgresql://user:pass@host:5432/test_db"
+    ```
 
-## Option 2: Local Configuration Setup
+    ### Step 4: Create Your First Snapshot
 
-For local development or when you want full control over configuration:
+    ```bash
+    dbsnapper build my_test
+    ```
 
-### Step 1: Initialize Configuration
+    ### Step 5: Load the Snapshot
 
-## Initialize the configuration file
+    ```bash
+    dbsnapper load my_test 0
+    ```
 
-Run the `config init` command to create an example configuration at `~/.config/dbsnapper/dbsnapper.yml`
+    🎉 **Success!** You've created and loaded your first snapshot. Ready to explore more features?
 
-```sh
-dbsnapper config init
-```
+=== "⚙️ Set Up for Your Team"
 
-!!! example "Configuration file initialized to default values"
+    **Perfect for:** Teams who want to share snapshots and use cloud storage.
+
+    **What you'll accomplish:**
+    
+    - ✅ Set up DBSnapper Cloud integration
+    - ✅ Configure team storage profiles
+    - ✅ Create shareable, sanitized snapshots
+    - ✅ Enable SSO-based team access
+    
+    **Prerequisites:** [DBSnapper Cloud account](https://app.dbsnapper.com/sign_up) and cloud storage access
+
+    ### Step 1: Install DBSnapper
+
+    Choose your preferred installation method:
+
+    ```bash
+    # macOS with Homebrew
+    brew install dbsnapper/tap/dbsnapper
+    
+    # Or use Docker
+    docker pull ghcr.io/dbsnapper/dbsnapper:latest
+    ```
+
+    ### Step 2: Connect to DBSnapper Cloud
+
+    ```bash
+    dbsnapper config init
+    dbsnapper auth token YOUR_AUTH_TOKEN
+    ```
+
+    ### Step 3: Configure Team Storage
+
+    Add your team's storage profile in the cloud dashboard or config:
 
     ```yaml
-    secret_key: d3d234bc83dd4efe7b7329855ba0acc2
-    working_directory: /Users/snappy/.dbsnapper
-    docker:
-      images:
-        postgres: postgres:latest
+    storage_profiles:
+      team_storage:
+        provider: s3
+        bucket: your-team-snapshots
+        awscli_profile: production
     ```
 
-### Check the configuration and environment
+    ### Step 4: Create Team Targets
 
-Next, we can check our configuration and required dependencies. This runs some checks to verify the configuration file is valid and reports on the database tools found in the path as well as Docker engine and database image availability.
+    Configure targets with sanitization and sharing:
 
-```sh
-dbsnapper config check
-```
-
-!!! example "`dbsnapper config check` output"
-
-    ```sh
-    Checking DBSnapper Configuration
-      ✅ Config file ( /Users/snappy/app/dbsnapper/cli/dbsnapper.yml ) found and loaded
-      🔵 Postgres Local Engine (pglocal)
-        ✅ psql found at /Applications/Postgres.app/Contents/Versions/latest/bin/psql
-        ✅ pg_dump found at /Applications/Postgres.app/Contents/Versions/latest/bin/pg_dump
-        ✅ pg_restore found at /Applications/Postgres.app/Contents/Versions/latest/bin/pg_restore
-      🔵 MySQL Local Engine (mylocal)
-        ✅ mysqldump found at /opt/homebrew/bin/mysqldump
-        ✅ mysql found at /opt/homebrew/bin/mysql
-      🔵 Postgres Docker Engine (pgdocker)
-        ✅ Docker client connected
-        ✅ docker.images set in config file
-        ✅ docker.images.postgres set in config file
-          ✅ Found Docker image: postgres:latest
-      🔵 Mysql Docker Engine (mydocker)
-        ✅ Docker client connected
-        ✅ docker.images set in config file
-        ✅ docker.images.mysql set in config file
-          ✅ Found Docker image: mysql:8.0-oracle
-      ✅ All supported database engines configured
-      ✅ DBSnapper Cloud connected
-
-      ✅ Configuration OK
-
+    ```yaml
+    targets:
+      production_app:
+        snapshot:
+          src_url: "postgresql://user:pass@prod:5432/app"
+          dst_url: "postgresql://user:pass@dev:5432/app_dev"
+        storage_profile: team_storage
+        sanitize:
+          query_file: "sanitize.sql"
+        # Enable team sharing via SSO groups
+        sso_groups: ["developers", "qa-team"]
     ```
 
-### Step 3: Configure Database Targets
+    ### Step 5: Build and Share Snapshots
 
-Add database connection details to your configuration. A "target" defines both source and destination databases.
+    ```bash
+    # Build original and sanitized snapshots
+    dbsnapper sanitize production_app -n
+    
+    # Team members can now access via shared targets
+    dbsnapper targets --shared
+    ```
 
-Open your configuration file (`~/.config/dbsnapper/dbsnapper.yml`) and add a target definition:
+    🎉 **Success!** Your team can now access sanitized snapshots securely.
 
-```yaml
-targets:
-  my_app:
-    snapshot:
-      src_url: postgresql://postgres:postgres@localhost:5432/production_app?sslmode=disable
-      dst_url: postgresql://postgres:postgres@localhost:5432/dev_app?sslmode=disable
-```
+=== "🔧 Integrate with Your Workflow"
 
-!!! warning "Database Safety"
+    **Perfect for:** Developers who want DBSnapper integrated into their daily workflow.
 
-    The destination database (`dst_url`) will be **completely dropped and recreated** when loading a snapshot. Never use a production database as a destination.
+    **What you'll accomplish:**
+    
+    - ✅ Set up VSCode extension for in-editor access
+    - ✅ Configure GitHub Actions for automated snapshots
+    - ✅ Use Terraform provider for infrastructure as code
+    - ✅ Enable MCP server for AI assistant integration
+    
+    **Prerequisites:** DBSnapper installed, VSCode/GitHub/Terraform as needed
 
-!!! tip "Connection Examples"
+    ### Step 1: Install VSCode Extension
 
-    - **PostgreSQL**: `postgresql://user:password@host:port/database?sslmode=disable`
-    - **MySQL**: `mysql://user:password@host:port/database`
+    Install the [DBSnapper Extension](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper) from the VS Code Marketplace.
 
-### Step 4: Verify Target Configuration
+    Configure your workspace settings:
 
-List all configured targets and verify connectivity:
+    ```json
+    {
+        "dbsnapper.configPath": "~/.config/dbsnapper/dbsnapper.yml",
+        "dbsnapper.autoRefresh": true
+    }
+    ```
 
-```bash
-dbsnapper targets
-```
+    ### Step 2: Set Up GitHub Actions
 
-This command displays all targets with their connection status and database sizes. The DBSnapper UI provides a clear overview:
+    Add the DBSnapper GitHub Action to your workflow:
 
-![DBSnapper Agent UI - All Targets](static/tui/dbs-ui-all-targets.png "DBSnapper Agent UI showing all configured targets")
+    ```yaml
+    # .github/workflows/db-snapshots.yml
+    name: Database Snapshots
+    on: 
+      schedule:
+        - cron: '0 2 * * *'  # Daily at 2 AM
+    
+    jobs:
+      snapshot:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: dbsnapper/install-dbsnapper-agent-action@v1
+            with:
+              version: latest
+          - name: Create Snapshot
+            env:
+              DBSNAPPER_SECRET_KEY: ${{ secrets.DBSNAPPER_SECRET_KEY }}
+              DBSNAPPER_AUTHTOKEN: ${{ secrets.DBSNAPPER_AUTHTOKEN }}
+            run: dbsnapper build production-db
+    ```
 
-### Step 5: Create Your First Snapshot
+    ### Step 3: Use Terraform Provider
 
-Build a snapshot of your source database:
+    Manage DBSnapper resources with Infrastructure as Code:
 
-```bash
-dbsnapper build my_app
-```
+    ```hcl
+    terraform {
+      required_providers {
+        dbsnapper = {
+          source = "dbsnapper/dbsnapper"
+        }
+      }
+    }
+    
+    resource "dbsnapper_target" "production" {
+      name = "production-api"
+      snapshot = {
+        src_url = var.database_url
+        dst_url = var.dev_database_url
+      }
+      storage_profile = "team-s3"
+    }
+    ```
 
-This command:
+    ### Step 4: Enable MCP Server (Optional)
 
-- Connects to your source database using the configured `src_url`
-- Creates a database dump using native tools (`pg_dump` for PostgreSQL, `mysqldump` for MySQL)
-- Stores the snapshot in your working directory
-- Optionally uploads to cloud storage if configured
+    For AI assistant integration:
 
-!!! tip "Snapshot Naming"
+    ```bash
+    # Start MCP server
+    dbsnapper mcp
+    
+    # Configure your AI assistant to use the MCP server
+    # Server runs on default port for Claude Desktop/other clients
+    ```
 
-    Snapshots are automatically timestamped and indexed. You can also add custom tags or descriptions.
+    🎉 **Success!** DBSnapper is now integrated into your development workflow.
 
-### Step 6: View Available Snapshots
+## What's Next?
 
-List all snapshots for a specific target:
+Now that you have DBSnapper running, explore these powerful features:
 
-```bash
-dbsnapper target my_app
-```
+### 🛡️ **Data Sanitization**
+Remove sensitive data from your snapshots:
+- **[Sanitization Guide](sanitize/introduction.md)** - Learn sanitization strategies
+- **[Configuration Examples](sanitize/configuration.md)** - Set up automated data cleaning
 
-This shows detailed information about each snapshot including size, creation time, and status:
+### 📊 **Database Subsetting**
+Create smaller, focused snapshots:
+- **[Subset Introduction](subset/introduction.md)** - Understand subsetting concepts
+- **[Configuration Guide](subset/configuration.md)** - Set up intelligent data filtering
 
-![DBSnapper Agent UI - Target Snapshots](static/tui/dbs-ui-target-snapshots.png "DBSnapper Agent UI showing snapshots for a target")
-
-### Step 7: Load a Snapshot
-
-Load the most recent snapshot (index 0) into your destination database:
-
-```bash
-dbsnapper load my_app 0
-```
-
-!!! danger "Destructive Operation"
-
-    The destination database will be **completely dropped and recreated**. Ensure you're not targeting a production database.
-
-## Congratulations! 🎉
-
-You've successfully created and loaded your first database snapshot with DBSnapper. Your development database now contains a sanitized copy of your production data.
-
-## Next Steps
-
-Now that you have the basics working, explore these advanced features:
-
-### Data Sanitization
-
-Learn how to remove sensitive information from your snapshots:
-
-- **[Sanitization Overview](sanitize/introduction.md)** - Understanding data sanitization concepts
-- **[Configure Sanitization Rules](sanitize/configuration.md)** - Set up automated PII removal
-
-### Data Subsetting
-
-Reduce snapshot size by including only relevant data:
-
-- **[Subset Configuration](subset/introduction.md)** - Create smaller, focused snapshots
-
-### Team Collaboration
-
+### ☁️ **Team Collaboration**
 Share snapshots securely with your team:
-
 - **[DBSnapper Cloud](dbsnapper-cloud/introduction.md)** - Central snapshot management
-- **[Storage Profiles](dbsnapper-cloud/storage_profiles.md)** - Configure cloud storage
+- **[SSO Setup](dbsnapper-cloud/sso/index.md)** - Configure team authentication
 
-### Automation & Integration
+### ⚡ **Performance Optimization**
+Optimize for your workload:
+- **[CPU Configuration](configuration.md#performance-configuration)** - Multi-core snapshot processing
+- **[Storage Profiles](dbsnapper-cloud/storage_profiles.md)** - Efficient cloud storage
 
-Integrate DBSnapper into your workflows:
+## Need Help?
 
-- **[GitHub Actions](articles/dbsnapper-github-actions-ecs-simplified.md)** - Automated CI/CD snapshots
-- **[VS Code Extension](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper)** - In-editor snapshot management
-- **[Terraform Provider](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)** - Infrastructure as Code
+### Common Issues
 
-## Common Issues & Troubleshooting
+**"Connection failed"** - Check your database URLs and network access
 
-**Connection Problems**: If `dbsnapper targets` shows connection errors, verify:
+**"Tools not found"** - Install database client tools or use Docker mode:
+```bash
+# Check what's available
+dbsnapper config check
 
-- Database credentials and network connectivity
-- Database server is running and accepting connections
-- SSL/TLS settings match your database configuration
+# Use Docker-based tools
+docker run -it ghcr.io/dbsnapper/dbsnapper:latest
+```
 
-**Missing Tools**: If `dbsnapper config check` reports missing tools:
+**"Permission denied"** - Ensure database user has required permissions:
+- `SELECT` access on source database  
+- `CREATE DATABASE` access on destination server
 
-- Install database tools locally (`postgresql-client`, `mysql-client`)
-- Or use Docker-based engines (recommended for consistency)
-
-**Permission Errors**: Ensure the DBSnapper user has:
-
-- `SELECT` permissions on source database
-- `CREATE DATABASE` permissions on destination server
-
-## Get Help
+### Get Support
 
 - **[Configuration Reference](configuration.md)** - Complete configuration options
-- **[Command Reference](cmd/dbsnapper.md)** - Full CLI documentation
+- **[Command Reference](cmd/dbsnapper.md)** - Full CLI documentation  
 - **[GitHub Issues](https://github.com/dbsnapper/dbsnapper/issues)** - Report bugs or request features
-- **[Community Support](https://github.com/dbsnapper/dbsnapper/discussions)** - Get help from the community
+- **[Community Discussions](https://github.com/dbsnapper/dbsnapper/discussions)** - Get help from the community
+
+---
+
+**Ready to dive deeper?** Check out our **[comprehensive configuration guide](configuration.md)** for advanced features and customization options.

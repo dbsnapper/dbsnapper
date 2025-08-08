@@ -190,7 +190,7 @@ A Terminal User Interface (TUI) has been added to the DBSnapper Agent, making it
   <small>DBSnapper Agent User Interface - All Targets</small>
 </p>
 
-[Sharing Targets](configuration.md/#sharing-target) have been added to DBSnapper. Leveraging the ability to specify different storage profiles for original and sanitized snapshots, you can now create a _share target_ in your configuration file, that will allow you to list and load sanitized snapshots from a shared storage location. This is useful for sharing sanitized snapshots with developers, testers, and other stakeholders.
+[Sharing Targets](configuration.md#share-configuration) have been added to DBSnapper. Leveraging the ability to specify different storage profiles for original and sanitized snapshots, you can now create a _share target_ in your configuration file, that will allow you to list and load sanitized snapshots from a shared storage location. This is useful for sharing sanitized snapshots with developers, testers, and other stakeholders.
 
 [New Storage Engines](cloud-storage-engines/introduction.md) have been added. In addition to our support for AWS S3 and CloudFlare R2, we have added support for <a href="https://min.io/" target="_blank">Minio</a> and <a href="https://www.digitalocean.com/products/spaces" target="_blank">Digital Ocean Spaces</a>
 

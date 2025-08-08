@@ -69,7 +69,7 @@ The <a href="https://github.com/dbsnapper/dbsnapper/pkgs/container/dbsnapper" ta
 <!-- prettier-ignore-start -->
 !!! note "Docker Dependency"
 
-    This tutorial uses Docker to launch the container - if you need to install Docker, see the [Detour: Install Docker Community Edition](#detour-install-docker-community-edition) section below.
+    This tutorial uses Docker to launch the container - if you need to install Docker, see the [Optional: Install Docker Community Edition](#optional-install-docker-community-edition) section below.
 <!-- prettier-ignore-end -->
 
 ```bash title="Launch DBSnapper Container & Setup DBSnapper Agent" linenums="1"

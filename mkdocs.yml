@@ -73,85 +73,99 @@ nav:
   - Welcome: index.md
   - Get Started:
       - How it Works: how-it-works.md
-      - requirements.md
-      - installation.md
-      - quick-start.md
+      - Requirements: requirements.md
+      - Installation: installation.md
+      - Quick Start Guide: quick-start.md
       - Configuration Settings: configuration.md
-      - Philosophy: philosophy.md
-  - Snapshot:
-      - Introduction: snapshot/introduction.md
-      - Configuration: snapshot/configuration.md
-      - Build and Load: snapshot/build_and_load.md
-  - Subset:
-      - Introduction: subset/introduction.md
-      - Configuration: subset/configuration.md
-  - Sanitize:
-      - Introduction: sanitize/introduction.md
-      - Configuration: sanitize/configuration.md
-      - Sanitize: sanitize/sanitize.md
-  - Share:
-      - Introduction: share/introduction.md
+      - Why DBSnapper?: philosophy.md
+  
+  # Core Features
+  - Core Features:
+      - Snapshot: snapshot/introduction.md
+      - Sanitize: sanitize/introduction.md  
+      - Subset: subset/introduction.md
+      - Share: share/introduction.md
+  
+  # Team Collaboration & Cloud Features
   - DBSnapper Cloud:
       - Introduction: dbsnapper-cloud/introduction.md
       - Targets: dbsnapper-cloud/targets.md
       - Storage Profiles: dbsnapper-cloud/storage_profiles.md
+      - Team Workflows: dbsnapper-cloud/team-workflows.md
       - Single Sign-On:
-          - dbsnapper-cloud/sso/index.md
-          - Single Sign-On (SSO) Integration with Okta: dbsnapper-cloud/sso/sso-okta-oidc.md
-
+          - Overview: dbsnapper-cloud/sso/index.md
+          - Okta Integration: dbsnapper-cloud/sso/sso-okta-oidc.md
+  
+  # Integration & Automation
+  - Integrations:
+      - GitHub Actions:
+          - Simplified Approach: articles/dbsnapper-github-actions-ecs-simplified.md
+          - Advanced ECS Setup: articles/dbsnapper-github-actions-amazon-ecs.md
+      - VS Code Extension: https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper
+      - Terraform Provider: https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest
+      - MCP Server: commands/mcp.md
+  
+  # Technical Reference
+  - Feature Configuration:
+      - Snapshot Configuration: snapshot/configuration.md
+      - Build and Load Guide: snapshot/build_and_load.md
+      - Sanitization Configuration: sanitize/configuration.md
+      - Sanitization Guide: sanitize/sanitize.md
+      - Subset Configuration: subset/configuration.md
+  
   - Database Engines:
       - Introduction: database-engines/introduction.md
       - PostgreSQL:
-          - PostgreSQL Local: database-engines/postgresql-local.md
-          - PostgreSQL Docker: database-engines/postgresql-docker.md
+          - Local Installation: database-engines/postgresql-local.md
+          - Docker Setup: database-engines/postgresql-docker.md
       - MySQL:
-          - MySQL Local: database-engines/mysql-local.md
-          - MySQL Docker: database-engines/mysql-docker.md
+          - Local Installation: database-engines/mysql-local.md
+          - Docker Setup: database-engines/mysql-docker.md
       - Advanced Topics:
           - Engine Selection Guide: database-engines/engine-selection.md
           - Ephemeral Databases: database-engines/ephemeral-databases.md
           - Docker Integration: database-engines/docker-integration.md
           - Configuration Reference: database-engines/engine-configuration.md
-  - Cloud Storage Engines:
-      - cloud-storage-engines/introduction.md
-      - cloud-storage-engines/configuration.md
-      - cloud-storage-engines/cloudflare-r2.md
-      - cloud-storage-engines/amazon-s3.md
-  - Commands:
-      - Overview: commands/index.md
-      - CLI Reference: cmd/dbsnapper.md
-      - Core Workflow:
+  
+  - Cloud Storage:
+      - Introduction: cloud-storage-engines/introduction.md
+      - Configuration: cloud-storage-engines/configuration.md
+      - Amazon S3: cloud-storage-engines/amazon-s3.md
+      - Cloudflare R2: cloud-storage-engines/cloudflare-r2.md
+  
+  - Command Reference:
+      - CLI Overview: cmd/dbsnapper.md
+      - Essential Commands:
           - Build: commands/build.md
           - Load: commands/load.md
+          - Targets: commands/targets.md
+          - Config: commands/config.md
+      - Advanced Commands:
           - Sanitize: commands/sanitize.md
           - Subset: commands/subset.md
           - Pull: commands/pull.md
-      - Target Management:
-          - Targets: commands/targets.md
-          - Target: commands/target.md
-      - Configuration:
-          - Config: commands/config.md
+          - Target (single): commands/target.md
+      - Configuration Commands:
           - Config Init: commands/config-init.md
           - Config Check: commands/config-check.md
           - Config Discover: commands/config-discover.md
           - Config Validate: commands/config-validate.md
       - Authentication:
-          - Auth: commands/auth.md
           - Auth Token: commands/auth-token.md
-      - Development:
-          - Dev: commands/dev.md
+          - Auth: commands/auth.md
+      - Development & Testing:
+          - Dev Commands: commands/dev.md
           - Dev TS: commands/dev-ts.md
           - Dev Schemas: cmd/dbsnapper_dev_schemas.md
           - Dev Assert TS: cmd/dbsnapper_dev_assert-ts.md
           - Dev Validate Sanitize: cmd/dbsnapper_dev_validate-sanitize.md
-      - Integration:
-          - MCP Server: commands/mcp.md
-  - Articles:
-      - articles/useful-postgres-mysql-queries.md
-      - articles/dbsnapper-github-actions-ecs-simplified.md
-      - articles/dbsnapper-github-actions-amazon-ecs.md
-      - articles/creating-sanitized-database-snapshots-with-dbsnapper.md
-      - articles/backup-amazon-rds-with-dbsnapper.md
+  
+  # Learning & Examples
+  - Tutorials & Articles:
+      - Creating Sanitized Snapshots: articles/creating-sanitized-database-snapshots-with-dbsnapper.md
+      - Backup Amazon RDS: articles/backup-amazon-rds-with-dbsnapper.md
+      - Useful Database Queries: articles/useful-postgres-mysql-queries.md
+  
   - Release Notes: release-notes.md
 
 markdown_extensions:
