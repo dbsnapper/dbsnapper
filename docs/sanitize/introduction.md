@@ -17,15 +17,11 @@ DBSnapper provides the [`sanitize`](../commands/sanitize.md) command to sanitize
 
 ### `sanitize` command steps
 
-1. Locate the desired snapshot in the working directory or pull it from the cloud (if configurec)
+1. Locate the desired snapshot in the working directory or pull it from the cloud (if configured)
 2. Load the snapshot into the `dst_url` database
 3. Apply the sanitization query to the database
 4. Create a new snapshot of the sanitized database and store it in the working directory and push it to the cloud (if configured)
 
-<!-- prettier-ignore-start -->
-
 !!! note
 
     In the near future we will be adding more capabilities to the sanitization process to make it even more powerful and flexible. Stay tuned for updates!
-
-<!-- prettier-ignore-end -->

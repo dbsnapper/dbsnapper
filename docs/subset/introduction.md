@@ -13,13 +13,12 @@ While this would seem to be a simple task involving a simple SQL query to select
 
 DBSnapper provides the `subset` command to create a subset of a database. The subset command relies on the subsetting configuration specified for the target database and will be dicussed in a following section.
 
-<!-- prettier-ignore-start -->
 !!! tip "Database Subsetting Terminology"
-    
+
     **Database Subset**
     :   A smaller, yet fully functional version of a large database.
 
-    **Subset Table** 
+    **Subset Table**
     :   The primary tables of interest in the subset. These are the tables that are the main focus of the subset and from which all other tables are derived.
 
     **Upstream Table**
@@ -30,8 +29,6 @@ DBSnapper provides the `subset` command to create a subset of a database. The su
 
     **Copy Table**
     :  A table that is copied in its entirety to the subset. This is useful for tables that are not directly related to the subset tables but are required for the subset to function correctly.
-
-<!-- prettier-ignore-end -->
 
 ### Steps to Create a Database Subset:
 
@@ -77,11 +74,9 @@ The `sakila.address` table is the _upstream_ table with the foreign key referenc
 
 Circular references are situations where a table has a foreign key relationship to another table that also has a foreign key relationship back to the original table, creating a cycle in the relationship graph and an infinite loop in the subsetting process.
 
-<!-- prettier-ignore-start -->
 !!! note "Self-Referencing Tables"
 
-    Circular references are also present when a table has a reference to itself. 
-<!-- prettier-ignore-end -->
+    Circular references are also present when a table has a reference to itself.
 
 If a circular reference is detected, the subsetting process will stop and an error will be generated. You must then identify where the circular reference should be broken and exclude the relationship from the subsetting process. You can specify the relationships to be excluded in the `excluded_relationships` section of the DBSnapper configuration:
 

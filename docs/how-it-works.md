@@ -7,7 +7,7 @@ DBSnapper transforms database snapshot management from a manual, error-prone pro
 Traditional approaches to database snapshots face critical challenges:
 
 - **Security risks** - Full production data exposed in development environments
-- **Compliance violations** - PII and sensitive data in the wrong hands  
+- **Compliance violations** - PII and sensitive data in the wrong hands
 - **Manual overhead** - Complex dump/restore processes that developers avoid
 - **Team bottlenecks** - Database admins become gatekeepers for realistic test data
 - **Infrastructure sprawl** - Multiple database instances for different teams and purposes
@@ -33,12 +33,14 @@ Traditional approaches to database snapshots face critical challenges:
 DBSnapper connects to your existing databases using read-only credentials and creates compressed snapshots using native database tools (`pg_dump`, `mysqldump`). These snapshots capture the current state of your data, including schema, indexes, and relationships.
 
 **Key Benefits:**
+
 - **No infrastructure changes** - Works with existing database setups
 - **High-performance capture** - Multi-core processing with configurable CPU usage
 - **Schema filtering** - Capture only the data you need (PostgreSQL)
 - **Native compatibility** - Uses standard database tools for maximum compatibility
 
 **Modern Integration:**
+
 - **CI/CD friendly** - Automated snapshot creation in GitHub Actions
 - **Container-ready** - Run in Docker, Kubernetes, or serverless environments
 - **Cloud storage** - Automatic upload to your S3, R2, or other cloud storage
@@ -56,13 +58,15 @@ DBSnapper connects to your existing databases using read-only credentials and cr
 DBSnapper's sanitization engine removes or masks Personally Identifiable Information (PII) and other sensitive data using configurable SQL queries. The process maintains referential integrity while ensuring compliance with data protection regulations.
 
 **Advanced Sanitization Features:**
+
 - **Three-tier priority system** - Target-specific, global, or file-based sanitization rules
 - **Ephemeral processing** - No persistent storage of sensitive data during sanitization
 - **Template support** - Use environment variables for dynamic sanitization
 - **Base64 encoding** - Handle complex SQL queries safely in configuration files
 
 **Compliance & Security:**
-- **GDPR/CCPA ready** - Built-in patterns for common compliance requirements  
+
+- **GDPR/CCPA ready** - Built-in patterns for common compliance requirements
 - **Audit trails** - Track what data was sanitized and when
 - **Your infrastructure only** - Sensitive data never leaves your environment
 - **Encryption at rest** - All configuration and snapshots encrypted with your keys
@@ -80,12 +84,14 @@ DBSnapper's sanitization engine removes or masks Personally Identifiable Informa
 Share sanitized snapshots through DBSnapper Cloud with fine-grained access control. Team members can discover, download, and load snapshots directly from their development environment without involving database administrators.
 
 **Team Collaboration Features:**
+
 - **SSO integration** - Use your existing Okta, Auth0, or other SSO provider
 - **Group-based access** - Share snapshots with specific teams automatically
 - **Presigned URLs** - Secure, time-limited access to snapshot downloads
 - **Multi-environment support** - Different snapshots for staging, development, and testing
 
 **Developer Experience:**
+
 - **IDE integration** - Load snapshots directly from VS Code
 - **Command-line access** - Simple `dbsnapper load` commands
 - **Terraform provider** - Infrastructure as Code for snapshot management
@@ -148,7 +154,7 @@ dbsnapper mcp  # Start MCP server for Claude Desktop
 Ready to implement this workflow in your environment?
 
 1. **[Install DBSnapper](installation.md)** - Get started with the method that fits your setup
-2. **[Quick Start Guide](quick-start.md)** - Choose your path and get running in minutes  
+2. **[Quick Start Guide](quick-start.md)** - Choose your path and get running in minutes
 3. **[Join DBSnapper Cloud](https://app.dbsnapper.com/sign_up)** - Enable team collaboration and secure sharing
 
 **Questions?** Check our **[Philosophy](philosophy.md)** page to understand the principles behind DBSnapper's design, or dive into the **[Configuration Guide](configuration.md)** for advanced setup options.

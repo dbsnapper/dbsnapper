@@ -78,14 +78,14 @@ nav:
       - Quick Start Guide: quick-start.md
       - Configuration Settings: configuration.md
       - Why DBSnapper?: philosophy.md
-  
+
   # Core Features
   - Core Features:
       - Snapshot: snapshot/introduction.md
-      - Sanitize: sanitize/introduction.md  
+      - Sanitize: sanitize/introduction.md
       - Subset: subset/introduction.md
       - Share: share/introduction.md
-  
+
   # Team Collaboration & Cloud Features
   - DBSnapper Cloud:
       - Introduction: dbsnapper-cloud/introduction.md
@@ -95,16 +95,20 @@ nav:
       - Single Sign-On:
           - Overview: dbsnapper-cloud/sso/index.md
           - Okta Integration: dbsnapper-cloud/sso/sso-okta-oidc.md
-  
+
+  # AI Integration (New in v3.0)
+  - AI Integrations:
+      - Overview: ai-integrations.md
+      - MCP Server Guide: commands/mcp.md
+
   # Integration & Automation
-  - Integrations:
+  - Platform Integrations:
       - GitHub Actions:
           - Simplified Approach: articles/dbsnapper-github-actions-ecs-simplified.md
           - Advanced ECS Setup: articles/dbsnapper-github-actions-amazon-ecs.md
       - VS Code Extension: https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper
       - Terraform Provider: https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest
-      - MCP Server: commands/mcp.md
-  
+
   # Technical Reference
   - Feature Configuration:
       - Snapshot Configuration: snapshot/configuration.md
@@ -112,7 +116,7 @@ nav:
       - Sanitization Configuration: sanitize/configuration.md
       - Sanitization Guide: sanitize/sanitize.md
       - Subset Configuration: subset/configuration.md
-  
+
   - Database Engines:
       - Introduction: database-engines/introduction.md
       - PostgreSQL:
@@ -126,13 +130,13 @@ nav:
           - Ephemeral Databases: database-engines/ephemeral-databases.md
           - Docker Integration: database-engines/docker-integration.md
           - Configuration Reference: database-engines/engine-configuration.md
-  
+
   - Cloud Storage:
       - Introduction: cloud-storage-engines/introduction.md
       - Configuration: cloud-storage-engines/configuration.md
       - Amazon S3: cloud-storage-engines/amazon-s3.md
       - Cloudflare R2: cloud-storage-engines/cloudflare-r2.md
-  
+
   - Command Reference:
       - CLI Overview: cmd/dbsnapper.md
       - Essential Commands:
@@ -159,13 +163,13 @@ nav:
           - Dev Schemas: cmd/dbsnapper_dev_schemas.md
           - Dev Assert TS: cmd/dbsnapper_dev_assert-ts.md
           - Dev Validate Sanitize: cmd/dbsnapper_dev_validate-sanitize.md
-  
+
   # Learning & Examples
   - Tutorials & Articles:
       - Creating Sanitized Snapshots: articles/creating-sanitized-database-snapshots-with-dbsnapper.md
       - Backup Amazon RDS: articles/backup-amazon-rds-with-dbsnapper.md
       - Useful Database Queries: articles/useful-postgres-mysql-queries.md
-  
+
   - Release Notes: release-notes.md
 
 markdown_extensions:

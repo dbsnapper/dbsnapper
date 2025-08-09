@@ -716,5 +716,7 @@ dbsnapper targets
 
 ## See Also
 
+- **[AI Integrations Overview](../ai-integrations.md)** - Full AI capabilities and future roadmap
 - [Model Context Protocol](https://modelcontextprotocol.io/) - Official MCP specification
 - [Claude Desktop](https://claude.ai/desktop) - Primary AI application supporting MCP integration
+- [DBSnapper GitHub Repository](https://github.com/joescharf/dbsnapper-agent) - Source code and additional technical documentation

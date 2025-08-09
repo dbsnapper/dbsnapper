@@ -10,7 +10,18 @@ description: DBSnapper simplifies the process of creating de-identified database
 # Welcome to DBSnapper
 
 <!-- prettier-ignore-start -->
-!!! note "Latest Updates"
+!!! success "🤖 **NEW in v3.0: AI-Powered Database Management**"
+
+    **DBSnapper v3.0 introduces comprehensive AI integration capabilities!** Manage your database snapshots through natural language conversations with AI assistants like Claude Desktop and Claude Code.
+    
+    - **[AI Integrations](ai-integrations.md)** - Natural language database snapshot management
+    - **Model Context Protocol (MCP)** - Full integration with AI assistants
+    - **Intelligent Operations** - Auto-discovery, validation, and error resolution
+    - **Enhanced Security** - AI-assisted sanitization and configuration validation
+    
+    [**Explore AI Features →**](ai-integrations.md){ .md-button .md-button--primary }
+
+!!! note "Platform Integrations"
 
     - **VSCode Extension** - Available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper) for in-editor database snapshot management
     - **Terraform Provider** - Manage DBSnapper resources with [Infrastructure as Code](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
@@ -69,6 +80,13 @@ DBSnapper provides comprehensive database snapshot management with these core ca
 - **Data Sanitization** - Remove or mask sensitive information
 - **SSO Integration** - Okta OIDC support with group-based sharing
 - **Private-cloud First** - Your data stays in your infrastructure
+
+### 🤖 **AI Integration (New in v3.0)**
+
+- **Natural Language Interface** - Manage snapshots through AI conversations
+- **Model Context Protocol (MCP)** - Full integration with Claude Desktop/Code
+- **Intelligent Discovery** - AI-powered database tool configuration
+- **Smart Validation** - AI-assisted configuration and error resolution
 
 ### ⚙️ **Developer Experience**
 

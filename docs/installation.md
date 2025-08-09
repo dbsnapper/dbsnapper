@@ -85,7 +85,7 @@ Get DBSnapper running in your environment with the installation method that best
     # PostgreSQL tools
     brew install postgresql
 
-    # MySQL tools  
+    # MySQL tools
     brew install mysql-client
     ```
 
@@ -99,9 +99,9 @@ Get DBSnapper running in your environment with the installation method that best
     # Download latest release
     TAG=$(curl -s https://api.github.com/repos/dbsnapper/dbsnapper/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
     ARCH=linux_x86_64  # or linux_arm64
-    
+
     wget https://github.com/dbsnapper/dbsnapper/releases/download/v${TAG}/dbsnapper_${ARCH}.deb
-    
+
     # Install
     sudo dpkg -i dbsnapper_${ARCH}.deb
     ```
@@ -112,9 +112,9 @@ Get DBSnapper running in your environment with the installation method that best
     # Download latest release
     TAG=$(curl -s https://api.github.com/repos/dbsnapper/dbsnapper/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
     ARCH=linux_x86_64  # or linux_arm64
-    
+
     wget https://github.com/dbsnapper/dbsnapper/releases/download/v${TAG}/dbsnapper_${ARCH}.rpm
-    
+
     # Install
     sudo rpm -i dbsnapper_${ARCH}.rpm
     ```
@@ -125,9 +125,9 @@ Get DBSnapper running in your environment with the installation method that best
     # Download latest release
     TAG=$(curl -s https://api.github.com/repos/dbsnapper/dbsnapper/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
     ARCH=linux_x86_64  # or linux_arm64
-    
+
     wget https://github.com/dbsnapper/dbsnapper/releases/download/v${TAG}/dbsnapper_${ARCH}.apk
-    
+
     # Install
     sudo apk add --allow-untrusted dbsnapper_${ARCH}.apk
     ```
@@ -196,7 +196,7 @@ Checking DBSnapper Configuration
     ✅ psql found at /usr/bin/psql
     ✅ pg_dump found at /usr/bin/pg_dump
     ✅ pg_restore found at /usr/bin/pg_restore
-  🔵 MySQL Local Engine (mylocal)  
+  🔵 MySQL Local Engine (mylocal)
     ✅ mysqldump found at /usr/bin/mysqldump
     ✅ mysql found at /usr/bin/mysql
   🔵 Postgres Docker Engine (pgdocker)
@@ -245,26 +245,26 @@ kind: CronJob
 metadata:
   name: dbsnapper-backup
 spec:
-  schedule: "0 2 * * *"  # Daily at 2 AM
+  schedule: "0 2 * * *" # Daily at 2 AM
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: dbsnapper
-            image: ghcr.io/dbsnapper/dbsnapper:latest
-            command: ["dbsnapper", "build", "production-db"]
-            env:
-            - name: DBSNAPPER_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: dbsnapper-secret
-                  key: secret-key
-            - name: DBSNAPPER_AUTHTOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: dbsnapper-secret
-                  key: auth-token
+            - name: dbsnapper
+              image: ghcr.io/dbsnapper/dbsnapper:latest
+              command: ["dbsnapper", "build", "production-db"]
+              env:
+                - name: DBSNAPPER_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: dbsnapper-secret
+                      key: secret-key
+                - name: DBSNAPPER_AUTHTOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: dbsnapper-secret
+                      key: auth-token
           restartPolicy: OnFailure
 ```
 
@@ -273,7 +273,7 @@ spec:
 For local development or small deployments:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   dbsnapper:
     image: ghcr.io/dbsnapper/dbsnapper:latest
@@ -283,7 +283,7 @@ services:
     volumes:
       - ./config:/root/.config/dbsnapper
       - ./snapshots:/root/.dbsnapper
-    command: ["tail", "-f", "/dev/null"]  # Keep running for manual commands
+    command: ["tail", "-f", "/dev/null"] # Keep running for manual commands
 ```
 
 ## Performance Considerations
@@ -300,7 +300,7 @@ defaults:
 # Per-target override
 targets:
   large_database:
-    cpus: 8  # Use more cores for large databases
+    cpus: 8 # Use more cores for large databases
     snapshot:
       src_url: "postgresql://user:pass@host:5432/large_db"
 ```
@@ -316,6 +316,7 @@ targets:
 ### Common Issues
 
 **"Command not found"** after installation:
+
 ```bash
 # Check if binary is in PATH
 which dbsnapper
@@ -325,6 +326,7 @@ export PATH=$PATH:/usr/local/bin
 ```
 
 **Docker permission denied**:
+
 ```bash
 # Add user to docker group (requires logout/login)
 sudo usermod -aG docker $USER
@@ -333,6 +335,7 @@ sudo usermod -aG docker $USER
 ```
 
 **Database tools not found**:
+
 ```bash
 # Use Docker mode instead of local tools
 dbsnapper config check --prefer-docker
@@ -348,7 +351,7 @@ Test your database connections:
 # Test PostgreSQL connection
 psql "postgresql://user:pass@host:5432/dbname" -c "SELECT version();"
 
-# Test MySQL connection  
+# Test MySQL connection
 mysql -h host -u user -p -e "SELECT VERSION();"
 ```
 
@@ -357,7 +360,7 @@ mysql -h host -u user -p -e "SELECT VERSION();"
 With DBSnapper installed, you're ready to:
 
 1. **[Initialize your first configuration](quick-start.md)** - Start with our guided quick start
-2. **[Set up DBSnapper Cloud](https://app.dbsnapper.com/sign_up)** - Enable team collaboration  
+2. **[Set up DBSnapper Cloud](https://app.dbsnapper.com/sign_up)** - Enable team collaboration
 3. **[Configure your first target](configuration.md)** - Connect to your databases
 
 **Need help?** Check our **[troubleshooting guide](quick-start.md#need-help)** or **[join the community discussions](https://github.com/dbsnapper/dbsnapper/discussions)**.
