@@ -83,7 +83,6 @@ nav:
   - Core Features:
       - Snapshot: snapshot/introduction.md
       - Sanitize: sanitize/introduction.md
-      - Subset: subset/introduction.md
       - Share: share/introduction.md
 
   # Team Collaboration & Cloud Features
@@ -115,7 +114,6 @@ nav:
       - Build and Load Guide: snapshot/build_and_load.md
       - Sanitization Configuration: sanitize/configuration.md
       - Sanitization Guide: sanitize/sanitize.md
-      - Subset Configuration: subset/configuration.md
 
   - Database Engines:
       - Introduction: database-engines/introduction.md
@@ -146,7 +144,6 @@ nav:
           - Config: commands/config.md
       - Advanced Commands:
           - Sanitize: commands/sanitize.md
-          - Subset: commands/subset.md
           - Pull: commands/pull.md
           - Target (single): commands/target.md
       - Configuration Commands:
@@ -157,12 +154,6 @@ nav:
       - Authentication:
           - Auth Token: commands/auth-token.md
           - Auth: commands/auth.md
-      - Development & Testing:
-          - Dev Commands: commands/dev.md
-          - Dev TS: commands/dev-ts.md
-          - Dev Schemas: cmd/dbsnapper_dev_schemas.md
-          - Dev Assert TS: cmd/dbsnapper_dev_assert-ts.md
-          - Dev Validate Sanitize: cmd/dbsnapper_dev_validate-sanitize.md
 
   # Learning & Examples
   - Tutorials & Articles:

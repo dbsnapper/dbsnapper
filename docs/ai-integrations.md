@@ -1,7 +1,7 @@
 # AI Integrations
 
-!!! success "New in v3.0"
-    DBSnapper v3.0 introduces comprehensive AI integration capabilities, starting with full Model Context Protocol (MCP) support. This represents a major step forward in making database snapshot management more accessible through natural language interaction with AI assistants.
+!!! success "New in v3.0.0-pr1 Preview"
+    DBSnapper v3.0.0-pr1 introduces AI integration capabilities through Model Context Protocol (MCP) support. This preview release demonstrates the core AI functionality with comprehensive MCP server integration for AI assistants.
 
 ## Overview
 
@@ -167,26 +167,32 @@ DBSnapper provides rich contextual information through MCP resources:
 - **`dbsnapper://sanitization-queries`** - Query configuration with execution status
 - **`dbsnapper://query-templates`** - Common sanitization templates (PII, GDPR, etc.)
 
-## Future AI Capabilities
+## Available in v3.0.0-pr1
 
-DBSnapper's AI integration roadmap includes exciting upcoming features:
+**✅ Model Context Protocol (MCP) Server**
+- Full MCP server implementation with HTTP and SSE transport
+- Complete tool exposure for all core DBSnapper operations
+- Resource access for configuration and snapshot data
+- Compatible with Claude Desktop, Claude Code, and other MCP clients
 
-### Phase 4: Enhanced AI Features
+**✅ Core AI Operations**
+- Target management through natural language
+- Snapshot creation, loading, and sanitization 
+- Configuration validation and database tool discovery
+- Real-time error handling and troubleshooting assistance
+
+## Roadmap: Future AI Capabilities
+
+### Full v3.0 Release - Enhanced AI Features
 - **Intelligent Workflow Automation** - AI-driven snapshot scheduling and management
 - **Smart Query Generation** - AI-assisted sanitization query creation
 - **Anomaly Detection** - AI-powered monitoring of snapshot operations
 - **Performance Optimization** - AI recommendations for snapshot and database performance
 
-### Phase 5: Advanced Analytics
+### v3.1+ - Advanced Analytics & Integrations
 - **Database Insights** - AI analysis of database structure and content patterns
 - **Usage Analytics** - Intelligent reporting on snapshot usage and patterns  
-- **Predictive Maintenance** - AI-driven recommendations for database maintenance
-- **Security Analysis** - AI-powered detection of sensitive data patterns
-
-### Planned Integrations
-- **GitHub Copilot Integration** - Database operations within your development environment
-- **Slack/Teams Bots** - Team collaboration through chat interfaces
-- **CI/CD Integration** - AI-assisted database operations in deployment pipelines
+- **Platform Integrations** - GitHub Copilot, Slack/Teams bots, CI/CD pipelines
 - **Custom AI Agents** - Build domain-specific AI assistants for your database workflows
 
 ## Getting Started

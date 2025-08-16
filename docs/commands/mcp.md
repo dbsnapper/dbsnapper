@@ -24,7 +24,11 @@ None - the MCP server runs without additional arguments.
 ## Options
 
 ```bash
-  -h, --help   help for mcp
+  -h, --help                     help for mcp
+      --path string             HTTP endpoint path (default "/mcp")
+      --port int                HTTP server port (default 8080)
+      --stdio                   Use stdio transport (legacy mode for Claude Code)
+  -t, --transport string        Transport type: http, sse, or stdio (default "http")
 
 Global Flags:
       --config string   config file (default is ~/.config/dbsnapper/dbsnapper.yml)
@@ -51,15 +55,15 @@ The Model Context Protocol is a standardized way for AI applications to access e
 ## How It Works
 
 ### MCP Server Architecture
-1. **Standard I/O Communication**: Communicates with AI applications via stdin/stdout
+1. **Multiple Transport Options**: HTTP (default), Server-Sent Events (SSE), or stdio communication
 2. **Tool Registry**: Exposes DBSnapper commands as callable tools
 3. **Resource System**: Provides structured access to configuration and data
 4. **State Management**: Maintains connection to DBSnapper configuration and working directory
 
 ### Integration Flow
 ```
-AI Application (Claude Desktop)
-        ↕ stdin/stdout (JSON-RPC)
+AI Application / Web Client
+        ↕ HTTP/SSE/stdio (JSON-RPC)
 DBSnapper MCP Server
         ↕ direct calls
 DBSnapper Core Operations
@@ -80,21 +84,42 @@ Your Databases
 - At least one database target configured
 - AI application supporting MCP (like Claude Desktop)
 
-### Claude Desktop Integration
+### Integration Options
 
-#### Installation Steps
+#### HTTP Integration (Default - Recommended)
+The MCP server now defaults to HTTP transport, making it accessible from web applications, APIs, and other HTTP clients:
+
+```bash
+# Start HTTP server (default)
+dbsnapper mcp
+
+# Custom port and path
+dbsnapper mcp --port 3001 --path /api/mcp
+
+# Server-Sent Events transport
+dbsnapper mcp --transport sse
+```
+
+**HTTP Access:**
+- MCP endpoint: `http://localhost:8080/mcp`
+- Server info: `http://localhost:8080/`
+
+#### Claude Desktop Integration (Stdio - Recommended)
+
+**Claude Desktop currently works best with stdio transport** for local MCP servers:
+
 1. **Locate Claude Desktop Configuration**
    - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
    - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`  
    - **Linux**: `~/.config/claude-desktop/claude_desktop_config.json`
 
-2. **Add DBSnapper MCP Server**
+2. **Add DBSnapper MCP Server (Stdio Mode)**
    ```json
    {
      "mcpServers": {
        "dbsnapper": {
          "command": "dbsnapper",
-         "args": ["mcp"],
+         "args": ["mcp", "--stdio"],
          "description": "DBSnapper database snapshot management"
        }
      }
@@ -103,15 +128,84 @@ Your Databases
 
 3. **Restart Claude Desktop** and start a new conversation
 
+#### Claude Code Integration (HTTP - Recommended)
+
+**Claude Code supports HTTP transport with streaming capabilities** for local MCP servers:
+
+1. **Start DBSnapper HTTP server**: `dbsnapper mcp` (runs on `http://localhost:8080/mcp`)
+
+2. **Create Claude Code MCP configuration** (`.mcp.json` in your project root):
+   ```json
+   {
+     "mcpServers": {
+       "dbsnapper-http": {
+         "type": "http",
+         "url": "http://localhost:8080/mcp"
+       }
+     }
+   }
+   ```
+
+3. **Start using DBSnapper in Claude Code** with natural language commands
+
+**Benefits:**
+- Real-time HTTP streaming support
+- Better performance for complex operations
+- Built-in debugging capabilities
+- Web-standard protocols
+
+#### Streamable HTTP with mcp-remote Adapter
+
+**For clients that don't yet support native Streamable HTTP**, you can use the `mcp-remote` adapter to connect any MCP client to DBSnapper's HTTP server:
+
+**What is mcp-remote?**
+The `mcp-remote` adapter enables MCP clients like Claude Desktop (which otherwise only support local connections) to work with remote MCP servers using the new Streamable HTTP transport.
+
+**Setup Instructions:**
+
+1. **Install mcp-remote adapter**:
+   ```bash
+   npm install -g mcp-remote
+   ```
+
+2. **Start DBSnapper HTTP server**: 
+   ```bash
+   dbsnapper mcp  # runs on http://localhost:8080/mcp
+   ```
+
+3. **Configure your MCP client with mcp-remote**:
+   ```json
+   {
+     "mcpServers": {
+       "dbsnapper-remote": {
+         "command": "npx",
+         "args": ["mcp-remote", "http://localhost:8080/mcp"],
+         "description": "DBSnapper via Streamable HTTP adapter"
+       }
+     }
+   }
+   ```
+
+**Benefits:**
+- Enables Streamable HTTP for any MCP client
+- Better performance than traditional stdio transport
+- Future-proof as clients adopt native Streamable HTTP
+- Real-time streaming capabilities
+
+**Use Cases:**
+- Testing Streamable HTTP with Claude Desktop
+- Connecting legacy MCP clients to modern HTTP servers
+- Bridge between traditional MCP and new HTTP transport
+
 #### Advanced Configuration Options
 
-**Full Path Configuration:**
+**Full Path Configuration (Stdio - Recommended for Claude Desktop):**
 ```json
 {
   "mcpServers": {
     "dbsnapper": {
       "command": "/usr/local/bin/dbsnapper",
-      "args": ["mcp"],
+      "args": ["mcp", "--stdio"],
       "description": "DBSnapper Agent MCP Server",
       "env": {
         "DBSNAPPER_CONFIG": "/etc/dbsnapper/config.yml",
@@ -122,13 +216,13 @@ Your Databases
 }
 ```
 
-**Debug Mode Configuration:**
+**Debug Mode Configuration (Stdio):**
 ```json
 {
   "mcpServers": {
     "dbsnapper": {
       "command": "/path/to/dbsnapper",
-      "args": ["mcp"],
+      "args": ["mcp", "--stdio"],
       "description": "DBSnapper with debug logging",
       "env": {
         "DBSNAPPER_HTTP_DEBUG": "true",
@@ -139,13 +233,13 @@ Your Databases
 }
 ```
 
-**Database Tools Configuration:**
+**Database Tools Configuration (Stdio):**
 ```json
 {
   "mcpServers": {
     "dbsnapper": {
       "command": "dbsnapper",
-      "args": ["mcp"],
+      "args": ["mcp", "--stdio"],
       "description": "DBSnapper with PostgreSQL tools",
       "env": {
         "PATH": "/Applications/Postgres.app/Contents/Versions/latest/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
@@ -163,6 +257,61 @@ Your Databases
 - `DBSNAPPER_HTTP_DEBUG`: Enable detailed HTTP debugging (true/false)
 - `DBSNAPPER_MCP_MODE`: Enable MCP-specific features (automatically set when using mcp command)
 - `PATH`: Include database client tool directories
+
+### Transport Methods
+
+#### Stdio Transport (Recommended for Claude Desktop)
+**Best for:** Claude Desktop, legacy direct AI assistant integration
+
+**Benefits:**
+- Direct process-based communication
+- No network ports or certificates needed
+- Native Claude Desktop support
+- Lower resource usage
+- Simple configuration
+
+**Usage:**
+```bash
+# Stdio transport for Claude Desktop
+dbsnapper mcp --stdio
+```
+
+#### HTTP Transport (Default - Best for APIs/Web/Claude Code)
+**Best for:** Claude Code, web applications, APIs, development integrations, debugging
+
+**Benefits:**
+- Accessible from any HTTP client
+- RESTful endpoints for integration
+- Better debugging and monitoring
+- Easy testing with curl or Postman
+- Future-proof for remote MCP servers
+
+**Usage:**
+```bash
+# Default HTTP transport
+dbsnapper mcp
+
+# Custom port and endpoint
+dbsnapper mcp --port 3001 --path /api/dbsnapper
+```
+
+**Claude Desktop Usage (Experimental):**
+Requires `mcp-remote` adapter: `npx mcp-remote http://localhost:8080/mcp`
+
+#### Server-Sent Events (SSE) Transport  
+**Best for:** Real-time applications, streaming data needs
+
+**Benefits:**
+- Real-time streaming capabilities
+- Event-driven architecture
+- Web-compatible streaming
+- Lower latency for continuous operations
+
+**Usage:**
+```bash
+# SSE transport
+dbsnapper mcp --transport sse --port 8080
+```
 
 ## Available Tools and Resources
 
@@ -498,8 +647,11 @@ The sanitized snapshot can be safely shared with your team or loaded into shared
 # Test MCP server directly
 dbsnapper mcp --help
 
-# Start MCP server with debug output
+# Start HTTP MCP server (default) with debug output  
 DBSNAPPER_LOG_LEVEL=debug dbsnapper mcp
+
+# Start stdio MCP server with debug output
+DBSNAPPER_LOG_LEVEL=debug dbsnapper mcp --stdio
 
 # Check if binary is accessible
 which dbsnapper
@@ -514,7 +666,7 @@ ls -la /path/to/dbsnapper
 
 #### Claude Desktop Integration Issues
 ```json
-// Verify JSON syntax is correct
+// Verify JSON syntax is correct (HTTP transport - recommended)
 {
   "mcpServers": {
     "dbsnapper": {
@@ -638,8 +790,11 @@ ls -la ~/.dbsnapper/
 
 #### Test MCP Server Independently
 ```bash
-# Start MCP server with debug output
+# Start HTTP MCP server with debug output (default)
 DBSNAPPER_LOG_LEVEL=debug dbsnapper mcp
+
+# Start stdio MCP server with debug output (for Claude Desktop)
+DBSNAPPER_LOG_LEVEL=debug dbsnapper mcp --stdio
 
 # Test specific operations
 dbsnapper targets --help
@@ -687,7 +842,7 @@ dbsnapper targets
 ### Access Control
 - **Operation permissions**: All operations subject to DBSnapper's existing permissions
 - **Configuration access**: AI cannot modify configuration files directly
-- **Network isolation**: MCP server uses stdio communication only (no network ports)
+- **Network isolation**: HTTP/SSE bind to localhost only, stdio uses no network ports
 - **Audit trail**: All operations logged through DBSnapper's logging system
 
 ### Best Practices

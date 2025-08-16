@@ -18,29 +18,51 @@ The MCP server provides standardized access to DBSnapper functionality through
 the Model Context Protocol, allowing LLM applications like Claude Code to
 interact with database snapshots, targets, and other operations.
 
-The server communicates over stdin/stdout and provides:
+The server provides multiple transport methods and includes:
 
 - Tools: Execute DBSnapper operations (list targets, build snapshots, etc.)
 - Resources: Access configuration and snapshot information
 - Prompts: Templates for common database operations
 
-Examples:
-  dbsnapper mcp                    # Start MCP server with stdio transport
-  DBSNAPPER_DEBUG=true dbsnapper mcp     # Start with debug logging
+Transport Options:
+  dbsnapper mcp                    # Start HTTP server (default) on port 8080
+  dbsnapper mcp --port 3001        # HTTP server on custom port
+  dbsnapper mcp --transport sse    # Server-Sent Events transport
+  dbsnapper mcp --stdio            # Legacy stdio transport for Claude Code
   
-Integration with Claude Code:
-  1. Add to ~/.config/claude-code/config.json:
+Examples:
+  dbsnapper mcp                           # HTTP transport (default)
+  dbsnapper mcp --port 3001 --path /api   # HTTP with custom port/path
+  dbsnapper mcp --transport sse           # SSE transport
+  dbsnapper mcp --stdio                   # Stdio for Claude Desktop/Code
+  DBSNAPPER_DEBUG=true dbsnapper mcp      # Debug logging (any transport)
+  
+Integration with Claude Desktop/Code (Stdio - Recommended):
+  1. Add to Claude configuration:
      {
        "mcpServers": {
          "dbsnapper": {
            "command": "dbsnapper",
-           "args": ["mcp"],
+           "args": ["mcp", "--stdio"],
            "description": "DBSnapper database snapshot management"
          }
        }
      }
-  2. Restart Claude Code
-  3. Use DBSnapper tools in conversations
+  2. Restart Claude Desktop/Code
+
+HTTP integration (experimental - requires mcp-remote adapter):
+  1. Start DBSnapper HTTP server: dbsnapper mcp
+  2. Install mcp-remote: npm install -g mcp-remote
+  3. Add to Claude configuration:
+     {
+       "mcpServers": {
+         "dbsnapper": {
+           "command": "npx",
+           "args": ["mcp-remote", "http://localhost:8080/mcp"],
+           "description": "DBSnapper via HTTP (experimental)"
+         }
+       }
+     }
 
 
 ```
@@ -50,7 +72,11 @@ dbsnapper mcp [flags]
 ### Options
 
 ```
-  -h, --help   help for mcp
+  -h, --help                     help for mcp
+      --path string             HTTP endpoint path (default "/mcp")
+      --port int                HTTP server port (default 8080)
+      --stdio                   Use stdio transport (legacy mode for Claude Code)
+  -t, --transport string        Transport type: http, sse, or stdio (default "http")
 ```
 
 ### Options inherited from parent commands

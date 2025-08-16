@@ -26,6 +26,10 @@ description: DBSnapper simplifies the process of creating de-identified database
     - **VSCode Extension** - Available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper) for in-editor database snapshot management
     - **Terraform Provider** - Manage DBSnapper resources with [Infrastructure as Code](https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest)
     - **GitHub Actions** - Automate database snapshots in your CI/CD pipelines
+
+!!! info "v3.0.0-pr1 Preview Release"
+
+    This is a preview release showcasing DBSnapper v3.0's AI integration capabilities. This preview includes all core functionality plus the new AI features.
     
 <!-- prettier-ignore-end -->
 
