@@ -4545,18 +4545,37 @@
 <h2 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span><span class="o">[</span>flags<span class="o">]</span>
 </code></pre></div>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Start MCP server with HTTP transport (default)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>dbsnapper<span class="w"> </span>mcp
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># HTTP transport on custom port  </span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--port<span class="w"> </span><span class="m">3001</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># HTTP transport with custom path</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--path<span class="w"> </span>/api/mcp
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Start with Server-Sent Events transport</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--transport<span class="w"> </span>sse
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Use stdio transport (legacy mode)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--stdio
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Start with debug logging</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="nv">DBSNAPPER_DEBUG</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>dbsnapper<span class="w"> </span>mcp
+</code></pre></div></p>
 <h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h2>
 <p>None - the MCP server runs without additional arguments.</p>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">                     </span><span class="nb">help</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>mcp
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">      </span>--path<span class="w"> </span>string<span class="w">             </span>HTTP<span class="w"> </span>endpoint<span class="w"> </span>path<span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="s2">&quot;/mcp&quot;</span><span class="o">)</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">      </span>--port<span class="w"> </span>int<span class="w">                </span>HTTP<span class="w"> </span>server<span class="w"> </span>port<span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="m">8080</span><span class="o">)</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span>--stdio<span class="w">                   </span>Use<span class="w"> </span>stdio<span class="w"> </span>transport<span class="w"> </span><span class="o">(</span>legacy<span class="w"> </span>mode<span class="w"> </span><span class="k">for</span><span class="w"> </span>Claude<span class="w"> </span>Code<span class="o">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>-t,<span class="w"> </span>--transport<span class="w"> </span>string<span class="w">        </span>Transport<span class="w"> </span>type:<span class="w"> </span>http,<span class="w"> </span>sse,<span class="w"> </span>or<span class="w"> </span>stdio<span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="s2">&quot;http&quot;</span><span class="o">)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Global<span class="w"> </span>Flags:
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span>--config<span class="w"> </span>string<span class="w">   </span>config<span class="w"> </span>file<span class="w"> </span><span class="o">(</span>default<span class="w"> </span>is<span class="w"> </span>~/.config/dbsnapper/dbsnapper.yml<span class="o">)</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span>--nocloud<span class="w">         </span>Disable<span class="w"> </span>cloud<span class="w"> </span>mode<span class="w"> </span>to<span class="w"> </span>speed<span class="w"> </span>up<span class="w"> </span>operations<span class="w"> </span>by<span class="w"> </span>skipping<span class="w"> </span>cloud<span class="w"> </span>API<span class="w"> </span>calls
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">                     </span><span class="nb">help</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>mcp
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">      </span>--path<span class="w"> </span>string<span class="w">             </span>HTTP<span class="w"> </span>path<span class="w"> </span><span class="o">(</span><span class="k">for</span><span class="w"> </span>http/sse<span class="w"> </span>transport<span class="o">)</span><span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="s2">&quot;/mcp&quot;</span><span class="o">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>-p,<span class="w"> </span>--port<span class="w"> </span>int<span class="w">                </span>HTTP<span class="w"> </span>port<span class="w"> </span><span class="o">(</span><span class="k">for</span><span class="w"> </span>http/sse<span class="w"> </span>transport<span class="o">)</span><span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="m">8080</span><span class="o">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span>--stdio<span class="w">                   </span>Use<span class="w"> </span>stdio<span class="w"> </span>transport<span class="w"> </span><span class="o">(</span>legacy<span class="w"> </span>mode<span class="w"> </span><span class="k">for</span><span class="w"> </span>Claude<span class="w"> </span>Desktop<span class="o">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>-t,<span class="w"> </span>--transport<span class="w"> </span>string<span class="w">        </span>Transport<span class="w"> </span>type:<span class="w"> </span>http,<span class="w"> </span>sse,<span class="w"> </span>or<span class="w"> </span>stdio<span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="s2">&quot;http&quot;</span><span class="o">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Global<span class="w"> </span>Flags:
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span>--config<span class="w"> </span>string<span class="w">   </span>config<span class="w"> </span>file<span class="w"> </span><span class="o">(</span>default<span class="w"> </span>is<span class="w"> </span>~/.config/dbsnapper/dbsnapper.yml<span class="o">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span>--nocloud<span class="w">         </span>Disable<span class="w"> </span>cloud<span class="w"> </span>mode<span class="w"> </span>to<span class="w"> </span>speed<span class="w"> </span>up<span class="w"> </span>operations<span class="w"> </span>by<span class="w"> </span>skipping<span class="w"> </span>cloud<span class="w"> </span>API<span class="w"> </span>calls
 </code></pre></div>
 <h2 id="what-is-model-context-protocol-mcp">What is Model Context Protocol (MCP)?<a class="headerlink" href="#what-is-model-context-protocol-mcp" title="Permanent link">&para;</a></h2>
 <p>The Model Context Protocol is a standardized way for AI applications to access external tools and data sources. The DBSnapper MCP Server exposes DBSnapper's functionality through this protocol, enabling AI assistants to:</p>
@@ -4584,13 +4603,13 @@
 <li><strong>State Management</strong>: Maintains connection to DBSnapper configuration and working directory</li>
 </ol>
 <h3 id="integration-flow">Integration Flow<a class="headerlink" href="#integration-flow" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>AI Application / Web Client
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>        ↕ HTTP/SSE/stdio (JSON-RPC)
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>DBSnapper MCP Server
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        ↕ direct calls
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>DBSnapper Core Operations
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        ↕ database connections
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Your Databases
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>AI Application / Web Client
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>        ↕ HTTP/SSE/stdio (JSON-RPC)
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>DBSnapper MCP Server
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        ↕ direct calls
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>DBSnapper Core Operations
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        ↕ database connections
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Your Databases
 </code></pre></div>
 <h3 id="security-model">Security Model<a class="headerlink" href="#security-model" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4609,14 +4628,14 @@
 <h3 id="integration-options">Integration Options<a class="headerlink" href="#integration-options" title="Permanent link">&para;</a></h3>
 <h4 id="http-integration-default-recommended">HTTP Integration (Default - Recommended)<a class="headerlink" href="#http-integration-default-recommended" title="Permanent link">&para;</a></h4>
 <p>The MCP server now defaults to HTTP transport, making it accessible from web applications, APIs, and other HTTP clients:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Start HTTP server (default)</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>dbsnapper<span class="w"> </span>mcp
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Custom port and path</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--port<span class="w"> </span><span class="m">3001</span><span class="w"> </span>--path<span class="w"> </span>/api/mcp
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Server-Sent Events transport</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--transport<span class="w"> </span>sse
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Start HTTP server (default)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>dbsnapper<span class="w"> </span>mcp
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Custom port and path</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--port<span class="w"> </span><span class="m">3001</span><span class="w"> </span>--path<span class="w"> </span>/api/mcp
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Server-Sent Events transport</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--transport<span class="w"> </span>sse
 </code></pre></div>
 <p><strong>HTTP Access:</strong>
 - MCP endpoint: <code>http://localhost:8080/mcp</code>
@@ -4632,15 +4651,18 @@
 </li>
 <li>
 <p><strong>Add DBSnapper MCP Server (Stdio Mode)</strong>
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="p">],</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper database snapshot management&quot;</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">}</span>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="p">],</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper database snapshot management&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_CONFIG&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Users/snappy/.config/dbsnapper/dbsnapper.yml&quot;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="p">}</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4655,14 +4677,15 @@
 </li>
 <li>
 <p><strong>Create Claude Code MCP configuration</strong> (<code>.mcp.json</code> in your project root):
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper-http&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http&quot;</span><span class="p">,</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/mcp&quot;</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="p">}</span>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">],</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">}</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -4682,25 +4705,25 @@ The <code>mcp-remote</code> adapter enables MCP clients like Claude Desktop (whi
 <ol>
 <li>
 <p><strong>Install mcp-remote adapter</strong>:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>mcp-remote
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>mcp-remote
 </code></pre></div></p>
 </li>
 <li>
 <p><strong>Start DBSnapper HTTP server</strong>: 
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>dbsnapper<span class="w"> </span>mcp<span class="w">  </span><span class="c1"># runs on http://localhost:8080/mcp</span>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>dbsnapper<span class="w"> </span>mcp<span class="w">  </span><span class="c1"># runs on http://localhost:8080/mcp</span>
 </code></pre></div></p>
 </li>
 <li>
 <p><strong>Configure your MCP client with mcp-remote</strong>:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper-remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp-remote&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/mcp&quot;</span><span class="p">],</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper via Streamable HTTP adapter&quot;</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">}</span>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper-remote&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp-remote&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost:8080/mcp&quot;</span><span class="p">],</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper via Streamable HTTP adapter&quot;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="p">}</span>
 </code></pre></div></p>
 </li>
 </ol>
@@ -4715,48 +4738,48 @@ The <code>mcp-remote</code> adapter enables MCP clients like Claude Desktop (whi
 - Bridge between traditional MCP and new HTTP transport</p>
 <h4 id="advanced-configuration-options">Advanced Configuration Options<a class="headerlink" href="#advanced-configuration-options" title="Permanent link">&para;</a></h4>
 <p><strong>Full Path Configuration (Stdio - Recommended for Claude Desktop):</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/usr/local/bin/dbsnapper&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="p">],</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper Agent MCP Server&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_CONFIG&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/etc/dbsnapper/config.yml&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_LOG_LEVEL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;info&quot;</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">}</span>
-</code></pre></div></p>
-<p><strong>Debug Mode Configuration (Stdio):</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/dbsnapper&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/usr/local/bin/dbsnapper&quot;</span><span class="p">,</span>
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="p">],</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper with debug logging&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper Agent MCP Server&quot;</span><span class="p">,</span>
 <a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_HTTP_DEBUG&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_LOG_LEVEL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_CONFIG&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/etc/dbsnapper/config.yml&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_LOG_LEVEL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;info&quot;</span>
 <a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">      </span><span class="p">}</span>
 <a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="p">}</span>
 </code></pre></div></p>
-<p><strong>Database Tools Configuration (Stdio):</strong>
+<p><strong>Debug Mode Configuration (Stdio):</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/path/to/dbsnapper&quot;</span><span class="p">,</span>
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="p">],</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper with PostgreSQL tools&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper with debug logging&quot;</span><span class="p">,</span>
 <a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">        </span><span class="nt">&quot;PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Applications/Postgres.app/Contents/Versions/latest/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin&quot;</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="p">}</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_HTTP_DEBUG&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_LOG_LEVEL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Database Tools Configuration (Stdio):</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--stdio&quot;</span><span class="p">],</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper with PostgreSQL tools&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">        </span><span class="nt">&quot;PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Applications/Postgres.app/Contents/Versions/latest/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin&quot;</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="p">}</span>
 </code></pre></div></p>
 <h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4777,8 +4800,8 @@ The <code>mcp-remote</code> adapter enables MCP clients like Claude Desktop (whi
 - Lower resource usage
 - Simple configuration</p>
 <p><strong>Usage:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Stdio transport for Claude Desktop</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--stdio
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Stdio transport for Claude Desktop</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--stdio
 </code></pre></div></p>
 <h4 id="http-transport-default-best-for-apiswebclaude-code">HTTP Transport (Default - Best for APIs/Web/Claude Code)<a class="headerlink" href="#http-transport-default-best-for-apiswebclaude-code" title="Permanent link">&para;</a></h4>
 <p><strong>Best for:</strong> Claude Code, web applications, APIs, development integrations, debugging</p>
@@ -4789,11 +4812,11 @@ The <code>mcp-remote</code> adapter enables MCP clients like Claude Desktop (whi
 - Easy testing with curl or Postman
 - Future-proof for remote MCP servers</p>
 <p><strong>Usage:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Default HTTP transport</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>dbsnapper<span class="w"> </span>mcp
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Custom port and endpoint</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--port<span class="w"> </span><span class="m">3001</span><span class="w"> </span>--path<span class="w"> </span>/api/dbsnapper
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Default HTTP transport</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>dbsnapper<span class="w"> </span>mcp
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Custom port and endpoint</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--port<span class="w"> </span><span class="m">3001</span><span class="w"> </span>--path<span class="w"> </span>/api/dbsnapper
 </code></pre></div></p>
 <p><strong>Claude Desktop Usage (Experimental):</strong>
 Requires <code>mcp-remote</code> adapter: <code>npx mcp-remote http://localhost:8080/mcp</code></p>
@@ -4805,8 +4828,8 @@ Requires <code>mcp-remote</code> adapter: <code>npx mcp-remote http://localhost:
 - Web-compatible streaming
 - Lower latency for continuous operations</p>
 <p><strong>Usage:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># SSE transport</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--transport<span class="w"> </span>sse<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># SSE transport</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--transport<span class="w"> </span>sse<span class="w"> </span>--port<span class="w"> </span><span class="m">8080</span>
 </code></pre></div></p>
 <h2 id="available-tools-and-resources">Available Tools and Resources<a class="headerlink" href="#available-tools-and-resources" title="Permanent link">&para;</a></h2>
 <h3 id="target-management-tools">Target Management Tools<a class="headerlink" href="#target-management-tools" title="Permanent link">&para;</a></h3>
@@ -4931,163 +4954,163 @@ Requires <code>mcp-remote</code> adapter: <code>npx mcp-remote http://localhost:
 <h2 id="example-usage-scenarios">Example Usage Scenarios<a class="headerlink" href="#example-usage-scenarios" title="Permanent link">&para;</a></h2>
 <h3 id="getting-started-with-ai-integration">Getting Started with AI Integration<a class="headerlink" href="#getting-started-with-ai-integration" title="Permanent link">&para;</a></h3>
 <h4 id="initial-setup-and-discovery">Initial Setup and Discovery<a class="headerlink" href="#initial-setup-and-discovery" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>User: &quot;What database targets do I have configured?&quot;
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>AI: I&#39;ll check your configured database targets.
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>[AI uses list_targets tool]
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>AI: You have 3 targets configured:
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>- production-db (PostgreSQL, cloud target)
-<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>- staging-db (PostgreSQL, local target)  
-<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>- analytics-db (MySQL, local target)
-<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>Would you like to see detailed information about any of these targets?
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>User: &quot;What database targets do I have configured?&quot;
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>AI: I&#39;ll check your configured database targets.
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>[AI uses list_targets tool]
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>AI: You have 3 targets configured:
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>- production-db (PostgreSQL, cloud target)
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>- staging-db (PostgreSQL, local target)  
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>- analytics-db (MySQL, local target)
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>Would you like to see detailed information about any of these targets?
 </code></pre></div>
 <h4 id="database-tool-setup">Database Tool Setup<a class="headerlink" href="#database-tool-setup" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>User: &quot;I&#39;m getting errors about pg_dump not being found&quot;
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>AI: I can help you set up your database tools automatically.
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>[AI uses discover_database_tools with autoSave: true]
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>AI: ✅ Database tools discovered and configured:
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>- PostgreSQL: pg_dump, pg_restore, psql found at /opt/homebrew/bin/
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>- MySQL: mysql, mysqldump found at /usr/local/bin/
-<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>- Configuration saved to your DBSnapper config file
-<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
-<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>Your database tools are now properly configured for future operations.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>User: &quot;I&#39;m getting errors about pg_dump not being found&quot;
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>AI: I can help you set up your database tools automatically.
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>[AI uses discover_database_tools with autoSave: true]
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>AI: ✅ Database tools discovered and configured:
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>- PostgreSQL: pg_dump, pg_restore, psql found at /opt/homebrew/bin/
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>- MySQL: mysql, mysqldump found at /usr/local/bin/
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>- Configuration saved to your DBSnapper config file
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>Your database tools are now properly configured for future operations.
 </code></pre></div>
 <h3 id="snapshot-management-workflows">Snapshot Management Workflows<a class="headerlink" href="#snapshot-management-workflows" title="Permanent link">&para;</a></h3>
 <h4 id="creating-production-snapshots">Creating Production Snapshots<a class="headerlink" href="#creating-production-snapshots" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>User: &quot;Create a snapshot of my production database and load it into staging&quot;
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>AI: I&#39;ll create a production snapshot and then load it into staging.
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>[AI uses build_snapshot with targetName: &quot;production-db&quot;]
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>AI: ✅ Production snapshot created successfully!
-<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>- Snapshot file: /snapshots/1705123456_production-db.zip
-<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>- Size: 2.1 GB
-<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>- Build time: 45.2 seconds
-<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
-<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>[AI uses load_snapshot with targetName: &quot;production-db&quot;, destinationUrl from staging config]
-<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>
-<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>AI: ✅ Snapshot loaded into staging environment!
-<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>- Loaded sanitized snapshot (index 0)
-<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>- Destination: staging-db  
-<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>- Load time: 12.3 seconds
-<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
-<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>Your staging environment now has the latest production data.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>User: &quot;Create a snapshot of my production database and load it into staging&quot;
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>AI: I&#39;ll create a production snapshot and then load it into staging.
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>[AI uses build_snapshot with targetName: &quot;production-db&quot;]
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>AI: ✅ Production snapshot created successfully!
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>- Snapshot file: /snapshots/1705123456_production-db.zip
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>- Size: 2.1 GB
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>- Build time: 45.2 seconds
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>[AI uses load_snapshot with targetName: &quot;production-db&quot;, destinationUrl from staging config]
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>AI: ✅ Snapshot loaded into staging environment!
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>- Loaded sanitized snapshot (index 0)
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>- Destination: staging-db  
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>- Load time: 12.3 seconds
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>Your staging environment now has the latest production data.
 </code></pre></div>
 <h4 id="snapshot-history-and-analysis">Snapshot History and Analysis<a class="headerlink" href="#snapshot-history-and-analysis" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>User: &quot;Show me the history of snapshots for my production database&quot;
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>AI: I&#39;ll get the snapshot history for your production database.
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>[AI uses list_snapshots with targetName: &quot;production-db&quot;]
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>AI: Here&#39;s your production-db snapshot history:
-<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>- Index 0 (latest): 1705123456_production-db.zip (2.1 GB, sanitized available)
-<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>- Index 1: 1705037056_production-db.zip (2.0 GB, sanitized available)  
-<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>- Index 2: 1704950656_production-db.zip (1.9 GB, sanitized available)
-<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>
-<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>All snapshots have sanitized versions available for safe sharing.
-<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>Would you like to load any specific snapshot?
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>User: &quot;Show me the history of snapshots for my production database&quot;
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>AI: I&#39;ll get the snapshot history for your production database.
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>[AI uses list_snapshots with targetName: &quot;production-db&quot;]
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>AI: Here&#39;s your production-db snapshot history:
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>- Index 0 (latest): 1705123456_production-db.zip (2.1 GB, sanitized available)
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>- Index 1: 1705037056_production-db.zip (2.0 GB, sanitized available)  
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>- Index 2: 1704950656_production-db.zip (1.9 GB, sanitized available)
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>All snapshots have sanitized versions available for safe sharing.
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>Would you like to load any specific snapshot?
 </code></pre></div>
 <h3 id="configuration-management">Configuration Management<a class="headerlink" href="#configuration-management" title="Permanent link">&para;</a></h3>
 <h4 id="configuration-validation">Configuration Validation<a class="headerlink" href="#configuration-validation" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>User: &quot;Is my DBSnapper configuration set up correctly?&quot;
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>AI: I&#39;ll check your DBSnapper configuration and setup.
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>[AI uses get_config_info and validate_database_tools]
-<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
-<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>AI: Your DBSnapper configuration looks good:
-<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>✅ Configuration file: ~/.config/dbsnapper/dbsnapper.yml
-<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>✅ Working directory: /Users/you/.dbsnapper  
-<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>✅ Database tools: PostgreSQL and MySQL tools configured
-<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>✅ Cloud mode: Enabled with valid authentication
-<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>✅ Targets: 3 configured (2 local, 1 cloud)
-<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>✅ Storage profiles: 1 S3 profile configured
-<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
-<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>Everything is properly configured for database snapshot operations.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>User: &quot;Is my DBSnapper configuration set up correctly?&quot;
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>AI: I&#39;ll check your DBSnapper configuration and setup.
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>[AI uses get_config_info and validate_database_tools]
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>AI: Your DBSnapper configuration looks good:
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>✅ Configuration file: ~/.config/dbsnapper/dbsnapper.yml
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>✅ Working directory: /Users/you/.dbsnapper  
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>✅ Database tools: PostgreSQL and MySQL tools configured
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>✅ Cloud mode: Enabled with valid authentication
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>✅ Targets: 3 configured (2 local, 1 cloud)
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>✅ Storage profiles: 1 S3 profile configured
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>Everything is properly configured for database snapshot operations.
 </code></pre></div>
 <h4 id="multi-environment-setup">Multi-Environment Setup<a class="headerlink" href="#multi-environment-setup" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>User: &quot;Help me set up snapshots for my development workflow&quot;
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>AI: I&#39;ll help you create an efficient development snapshot workflow.
-<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
-<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>[AI uses list_targets to understand environment]
-<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
-<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>AI: I see you have production-db and staging-db targets. Here&#39;s a recommended workflow:
-<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
-<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>1. Create daily production snapshots (sanitized for security)
-<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>2. Load sanitized snapshots into staging for testing
-<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>3. Use sanitized data for development environments
-<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>
-<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>Would you like me to create a sanitized snapshot from production now?
-<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>
-<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>[User agrees]
-<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
-<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>[AI uses build_snapshot then sanitize_snapshot]
-<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>
-<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>AI: ✅ Development-ready data prepared:
-<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>- Original production snapshot: 1705123456_production-db.zip
-<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>- Sanitized version: 1705123456_production-db.san.zip  
-<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>- Sensitive data removed, ready for development use
-<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>
-<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>You can now safely use this data across development environments.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>User: &quot;Help me set up snapshots for my development workflow&quot;
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>AI: I&#39;ll help you create an efficient development snapshot workflow.
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>[AI uses list_targets to understand environment]
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>AI: I see you have production-db and staging-db targets. Here&#39;s a recommended workflow:
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>1. Create daily production snapshots (sanitized for security)
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>2. Load sanitized snapshots into staging for testing
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>3. Use sanitized data for development environments
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>Would you like me to create a sanitized snapshot from production now?
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>[User agrees]
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>[AI uses build_snapshot then sanitize_snapshot]
+<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>
+<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>AI: ✅ Development-ready data prepared:
+<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>- Original production snapshot: 1705123456_production-db.zip
+<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>- Sanitized version: 1705123456_production-db.san.zip  
+<a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>- Sensitive data removed, ready for development use
+<a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a>
+<a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a>You can now safely use this data across development environments.
 </code></pre></div>
 <h3 id="advanced-workflows">Advanced Workflows<a class="headerlink" href="#advanced-workflows" title="Permanent link">&para;</a></h3>
 <h4 id="automated-testing-setup">Automated Testing Setup<a class="headerlink" href="#automated-testing-setup" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>User: &quot;I need to set up automated testing with fresh data each day&quot;
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>AI: I&#39;ll help you understand how to set up automated testing with fresh snapshots.
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
-<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>[AI uses get_config_info and list_snapshots]
-<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
-<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>AI: Based on your configuration, here&#39;s an automated testing approach:
-<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
-<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>Current setup:
-<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>- Production snapshots: Available with sanitization
-<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>- Test environments: Configured for automated loading
-<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>- Database tools: Properly configured
-<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>
-<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>Recommended daily workflow:
-<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>1. Build fresh production snapshot (automated via CI/CD)
-<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>2. Sanitize snapshot for test data safety  
-<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>3. Load sanitized snapshot into test databases
-<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>4. Run automated test suite
-<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>
-<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>The MCP integration can be used with GitHub Actions or other CI/CD tools.
-<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>Would you like me to help set up any part of this workflow?
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>User: &quot;I need to set up automated testing with fresh data each day&quot;
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>AI: I&#39;ll help you understand how to set up automated testing with fresh snapshots.
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>[AI uses get_config_info and list_snapshots]
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>AI: Based on your configuration, here&#39;s an automated testing approach:
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>Current setup:
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>- Production snapshots: Available with sanitization
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>- Test environments: Configured for automated loading
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>- Database tools: Properly configured
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>Recommended daily workflow:
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>1. Build fresh production snapshot (automated via CI/CD)
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>2. Sanitize snapshot for test data safety  
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>3. Load sanitized snapshot into test databases
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>4. Run automated test suite
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>The MCP integration can be used with GitHub Actions or other CI/CD tools.
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>Would you like me to help set up any part of this workflow?
 </code></pre></div>
 <h4 id="data-sharing-and-collaboration">Data Sharing and Collaboration<a class="headerlink" href="#data-sharing-and-collaboration" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>User: &quot;I need to share database data with my team, but it contains sensitive information&quot;
-<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>AI: I can help you create a sanitized snapshot that&#39;s safe for team sharing.
-<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
-<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>[AI uses list_snapshots to see available data]
-<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
-<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>AI: I see you have recent production snapshots. I&#39;ll create a sanitized version for safe sharing.
-<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
-<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>[AI uses sanitize_snapshot with appropriate configuration]
-<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
-<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>AI: ✅ Team-safe snapshot created:
-<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>- Original: 1705123456_production-db.zip (contains sensitive data)
-<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>- Sanitized: 1705123456_production-db.san.zip (safe for team use)
-<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>- Sanitization: PII removed, emails masked, IDs preserved for referential integrity
-<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>
-<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>The sanitized snapshot can be safely shared with your team or loaded into shared development environments. The data structure and relationships are preserved while sensitive information is protected.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>User: &quot;I need to share database data with my team, but it contains sensitive information&quot;
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>AI: I can help you create a sanitized snapshot that&#39;s safe for team sharing.
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>[AI uses list_snapshots to see available data]
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>AI: I see you have recent production snapshots. I&#39;ll create a sanitized version for safe sharing.
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>[AI uses sanitize_snapshot with appropriate configuration]
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>AI: ✅ Team-safe snapshot created:
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>- Original: 1705123456_production-db.zip (contains sensitive data)
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>- Sanitized: 1705123456_production-db.san.zip (safe for team use)
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>- Sanitization: PII removed, emails masked, IDs preserved for referential integrity
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>The sanitized snapshot can be safely shared with your team or loaded into shared development environments. The data structure and relationships are preserved while sensitive information is protected.
 </code></pre></div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="common-setup-issues">Common Setup Issues<a class="headerlink" href="#common-setup-issues" title="Permanent link">&para;</a></h3>
 <h4 id="mcp-server-not-starting">MCP Server Not Starting<a class="headerlink" href="#mcp-server-not-starting" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Test MCP server directly</span>
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--help
-<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Start HTTP MCP server (default) with debug output  </span>
-<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="nv">DBSNAPPER_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>dbsnapper<span class="w"> </span>mcp
-<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
-<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="c1"># Start stdio MCP server with debug output</span>
-<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="nv">DBSNAPPER_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--stdio
-<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
-<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="c1"># Check if binary is accessible</span>
-<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>which<span class="w"> </span>dbsnapper
-<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>ls<span class="w"> </span>-la<span class="w"> </span>/path/to/dbsnapper
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Test MCP server directly</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--help
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Start HTTP MCP server (default) with debug output  </span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="nv">DBSNAPPER_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>dbsnapper<span class="w"> </span>mcp
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># Start stdio MCP server with debug output</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="nv">DBSNAPPER_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--stdio
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="c1"># Check if binary is accessible</span>
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>which<span class="w"> </span>dbsnapper
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>ls<span class="w"> </span>-la<span class="w"> </span>/path/to/dbsnapper
 </code></pre></div>
 <p><strong>Solutions:</strong>
 1. Verify DBSnapper binary exists and is executable
@@ -5095,16 +5118,16 @@ Requires <code>mcp-remote</code> adapter: <code>npx mcp-remote http://localhost:
 3. Ensure proper permissions on binary and config files
 4. Use absolute paths in Claude Desktop configuration</p>
 <h4 id="claude-desktop-integration-issues">Claude Desktop Integration Issues<a class="headerlink" href="#claude-desktop-integration-issues" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">// Verify JSON syntax is correct (HTTP transport - recommended)</span>
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="p">{</span>
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/full/path/to/dbsnapper&quot;</span><span class="p">,</span>
-<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">],</span>
-<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper database management&quot;</span>
-<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1">// Verify JSON syntax is correct (HTTP transport - recommended)</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="p">{</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/full/path/to/dbsnapper&quot;</span><span class="p">,</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">],</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DBSnapper database management&quot;</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="p">}</span>
 </code></pre></div>
 <p><strong>Solutions:</strong>
 1. Validate JSON syntax in configuration file
@@ -5112,44 +5135,44 @@ Requires <code>mcp-remote</code> adapter: <code>npx mcp-remote http://localhost:
 3. Restart Claude Desktop completely after configuration changes
 4. Check Claude Desktop logs for error messages</p>
 <h4 id="database-tools-not-found">Database Tools Not Found<a class="headerlink" href="#database-tools-not-found" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Error: &quot;pg_dump&quot;: executable file not found in $PATH
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Error: &quot;pg_dump&quot;: executable file not found in $PATH
 </code></pre></div>
 <p><strong>Recommended Solution: Use MCP Tool Discovery</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>AI Prompt: &quot;Find and configure my database tools automatically&quot;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>AI Prompt: &quot;Find and configure my database tools automatically&quot;
 </code></pre></div></p>
 <p><strong>Alternative: Manual PATH Configuration</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">{</span>
-<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
-<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">],</span>
-<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">        </span><span class="nt">&quot;PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin&quot;</span>
-<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">{</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">],</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="w">        </span><span class="nt">&quot;PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin&quot;</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="p">}</span>
 </code></pre></div></p>
 <h3 id="configuration-issues">Configuration Issues<a class="headerlink" href="#configuration-issues" title="Permanent link">&para;</a></h3>
 <h4 id="configuration-file-not-found">Configuration File Not Found<a class="headerlink" href="#configuration-file-not-found" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1"># Check default configuration location</span>
-<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>~/.config/dbsnapper/dbsnapper.yml
-<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>
-<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="c1"># Initialize configuration if missing</span>
-<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>dbsnapper<span class="w"> </span>config<span class="w"> </span>init
-<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>
-<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="c1"># Use custom configuration path</span>
-<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DBSNAPPER_CONFIG</span><span class="o">=</span>/path/to/custom/config.yml
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># Check default configuration location</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>~/.config/dbsnapper/dbsnapper.yml
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="c1"># Initialize configuration if missing</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>dbsnapper<span class="w"> </span>config<span class="w"> </span>init
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="c1"># Use custom configuration path</span>
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DBSNAPPER_CONFIG</span><span class="o">=</span>/path/to/custom/config.yml
 </code></pre></div>
 <h4 id="permission-issues">Permission Issues<a class="headerlink" href="#permission-issues" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># Fix binary permissions</span>
-<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/path/to/dbsnapper
-<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
-<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="c1"># Fix configuration file permissions</span>
-<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>~/.config/dbsnapper/dbsnapper.yml
-<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>
-<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="c1"># Check working directory permissions</span>
-<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>ls<span class="w"> </span>-la<span class="w"> </span>~/.dbsnapper/
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1"># Fix binary permissions</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/path/to/dbsnapper
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="c1"># Fix configuration file permissions</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>~/.config/dbsnapper/dbsnapper.yml
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="c1"># Check working directory permissions</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>ls<span class="w"> </span>-la<span class="w"> </span>~/.dbsnapper/
 </code></pre></div>
 <h3 id="ai-integration-issues">AI Integration Issues<a class="headerlink" href="#ai-integration-issues" title="Permanent link">&para;</a></h3>
 <h4 id="ai-cant-execute-tools">AI Can't Execute Tools<a class="headerlink" href="#ai-cant-execute-tools" title="Permanent link">&para;</a></h4>
@@ -5181,40 +5204,40 @@ Requires <code>mcp-remote</code> adapter: <code>npx mcp-remote http://localhost:
 4. Verify working directory consistency</p>
 <h3 id="debugging-and-diagnostics">Debugging and Diagnostics<a class="headerlink" href="#debugging-and-diagnostics" title="Permanent link">&para;</a></h3>
 <h4 id="enable-debug-mode">Enable Debug Mode<a class="headerlink" href="#enable-debug-mode" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="p">{</span>
-<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
-<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">],</span>
-<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_LOG_LEVEL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
-<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_HTTP_DEBUG&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span>
-<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">    </span><span class="nt">&quot;dbsnapper&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dbsnapper&quot;</span><span class="p">,</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp&quot;</span><span class="p">],</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_LOG_LEVEL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="w">        </span><span class="nt">&quot;DBSNAPPER_HTTP_DEBUG&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;true&quot;</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="p">}</span>
 </code></pre></div>
 <h4 id="test-mcp-server-independently">Test MCP Server Independently<a class="headerlink" href="#test-mcp-server-independently" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1"># Start HTTP MCP server with debug output (default)</span>
-<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nv">DBSNAPPER_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>dbsnapper<span class="w"> </span>mcp
-<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
-<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="c1"># Start stdio MCP server with debug output (for Claude Desktop)</span>
-<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="nv">DBSNAPPER_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--stdio
-<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>
-<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="c1"># Test specific operations</span>
-<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>dbsnapper<span class="w"> </span>targets<span class="w"> </span>--help
-<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>dbsnapper<span class="w"> </span>build<span class="w"> </span>--help
-<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>dbsnapper<span class="w"> </span>load<span class="w"> </span>--help
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># Start HTTP MCP server with debug output (default)</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="nv">DBSNAPPER_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>dbsnapper<span class="w"> </span>mcp
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="c1"># Start stdio MCP server with debug output (for Claude Desktop)</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="nv">DBSNAPPER_LOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>dbsnapper<span class="w"> </span>mcp<span class="w"> </span>--stdio
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="c1"># Test specific operations</span>
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>dbsnapper<span class="w"> </span>targets<span class="w"> </span>--help
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>dbsnapper<span class="w"> </span>build<span class="w"> </span>--help
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>dbsnapper<span class="w"> </span>load<span class="w"> </span>--help
 </code></pre></div>
 <h4 id="verify-configuration">Verify Configuration<a class="headerlink" href="#verify-configuration" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># Validate configuration file</span>
-<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>dbsnapper<span class="w"> </span>config<span class="w"> </span>validate
-<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
-<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="c1"># Check configuration information</span>
-<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>dbsnapper<span class="w"> </span>config<span class="w"> </span>check
-<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
-<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="c1"># Test database connectivity</span>
-<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>dbsnapper<span class="w"> </span>targets
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c1"># Validate configuration file</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>dbsnapper<span class="w"> </span>config<span class="w"> </span>validate
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="c1"># Check configuration information</span>
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>dbsnapper<span class="w"> </span>config<span class="w"> </span>check
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="c1"># Test database connectivity</span>
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>dbsnapper<span class="w"> </span>targets
 </code></pre></div>
 <h2 id="performance-considerations">Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">&para;</a></h2>
 <h3 id="memory-usage">Memory Usage<a class="headerlink" href="#memory-usage" title="Permanent link">&para;</a></h3>
