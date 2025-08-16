@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../static/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
     
     
       
@@ -464,6 +464,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#supported-platforms" class="md-nav__link">
     <span class="md-ellipsis">
       Supported Platforms
@@ -471,20 +481,316 @@
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Scaling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#supported-databases" class="md-nav__link">
+  <a href="#database-support" class="md-nav__link">
     <span class="md-ellipsis">
-      Supported Databases
+      Database Support
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-database-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Database Engines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Database Engines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      PostgreSQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      MySQL
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-access-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Access Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-client-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Client Tools
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Client Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-docker-based-tools-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Docker-Based Tools (Recommended)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-local-tools-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Local Tools Installation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-and-orchestration-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container and Orchestration Support
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container and Orchestration Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetescontainer-orchestration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes/Container Orchestration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cicd-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI/CD Integration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-storage-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Storage Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Storage Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-storage-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Storage Providers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Storage Providers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amazon-s3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amazon S3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloudflare-r2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloudflare R2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-s3-compatible-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional S3-Compatible Providers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-and-security-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network and Security Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network and Security Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#network-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-environment-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Environment Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Environment Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ide-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDE Support
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP Server Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terraform-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      Terraform Provider
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatibility-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compatibility Matrix
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-cloud-storage-providers" class="md-nav__link">
+  <a href="#getting-started" class="md-nav__link">
     <span class="md-ellipsis">
-      Supported Cloud Storage Providers
+      Getting Started
     </span>
   </a>
   
@@ -511,7 +817,7 @@
   
   
   <span class="md-ellipsis">
-    DBSnapper Agent Installation
+    Installation
     
   </span>
   
@@ -580,7 +886,7 @@
   
   
   <span class="md-ellipsis">
-    Philosophy
+    Why DBSnapper?
     
   </span>
   
@@ -629,7 +935,7 @@
   
   
   <span class="md-ellipsis">
-    Snapshot
+    Core Features
     
   </span>
   
@@ -640,7 +946,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Snapshot
+            Core Features
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -656,7 +962,7 @@
   
   
   <span class="md-ellipsis">
-    Introduction
+    Snapshot
     
   </span>
   
@@ -674,12 +980,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../snapshot/configuration/" class="md-nav__link">
+      <a href="../sanitize/introduction/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Configuration
+    Sanitize
     
   </span>
   
@@ -697,12 +1003,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../snapshot/build_and_load/" class="md-nav__link">
+      <a href="../share/introduction/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Build and Load
+    Share
     
   </span>
   
@@ -728,6 +1034,12 @@
   
     
     
+      
+        
+      
+        
+      
+        
       
         
       
@@ -749,7 +1061,7 @@
   
   
   <span class="md-ellipsis">
-    Subset
+    DBSnapper Cloud
     
   </span>
   
@@ -759,301 +1071,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            Subset
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../subset/introduction/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Introduction
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../subset/configuration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Configuration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    Sanitize
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            Sanitize
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sanitize/introduction/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Introduction
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sanitize/configuration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Configuration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sanitize/sanitize/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Sanitize
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    Share
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            Share
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../share/introduction/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Introduction
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    DBSnapper Cloud
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             DBSnapper Cloud
           </label>
@@ -1134,6 +1151,29 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../dbsnapper-cloud/team-workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Team Workflows
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -1151,7 +1191,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -1168,14 +1208,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7_4">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             Single Sign-On
           </label>
@@ -1195,7 +1235,7 @@
   
   
   <span class="md-ellipsis">
-    Single Sign-On (SSO) Integration with Okta
+    Okta Integration
     
   </span>
   
@@ -1231,6 +1271,445 @@
     
       
         
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI Integrations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            AI Integrations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ai-integrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MCP Server Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Platform Integrations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Platform Integrations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    GitHub Actions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            GitHub Actions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../articles/dbsnapper-github-actions-ecs-simplified/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Simplified Approach
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../articles/dbsnapper-github-actions-amazon-ecs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced ECS Setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VS Code Extension
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terraform Provider
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Feature Configuration
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Feature Configuration
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snapshot/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snapshot Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snapshot/build_and_load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build and Load Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sanitize/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sanitization Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sanitize/sanitize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sanitization Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
       
         
       
@@ -1300,22 +1779,43 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../database-engines/postgresql-local/" class="md-nav__link">
+    
+    
+      
         
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
-    PostgreSQL Local (postgres://)
+    PostgreSQL
     
   </span>
   
 
-      </a>
-    </li>
-  
-
-              
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            PostgreSQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
                 
@@ -1324,12 +1824,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../database-engines/mysql-local/" class="md-nav__link">
+      <a href="../database-engines/postgresql-local/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    MySQL Local (mysql://)
+    Local Installation
     
   </span>
   
@@ -1352,7 +1852,82 @@
   
   
   <span class="md-ellipsis">
-    PostgreSQL Docker (pgdocker://)
+    Docker Setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    MySQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            MySQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database-engines/mysql-local/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Local Installation
     
   </span>
   
@@ -1375,12 +1950,168 @@
   
   
   <span class="md-ellipsis">
-    MySQL Docker (mydocker://)
+    Docker Setup
     
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_4" id="__nav_8_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database-engines/engine-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Engine Selection Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database-engines/ephemeral-databases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ephemeral Databases
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database-engines/docker-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database-engines/engine-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1426,7 +2157,7 @@
   
   
   <span class="md-ellipsis">
-    Cloud Storage Engines
+    Cloud Storage
     
   </span>
   
@@ -1437,7 +2168,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
-            Cloud Storage Engines
+            Cloud Storage
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -1453,7 +2184,7 @@
   
   
   <span class="md-ellipsis">
-    Cloud Storage Engines
+    Introduction
     
   </span>
   
@@ -1476,30 +2207,7 @@
   
   
   <span class="md-ellipsis">
-    Storage Engine Configuration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cloud-storage-engines/cloudflare-r2/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Cloudflare R2 Storage Engine
+    Configuration
     
   </span>
   
@@ -1522,7 +2230,30 @@
   
   
   <span class="md-ellipsis">
-    Amazon S3 Storage Engine
+    Amazon S3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud-storage-engines/cloudflare-r2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cloudflare R2
     
   </span>
   
@@ -1553,6 +2284,12 @@
       
         
       
+        
+      
+        
+      
+        
+      
     
     
     
@@ -1569,7 +2306,7 @@
   
   
   <span class="md-ellipsis">
-    Commands
+    Command Reference
     
   </span>
   
@@ -1580,7 +2317,78 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_10">
             <span class="md-nav__icon md-icon"></span>
-            Commands
+            Command Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cmd/dbsnapper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_2" id="__nav_10_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Essential Commands
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_2">
+            <span class="md-nav__icon md-icon"></span>
+            Essential Commands
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -1596,7 +2404,7 @@
   
   
   <span class="md-ellipsis">
-    Build Command
+    Build
     
   </span>
   
@@ -1619,12 +2427,435 @@
   
   
   <span class="md-ellipsis">
-    Load Command
+    Load
     
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/targets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Targets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_3" id="__nav_10_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced Commands
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_3">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/sanitize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sanitize
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/pull/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pull
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/target/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Target (single)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_4" id="__nav_10_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Configuration Commands
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_4">
+            <span class="md-nav__icon md-icon"></span>
+            Configuration Commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/config-init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config Init
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/config-check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config Check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/config-discover/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config Discover
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/config-validate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config Validate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_10_5" id="__nav_10_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Authentication
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_10_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10_5">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/auth-token/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Auth Token
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Auth
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1645,22 +2876,6 @@
   
     
     
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
       
         
       
@@ -1684,7 +2899,7 @@
   
   
   <span class="md-ellipsis">
-    Command Line Usage
+    Tutorials & Articles
     
   </span>
   
@@ -1695,388 +2910,9 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_11">
             <span class="md-nav__icon md-icon"></span>
-            Command Line Usage
+            Tutorials & Articles
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_auth_token/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper auth token
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_config_init/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper config init
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_config_check/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper config check
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_subset/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper subset
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_build/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper build
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_pull/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper pull
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_sanitize/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper sanitize
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_load/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper load
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_targets/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper targets
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cmd/dbsnapper_target/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dbsnapper target
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
-        
-          
-          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    Articles
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_12">
-            <span class="md-nav__icon md-icon"></span>
-            Articles
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../articles/useful-postgres-mysql-queries/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Useful Postgres and MySQL Queries
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../articles/dbsnapper-github-actions-ecs-simplified/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Part 2: Using DBSnapper, GitHub Actions, and ECS - A Simplified Approach
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../articles/dbsnapper-github-actions-amazon-ecs/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Part 1: Using DBSnapper with GitHub Actions and Amazon ECS
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2090,7 +2926,7 @@
   
   
   <span class="md-ellipsis">
-    Sanitized Database Snapshots with DBSnapper
+    Creating Sanitized Snapshots
     
   </span>
   
@@ -2113,7 +2949,30 @@
   
   
   <span class="md-ellipsis">
-    Backup Amazon RDS Databases with DBSnapper
+    Backup Amazon RDS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../articles/useful-postgres-mysql-queries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Useful Database Queries
     
   </span>
   
@@ -2180,6 +3039,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#supported-platforms" class="md-nav__link">
     <span class="md-ellipsis">
       Supported Platforms
@@ -2187,20 +3056,316 @@
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Scaling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#supported-databases" class="md-nav__link">
+  <a href="#database-support" class="md-nav__link">
     <span class="md-ellipsis">
-      Supported Databases
+      Database Support
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-database-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Database Engines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Database Engines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      PostgreSQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      MySQL
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-access-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Access Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-client-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Client Tools
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Client Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-docker-based-tools-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Docker-Based Tools (Recommended)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-local-tools-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Local Tools Installation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-and-orchestration-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container and Orchestration Support
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Container and Orchestration Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetescontainer-orchestration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes/Container Orchestration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cicd-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI/CD Integration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-storage-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Storage Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Storage Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-storage-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Storage Providers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Storage Providers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amazon-s3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amazon S3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloudflare-r2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloudflare R2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-s3-compatible-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional S3-Compatible Providers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-and-security-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network and Security Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network and Security Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#network-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-environment-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Environment Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Environment Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ide-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDE Support
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP Server Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terraform-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      Terraform Provider
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatibility-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compatibility Matrix
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-cloud-storage-providers" class="md-nav__link">
+  <a href="#getting-started" class="md-nav__link">
     <span class="md-ellipsis">
-      Supported Cloud Storage Providers
+      Getting Started
     </span>
   </a>
   
@@ -2223,39 +3388,316 @@
 
 
 <h1 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h1>
-<p>Below are the requirements for the DBSnapper Agent.</p>
-<h2 id="supported-platforms">Supported Platforms<a class="headerlink" href="#supported-platforms" title="Permanent link">&para;</a></h2>
-<p>You can find the latest builds at the <a href="https://github.com/dbsnapper/dbsnapper/releases">DBSnapper Agent Releases page</a>.</p>
+<p>DBSnapper is designed to work across diverse environments, from local development machines to enterprise container orchestration platforms. Here's what you need to get started.</p>
+<h2 id="system-requirements">System Requirements<a class="headerlink" href="#system-requirements" title="Permanent link">&para;</a></h2>
+<h3 id="supported-platforms">Supported Platforms<a class="headerlink" href="#supported-platforms" title="Permanent link">&para;</a></h3>
+<p>DBSnapper runs on all major platforms with pre-built binaries available from the <a href="https://github.com/dbsnapper/dbsnapper/releases">GitHub Releases</a> page:</p>
 <ul>
-<li>
-<p><strong>MacOS</strong>: Latest versions of MacOS are supported.</p>
-</li>
-<li>
-<p><strong>Linux</strong>: Full compatibility with various distributions of Linux, catering to a wide range of Linux-based environments.</p>
-</li>
+<li><strong>macOS</strong> - Universal binary supporting both Intel (x86_64) and Apple Silicon (ARM64) architectures</li>
+<li><strong>Linux</strong> - Full compatibility across distributions:</li>
+<li><strong>x86_64</strong> - Standard 64-bit Intel/AMD processors</li>
+<li><strong>ARM64</strong> - ARM 64-bit processors (AWS Graviton, Raspberry Pi 4+, etc.)</li>
+<li><strong>Distributions</strong>: Ubuntu, Debian, RHEL, CentOS, Fedora, Alpine Linux, and others</li>
 </ul>
-<h2 id="supported-databases">Supported Databases<a class="headerlink" href="#supported-databases" title="Permanent link">&para;</a></h2>
-<p>DBSnapper leverages the native database utilities for snapshot creation and restoration. It can access these tools either directly from the host system's path or through Docker container images, offering flexibility in how you manage your database environments.</p>
-<p>The following databases are supported at this time:</p>
+<h3 id="hardware-requirements">Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permanent link">&para;</a></h3>
+<p><strong>Minimum System Requirements:</strong>
+- <strong>CPU</strong>: 1 core (multi-core recommended for large databases)
+- <strong>Memory</strong>: 512MB RAM minimum, 2GB+ recommended
+- <strong>Storage</strong>: 100MB for installation + space for snapshots
+- <strong>Network</strong>: Internet access for DBSnapper Cloud integration (optional)</p>
+<p><strong>Recommended for Production:</strong>
+- <strong>CPU</strong>: 4+ cores for optimal snapshot performance
+- <strong>Memory</strong>: 4GB+ RAM for large database operations
+- <strong>Storage</strong>: SSD storage for working directory
+- <strong>Network</strong>: High-bandwidth connection for cloud storage operations</p>
+<h3 id="performance-scaling">Performance Scaling<a class="headerlink" href="#performance-scaling" title="Permanent link">&para;</a></h3>
+<p>DBSnapper v3.0 introduces <strong>configurable CPU usage</strong> for database operations:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Configure CPU usage globally</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">defaults</span><span class="p">:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w">  </span><span class="c1"># Use 4 CPU cores for all operations</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Override per target for large databases</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">targets</span><span class="p">:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">production_db</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span><span class="w">  </span><span class="c1"># Use 8 cores for this target</span>
+</code></pre></div>
+<p><strong>Performance Benefits:</strong>
+- <strong>PostgreSQL</strong>: Multi-core <code>pg_dump</code> and <code>pg_restore</code> operations
+- <strong>Large datasets</strong>: Significantly faster snapshot creation and restoration
+- <strong>Concurrent operations</strong>: Better resource utilization in container environments</p>
+<h2 id="database-support">Database Support<a class="headerlink" href="#database-support" title="Permanent link">&para;</a></h2>
+<h3 id="supported-database-engines">Supported Database Engines<a class="headerlink" href="#supported-database-engines" title="Permanent link">&para;</a></h3>
+<p>DBSnapper leverages native database utilities for maximum compatibility and performance:</p>
+<h4 id="postgresql"><strong>PostgreSQL</strong><a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h4>
 <ul>
-<li>
-<p><strong>PostgreSQL</strong>: DBSnapper supports both local and Docker-based PostgreSQL databases.</p>
-</li>
-<li>
-<p><strong>MySQL</strong>: DBSnapper supports both local and Docker-based MySQL databases.</p>
-</li>
+<li><strong>Versions</strong>: PostgreSQL 10, 11, 12, 13, 14, 15, 16+</li>
+<li><strong>Deployment types</strong>: Local, Docker, RDS, Aurora, Cloud SQL, self-hosted</li>
+<li><strong>Advanced features</strong>:</li>
+<li>Schema filtering (include/exclude specific schemas)</li>
+<li>Multi-core parallel operations</li>
+<li>Connection pooling support</li>
+<li>SSL/TLS encryption</li>
 </ul>
-<p>See the <a href="../database-engines/introduction/">Database Engines</a> documentation for more information on how to configure and use these database engines.</p>
-<h2 id="supported-cloud-storage-providers">Supported Cloud Storage Providers<a class="headerlink" href="#supported-cloud-storage-providers" title="Permanent link">&para;</a></h2>
-<p>The <a href="../dbsnapper-cloud/introduction/">DBSnapper Cloud</a> extends the capabilities of the DBSnapper Agent by providing a support for cloud storage in a "Bring Your Own Cloud Storage" arrangement. The DBSnapper Agent supports the following cloud storage providers:</p>
+<h4 id="mysql"><strong>MySQL</strong><a class="headerlink" href="#mysql" title="Permanent link">&para;</a></h4>
 <ul>
-<li>
-<p><strong>Amazon S3</strong>: DBSnapper supports the <a href="https://aws.amazon.com/s3/">Amazon Simple Storage Service (S3)</a> cloud storage platform.</p>
-</li>
-<li>
-<p><strong>Cloudflare R2</strong>: DBSnapper supports <a href="https://developers.cloudflare.com/r2/">Cloudflare R2</a> cloud storage platform.</p>
-</li>
+<li><strong>Versions</strong>: MySQL 5.7, 8.0+, MariaDB 10.3+</li>
+<li><strong>Deployment types</strong>: Local, Docker, RDS, Aurora, Cloud SQL, self-hosted</li>
+<li><strong>Features</strong>:</li>
+<li>Full database snapshots</li>
+<li>Multi-core operations (when supported)</li>
+<li>SSL/TLS encryption</li>
 </ul>
+<h3 id="database-access-requirements">Database Access Requirements<a class="headerlink" href="#database-access-requirements" title="Permanent link">&para;</a></h3>
+<p><strong>Source Database Permissions:</strong>
+- <code>SELECT</code> privilege on all tables to be snapshotted
+- <code>SHOW DATABASES</code> privilege (MySQL) or connection access (PostgreSQL)
+- For schema operations: appropriate schema-level permissions</p>
+<p><strong>Destination Database Permissions:</strong>
+- <code>CREATE DATABASE</code> privilege on the destination server
+- <code>DROP DATABASE</code> privilege (snapshots replace existing databases)
+- Full read/write access to the target database</p>
+<p><strong>Security Best Practices:</strong>
+- Use dedicated DBSnapper database users with minimal required permissions
+- Enable SSL/TLS connections for production databases
+- Consider read replicas for snapshot sources to reduce production load</p>
+<h2 id="database-client-tools">Database Client Tools<a class="headerlink" href="#database-client-tools" title="Permanent link">&para;</a></h2>
+<p>DBSnapper requires database client tools for snapshot operations. You have two options:</p>
+<h3 id="option-1-docker-based-tools-recommended">Option 1: Docker-Based Tools (Recommended)<a class="headerlink" href="#option-1-docker-based-tools-recommended" title="Permanent link">&para;</a></h3>
+<p>Use the DBSnapper Docker image with all tools pre-installed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/dbsnapper/dbsnapper:latest
+</code></pre></div>
+<p><strong>Benefits:</strong>
+- All tools included and version-tested
+- Consistent environment across different systems
+- No local tool installation required
+- Perfect for CI/CD pipelines and containers</p>
+<h3 id="option-2-local-tools-installation">Option 2: Local Tools Installation<a class="headerlink" href="#option-2-local-tools-installation" title="Permanent link">&para;</a></h3>
+<p>Install database client tools on your local system:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">macOS</label><label for="__tabbed_1_2">Ubuntu/Debian</label><label for="__tabbed_1_3">RHEL/CentOS/Fedora</label><label for="__tabbed_1_4">Alpine Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># PostgreSQL tools</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>brew<span class="w"> </span>install<span class="w"> </span>postgresql
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># MySQL tools</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>brew<span class="w"> </span>install<span class="w"> </span>mysql-client
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># PostgreSQL tools</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>postgresql-client
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># MySQL tools</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>mysql-client
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># PostgreSQL tools</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>postgresql
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># MySQL tools</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>mysql
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># PostgreSQL tools</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>postgresql-client
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># MySQL tools</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>sudo<span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>mysql-client
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><strong>Required Tools:</strong>
+- <strong>PostgreSQL</strong>: <code>psql</code>, <code>pg_dump</code>, <code>pg_restore</code>
+- <strong>MySQL</strong>: <code>mysql</code>, <code>mysqldump</code></p>
+<h2 id="container-and-orchestration-support">Container and Orchestration Support<a class="headerlink" href="#container-and-orchestration-support" title="Permanent link">&para;</a></h2>
+<h3 id="docker-requirements">Docker Requirements<a class="headerlink" href="#docker-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Docker Engine</strong>: Version 18.09+ recommended</li>
+<li><strong>Docker permissions</strong>: User must be able to run Docker containers</li>
+<li><strong>Network access</strong>: Container networking for database connections</li>
+</ul>
+<h3 id="kubernetescontainer-orchestration">Kubernetes/Container Orchestration<a class="headerlink" href="#kubernetescontainer-orchestration" title="Permanent link">&para;</a></h3>
+<p>DBSnapper works excellently in container orchestration platforms:</p>
+<p><strong>Resource Requirements:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">resources</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">requests</span><span class="p">:</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;512Mi&quot;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;250m&quot;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">limits</span><span class="p">:</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2Gi&quot;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2000m&quot;</span><span class="w">  </span><span class="c1"># Adjust based on CPU configuration</span>
+</code></pre></div></p>
+<p><strong>Volume Requirements:</strong>
+- Configuration volume: <code>~/.config/dbsnapper</code>
+- Working directory volume: <code>~/.dbsnapper</code> (for local snapshots)
+- Optional: Shared storage for team access</p>
+<h3 id="cicd-integration">CI/CD Integration<a class="headerlink" href="#cicd-integration" title="Permanent link">&para;</a></h3>
+<p>DBSnapper integrates seamlessly with CI/CD pipelines:</p>
+<p><strong>GitHub Actions:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dbsnapper/install-dbsnapper-agent-action@v1</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
+</code></pre></div></p>
+<p><strong>GitLab CI, Jenkins, etc.:</strong> Use the Docker image for consistent environments</p>
+<h2 id="cloud-storage-integration">Cloud Storage Integration<a class="headerlink" href="#cloud-storage-integration" title="Permanent link">&para;</a></h2>
+<h3 id="supported-storage-providers">Supported Storage Providers<a class="headerlink" href="#supported-storage-providers" title="Permanent link">&para;</a></h3>
+<p>DBSnapper follows a <strong>"Bring Your Own Cloud Storage"</strong> model for maximum security and flexibility:</p>
+<h4 id="amazon-s3"><strong>Amazon S3</strong><a class="headerlink" href="#amazon-s3" title="Permanent link">&para;</a></h4>
+<ul>
+<li>AWS S3 (all regions)</li>
+<li>S3-compatible services (MinIO, DigitalOcean Spaces, etc.)</li>
+<li><strong>Authentication</strong>: AWS CLI profiles, IAM roles, access keys</li>
+<li><strong>Features</strong>: Server-side encryption, versioning, lifecycle policies</li>
+</ul>
+<h4 id="cloudflare-r2"><strong>Cloudflare R2</strong><a class="headerlink" href="#cloudflare-r2" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Cloudflare R2 storage</li>
+<li><strong>Authentication</strong>: API tokens, S3-compatible credentials</li>
+<li><strong>Benefits</strong>: Zero egress fees, global distribution</li>
+</ul>
+<h4 id="additional-s3-compatible-providers"><strong>Additional S3-Compatible Providers</strong><a class="headerlink" href="#additional-s3-compatible-providers" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>MinIO</strong>: Self-hosted object storage</li>
+<li><strong>DigitalOcean Spaces</strong>: Managed object storage</li>
+<li><strong>Backblaze B2</strong>: Cost-effective cloud storage</li>
+<li><strong>Wasabi</strong>: Hot cloud storage</li>
+</ul>
+<h3 id="storage-requirements">Storage Requirements<a class="headerlink" href="#storage-requirements" title="Permanent link">&para;</a></h3>
+<p><strong>Capacity Planning:</strong>
+- Snapshot sizes typically 10-50% of original database size (due to compression)
+- Plan for multiple snapshots per target (original + sanitized versions)
+- Consider retention policies for automated cleanup</p>
+<p><strong>Performance Considerations:</strong>
+- High-bandwidth network connections for large database uploads
+- Consider storage regions close to your database infrastructure
+- Use presigned URLs for secure, direct uploads/downloads</p>
+<h2 id="network-and-security-requirements">Network and Security Requirements<a class="headerlink" href="#network-and-security-requirements" title="Permanent link">&para;</a></h2>
+<h3 id="network-access">Network Access<a class="headerlink" href="#network-access" title="Permanent link">&para;</a></h3>
+<p><strong>Outbound connections required for:</strong>
+- Database servers (source and destination)
+- DBSnapper Cloud API (if using cloud features): <code>app.dbsnapper.com</code>
+- Cloud storage providers (S3, R2, etc.)
+- Container registry: <code>ghcr.io</code> (for Docker images)</p>
+<p><strong>Firewall Considerations:</strong>
+- Standard database ports: PostgreSQL (5432), MySQL (3306)
+- HTTPS (443) for cloud API and storage operations
+- Custom ports if using non-standard database configurations</p>
+<h3 id="security-requirements">Security Requirements<a class="headerlink" href="#security-requirements" title="Permanent link">&para;</a></h3>
+<p><strong>Encryption:</strong>
+- <strong>In transit</strong>: TLS 1.2+ for all network communications
+- <strong>At rest</strong>: AES-256 encryption for stored configurations and snapshots
+- <strong>Database connections</strong>: SSL/TLS supported and recommended</p>
+<p><strong>Authentication:</strong>
+- Support for all standard database authentication methods
+- Integration with AWS IAM, OIDC, and other identity providers
+- Optional: SSO integration with Okta, Auth0, Azure AD</p>
+<h2 id="development-environment-integration">Development Environment Integration<a class="headerlink" href="#development-environment-integration" title="Permanent link">&para;</a></h2>
+<h3 id="ide-support">IDE Support<a class="headerlink" href="#ide-support" title="Permanent link">&para;</a></h3>
+<p><strong>VS Code Extension</strong>: <a href="https://marketplace.visualstudio.com/items?itemName=dbsnapper.vscode-dbsnapper">DBSnapper for VS Code</a>
+- In-editor snapshot management
+- Target configuration and testing
+- Direct integration with workspace settings</p>
+<h3 id="mcp-server-integration">MCP Server Integration<a class="headerlink" href="#mcp-server-integration" title="Permanent link">&para;</a></h3>
+<p><strong>AI Assistant Integration:</strong>
+- Model Context Protocol (MCP) server for Claude Desktop and compatible AI assistants
+- Programmatic database operations through AI conversation
+- Requires DBSnapper installation and configuration</p>
+<h3 id="terraform-provider">Terraform Provider<a class="headerlink" href="#terraform-provider" title="Permanent link">&para;</a></h3>
+<p><strong>Infrastructure as Code</strong>: <a href="https://registry.terraform.io/providers/dbsnapper/dbsnapper/latest">DBSnapper Terraform Provider</a>
+- Manage DBSnapper resources with Terraform
+- Integration with existing infrastructure automation
+- Supports all major DBSnapper configuration options</p>
+<h2 id="compatibility-matrix">Compatibility Matrix<a class="headerlink" href="#compatibility-matrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Local Mode</th>
+<th>Cloud Mode</th>
+<th>Docker</th>
+<th>Kubernetes</th>
+<th>CI/CD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL Support</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>MySQL Support</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Schema Filtering</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Multi-Core Operations</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Cloud Storage</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Team Sharing</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>SSO Integration</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>MCP Server</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<p>With these requirements in mind, choose your deployment approach:</p>
+<ol>
+<li><strong>Quick Trial</strong>: Use the <a href="../installation/">Docker image</a> - no local setup required</li>
+<li><strong>Local Development</strong>: <a href="../installation/">Install natively</a> for your platform  </li>
+<li><strong>Team Setup</strong>: <a href="https://app.dbsnapper.com/sign_up">Configure DBSnapper Cloud</a> for collaboration</li>
+<li><strong>Production Deployment</strong>: Use <a href="../installation/#container-orchestration">container orchestration</a> for scale</li>
+</ol>
+<p><strong>Next:</strong> Ready to install? Check out our <strong><a href="../installation/">Installation Guide</a></strong> for step-by-step instructions.</p>
 
 
 
@@ -2276,7 +3718,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 21, 2024 21:43:33 UTC">February 21, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 8, 2025 04:01:10 UTC">August 8, 2025</span>
   </span>
 
     
@@ -2372,10 +3814,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "search.share", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "search.share", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="../assets/javascripts/bundle.50899def.min.js"></script>
       
     
   </body>
