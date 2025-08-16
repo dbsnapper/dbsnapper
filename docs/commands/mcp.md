@@ -17,6 +17,27 @@ The MCP command provides AI application integration:
 dbsnapper mcp [flags]
 ```
 
+**Examples:**
+```bash
+# Start MCP server with HTTP transport (default)
+dbsnapper mcp
+
+# HTTP transport on custom port  
+dbsnapper mcp --port 3001
+
+# HTTP transport with custom path
+dbsnapper mcp --path /api/mcp
+
+# Start with Server-Sent Events transport
+dbsnapper mcp --transport sse
+
+# Use stdio transport (legacy mode)
+dbsnapper mcp --stdio
+
+# Start with debug logging
+DBSNAPPER_DEBUG=true dbsnapper mcp
+```
+
 ## Arguments
 
 None - the MCP server runs without additional arguments.
@@ -25,9 +46,9 @@ None - the MCP server runs without additional arguments.
 
 ```bash
   -h, --help                     help for mcp
-      --path string             HTTP endpoint path (default "/mcp")
-      --port int                HTTP server port (default 8080)
-      --stdio                   Use stdio transport (legacy mode for Claude Code)
+      --path string             HTTP path (for http/sse transport) (default "/mcp")
+  -p, --port int                HTTP port (for http/sse transport) (default 8080)
+      --stdio                   Use stdio transport (legacy mode for Claude Desktop)
   -t, --transport string        Transport type: http, sse, or stdio (default "http")
 
 Global Flags:
@@ -120,7 +141,10 @@ dbsnapper mcp --transport sse
        "dbsnapper": {
          "command": "dbsnapper",
          "args": ["mcp", "--stdio"],
-         "description": "DBSnapper database snapshot management"
+         "description": "DBSnapper database snapshot management",
+         "env": {
+           "DBSNAPPER_CONFIG": "/Users/snappy/.config/dbsnapper/dbsnapper.yml"
+         }
        }
      }
    }
@@ -138,9 +162,10 @@ dbsnapper mcp --transport sse
    ```json
    {
      "mcpServers": {
-       "dbsnapper-http": {
-         "type": "http",
-         "url": "http://localhost:8080/mcp"
+       "dbsnapper": {
+         "command": "dbsnapper",
+         "args": ["mcp"],
+         "env": {}
        }
      }
    }
